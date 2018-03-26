@@ -12,15 +12,31 @@ public class ViewHelper {
         switchVisibility(fragment.getView(), fragment.isVisible());
     }
 
+    public static void setVisibility(Fragment fragment, boolean isVisible) {
+        setVisibility(fragment.getView(), isVisible);
+    }
+
+    public static void setVisibility(android.support.v4.app.Fragment fragment, boolean isVisible) {
+        setVisibility(fragment.getView(), isVisible);
+    }
+
     public static void setVisibility(View view, boolean isVisible) {
         if(isVisible) {
-            view.setVisibility(View.GONE);
-        } else {
             view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
         }
     }
 
+    private static void switchVisibility(Fragment fragment, boolean visible) {
+        ViewHelper.setVisibility(fragment.getView(), !visible);
+    }
+
+    private static void switchVisibility(android.support.v4.app.Fragment fragment, boolean visible) {
+        ViewHelper.setVisibility(fragment.getView(), !visible);
+    }
+
     private static void switchVisibility(View view, boolean visible) {
-        ViewHelper.setVisibility(view, visible);
+        ViewHelper.setVisibility(view, !visible);
     }
 }

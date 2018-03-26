@@ -10,18 +10,35 @@ import com.beardedhen.androidbootstrap.TypefaceProvider;
 import at.teamgotcha.helpers.ViewHelper;
 
 public class MainActivity extends AppCompatActivity {
+    private BootstrapButton settingsButton;
+    private BootstrapButton connectionButton;
+    private BootstrapButton helpButton;
+    private BootstrapButton shopButton;
+    private Fragment settingsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TypefaceProvider.registerDefaultIconSets();
+
+        // disable the action bar
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_main);
-        final BootstrapButton settingsButton = findViewById(R.id.settings_button);
+
+        settingsButton = findViewById(R.id.settings_button);
+        connectionButton = findViewById(R.id.connection_button);
+        helpButton = findViewById(R.id.help_button);
+        shopButton = findViewById(R.id.shop_button);
 
         // https://stackoverflow.com/questions/17118339/how-do-i-retrieve-an-instance-of-a-fragment-defined-in-xml
         FragmentManager mgr = getSupportFragmentManager();
-        final Fragment settingsFragment = mgr.findFragmentById(R.id.settings_fragment);
+        settingsFragment = mgr.findFragmentById(R.id.settings_fragment);
 
+        // set them invisible
+        ViewHelper.setVisibility(settingsFragment, false);
+
+        // set listeners
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,5 +46,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        connectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableSettingsView();
+            }
+        });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableSettingsView();
+            }
+        });
+
+        shopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableSettingsView();
+            }
+        });
+    }
+
+    private void disableSettingsView() {
+        ViewHelper.setVisibility(settingsFragment, false);
     }
 }

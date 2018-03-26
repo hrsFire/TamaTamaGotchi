@@ -8,7 +8,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="at.teamgotcha.tamagotchi.fragments.SettingsFragment">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,13 +21,7 @@
             android:layout_marginBottom="@dimen/button_separator"
             app:bootstrapBrand="primary"
             app:bootstrapSize="lg"
-            app:roundedCorners="true"
-            app:buttonMode="regular" />
-<!--
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>-->
+            app:roundedCorners="true" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/language_button"
@@ -38,8 +31,7 @@
             android:layout_marginBottom="@dimen/button_separator"
             app:bootstrapBrand="primary"
             app:bootstrapSize="lg"
-            app:roundedCorners="true"
-            app:buttonMode="regular" />
+            app:roundedCorners="true" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/volume_button"
@@ -49,8 +41,7 @@
             android:layout_marginBottom="@dimen/button_separator"
             app:bootstrapBrand="primary"
             app:bootstrapSize="lg"
-            app:roundedCorners="true"
-            app:buttonMode="regular" />
+            app:roundedCorners="true" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/notification_button"
@@ -60,8 +51,7 @@
             android:layout_marginBottom="@dimen/button_separator"
             app:bootstrapBrand="primary"
             app:bootstrapSize="lg"
-            app:roundedCorners="true"
-            app:buttonMode="regular" />
+            app:roundedCorners="true" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/select_pet_button"
@@ -70,7 +60,6 @@
             android:text="@string/select_pet"
             app:bootstrapBrand="primary"
             app:bootstrapSize="lg"
-            app:roundedCorners="true"
-            app:buttonMode="regular" />
+            app:roundedCorners="true" />
     </LinearLayout>
 </FrameLayout>

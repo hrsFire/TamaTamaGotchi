@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.beardedhen.androidbootstrap.BootstrapButton;
-
-import at.teamgotcha.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.R;
 
 public class SettingsFragment extends Fragment {
@@ -32,7 +30,6 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         restartButton = view.findViewById(R.id.restart_button);
-        ViewHelper.setVisibility(view, true);
 
         return view;
     }
