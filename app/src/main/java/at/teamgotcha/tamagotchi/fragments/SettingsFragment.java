@@ -6,13 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import at.teamgotcha.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.R;
 
 public class SettingsFragment extends Fragment {
-    private Button restartButton;
+    private BootstrapButton restartButton;
     // private OnFragmentInteractionListener mListener;
 
     public SettingsFragment() {

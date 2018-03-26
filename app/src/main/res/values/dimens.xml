@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="first_z_layer">5dp</dimen>
+    <dimen name="first_z_layer">10dp</dimen>
+    <dimen name="button_separator">2dp</dimen>
 </resources>

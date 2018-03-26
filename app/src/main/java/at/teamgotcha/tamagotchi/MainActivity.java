@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-
+import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
 import at.teamgotcha.helpers.ViewHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,8 +14,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TypefaceProvider.registerDefaultIconSets();
         setContentView(R.layout.activity_main);
-        final Button settingsButton = findViewById(R.id.settings_button);
+        final BootstrapButton settingsButton = findViewById(R.id.settings_button);
 
         // https://stackoverflow.com/questions/17118339/how-do-i-retrieve-an-instance-of-a-fragment-defined-in-xml
         FragmentManager mgr = getSupportFragmentManager();

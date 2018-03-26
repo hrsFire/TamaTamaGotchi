@@ -1,27 +1,76 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OptionsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="at.teamgotcha.tamagotchi.fragments.SettingsFragment">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <Button
+        <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/restart_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Settings" />
+            android:text="@string/restart"
+            android:layout_marginBottom="@dimen/button_separator"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:roundedCorners="true"
+            app:buttonMode="regular" />
+<!--
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>-->
 
-        <CheckBox
-            android:id="@+id/checkBox3"
-            android:layout_width="wrap_content"
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/language_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="CheckBox" />
+            android:text="@string/language"
+            android:layout_marginBottom="@dimen/button_separator"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:roundedCorners="true"
+            app:buttonMode="regular" />
 
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/volume_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/volume"
+            android:layout_marginBottom="@dimen/button_separator"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:roundedCorners="true"
+            app:buttonMode="regular" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/notification_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notification"
+            android:layout_marginBottom="@dimen/button_separator"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:roundedCorners="true"
+            app:buttonMode="regular" />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/select_pet_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_pet"
+            app:bootstrapBrand="primary"
+            app:bootstrapSize="lg"
+            app:roundedCorners="true"
+            app:buttonMode="regular" />
     </LinearLayout>
-
 </FrameLayout>
