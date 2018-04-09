@@ -33,6 +33,8 @@ public class HelpFragment extends Fragment {
         faqButton = view.findViewById(R.id.faq_button);
         tutorialButton = view.findViewById(R.id.tutorial_button);
 
+        setListeners();
+
         return view;
     }
 
@@ -44,5 +46,19 @@ public class HelpFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void setListeners() {
+        faqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        tutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }

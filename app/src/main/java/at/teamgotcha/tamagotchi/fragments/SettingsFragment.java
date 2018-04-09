@@ -11,6 +11,10 @@ import at.teamgotcha.tamagotchi.R;
 
 public class SettingsFragment extends Fragment {
     private BootstrapButton restartButton;
+    private BootstrapButton languageButton;
+    private BootstrapButton volumeButton;
+    private BootstrapButton notificationButton;
+    private BootstrapButton selectPetButton;
     // private OnFragmentInteractionListener mListener;
 
     public SettingsFragment() {
@@ -30,6 +34,12 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         restartButton = view.findViewById(R.id.restart_button);
+        languageButton = view.findViewById(R.id.language_button);
+        volumeButton = view.findViewById(R.id.volume_button);
+        notificationButton = view.findViewById(R.id.notification_button);
+        selectPetButton = view.findViewById(R.id.select_pet_button);
+
+        setListeners();
 
         return view;
     }
@@ -56,5 +66,37 @@ public class SettingsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         // mListener = null;
+    }
+
+    private void setListeners() {
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        languageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        volumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        selectPetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }

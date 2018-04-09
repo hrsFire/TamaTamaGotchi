@@ -11,4 +11,10 @@
     <string name="select_pet">Select Pet</string>
     <string name="faq">FAQ</string>
     <string name="tutorial">Tutorial</string>
+    <string name="nutrition">Nutrition</string>
+    <string name="bathing">Bathing</string>
+    <string name="sleeping">Sleeping</string>
+    <string name="playing">Playing</string>
+    <string name="strolling">Strolling</string>
+    <string name="make_music">Make Music</string>
 </resources>

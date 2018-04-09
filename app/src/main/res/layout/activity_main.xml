@@ -18,6 +18,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <!-- top -->
             <LinearLayout
                 android:id="@+id/top_menu_layout"
                 android:orientation="vertical"
@@ -75,22 +77,21 @@
                 </HorizontalScrollView>
             </LinearLayout>
 
+            <!-- center -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.9">
 
+                <!-- left -->
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="links" />
                 </LinearLayout>
 
+                <!-- center -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -101,29 +102,31 @@
                     </GridLayout>
                 </LinearLayout>
 
+                <!-- right -->
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="rechts" />
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <fragment
+                        android:id="@+id/single_player_interaction_fragment"
+                        android:name="at.teamgotcha.tamagotchi.fragments.SinglePlayerInteractionFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- bottom -->
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="unten" />
+                android:layout_height="wrap_content"
+                android:gravity="center">
             </LinearLayout>
         </LinearLayout>
 
-        <!-- menus -->
+        <!-- popups: menus -->
         <RelativeLayout
             android:id="@+id/settings_layout"
             android:layout_width="150dp"
