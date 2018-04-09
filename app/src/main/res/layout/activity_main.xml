@@ -76,5 +76,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/help_button"
+            android:translationZ="@dimen/first_z_layer">
+
+            <fragment
+                android:id="@+id/help_fragment"
+                android:name="at.teamgotcha.tamagotchi.fragments.HelpFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

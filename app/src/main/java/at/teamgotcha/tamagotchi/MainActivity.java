@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private BootstrapButton helpButton;
     private BootstrapButton shopButton;
     private Fragment settingsFragment;
+    private Fragment helpFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +34,20 @@ public class MainActivity extends AppCompatActivity {
 
         // https://stackoverflow.com/questions/17118339/how-do-i-retrieve-an-instance-of-a-fragment-defined-in-xml
         FragmentManager mgr = getSupportFragmentManager();
+
         settingsFragment = mgr.findFragmentById(R.id.settings_fragment);
+        helpFragment = mgr.findFragmentById(R.id.help_fragment);
 
         // set them invisible
         ViewHelper.setVisibility(settingsFragment, false);
+        ViewHelper.setVisibility(helpFragment, false);
 
         // set listeners
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ViewHelper.switchVisibility(settingsFragment);
+                disableHelpView();
             }
         });
 
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 disableSettingsView();
+                disableHelpView();
             }
         });
 
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 disableSettingsView();
+                ViewHelper.switchVisibility(helpFragment);
             }
         });
 
@@ -64,11 +71,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 disableSettingsView();
+                disableHelpView();
             }
         });
     }
 
     private void disableSettingsView() {
         ViewHelper.setVisibility(settingsFragment, false);
+    }
+
+    private void disableHelpView() {
+        ViewHelper.setVisibility(helpFragment, false);
     }
 }
