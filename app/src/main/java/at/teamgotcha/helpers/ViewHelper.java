@@ -12,6 +12,10 @@ public class ViewHelper {
         switchVisibility(fragment.getView(), fragment.isVisible());
     }
 
+    public static void switchVisibility(View view) {
+        switchVisibility(view, getVisibilityAsBool(view.getVisibility()));
+    }
+
     public static void setVisibility(Fragment fragment, boolean isVisible) {
         setVisibility(fragment.getView(), isVisible);
     }
@@ -26,6 +30,10 @@ public class ViewHelper {
         } else {
             view.setVisibility(View.GONE);
         }
+    }
+
+    public static boolean getVisibilityAsBool(int visibility) {
+        return visibility == View.VISIBLE;
     }
 
     private static void switchVisibility(Fragment fragment, boolean visible) {

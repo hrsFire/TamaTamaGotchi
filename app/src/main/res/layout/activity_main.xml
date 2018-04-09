@@ -12,82 +12,112 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <HorizontalScrollView
+            <HorizontalScrollView
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars = "vertical"
+                android:scrollbarStyle="insideInset">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/settings_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings"
+                        app:bootstrapBrand="warning"
+                        app:bootstrapSize="lg"
+                        app:roundedCorners="true" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/connection_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/connection"
+                        app:bootstrapBrand="warning"
+                        app:bootstrapSize="lg"
+                        app:roundedCorners="true" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/help_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/help"
+                        app:bootstrapBrand="warning"
+                        app:bootstrapSize="lg"
+                        app:roundedCorners="true" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/shop_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shop"
+                        app:bootstrapBrand="warning"
+                        app:bootstrapSize="lg"
+                        app:roundedCorners="true" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:id="@+id/settings_layout"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_above="@id/settings_button"
+                android:translationZ="@dimen/first_z_layer">
+
+                <fragment
+                    android:id="@+id/settings_fragment"
+                    android:name="at.teamgotcha.tamagotchi.fragments.SettingsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/help_layout"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_above="@id/help_button"
+                android:translationZ="@dimen/first_z_layer">
+
+                <fragment
+                    android:id="@+id/help_fragment"
+                    android:name="at.teamgotcha.tamagotchi.fragments.HelpFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9">
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bootstrap_brand_primary">
+                <TextView android:text="kajsdklf" />
+            </GridLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:scrollbars = "vertical"
-            android:scrollbarStyle="insideInset">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <com.beardedhen.androidbootstrap.BootstrapButton
-                    android:id="@+id/settings_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings"
-                    app:bootstrapBrand="warning"
-                    app:bootstrapSize="lg"
-                    app:roundedCorners="true" />
-
-                <com.beardedhen.androidbootstrap.BootstrapButton
-                    android:id="@+id/connection_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/connection"
-                    app:bootstrapBrand="warning"
-                    app:bootstrapSize="lg"
-                    app:roundedCorners="true" />
-
-                <com.beardedhen.androidbootstrap.BootstrapButton
-                    android:id="@+id/help_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/help"
-                    app:bootstrapBrand="warning"
-                    app:bootstrapSize="lg"
-                    app:roundedCorners="true" />
-
-                <com.beardedhen.androidbootstrap.BootstrapButton
-                    android:id="@+id/shop_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/shop"
-                    app:bootstrapBrand="warning"
-                    app:bootstrapSize="lg"
-                    app:roundedCorners="true" />
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/settings_button"
-            android:translationZ="@dimen/first_z_layer">
-
-            <fragment
-                android:id="@+id/settings_fragment"
-                android:name="at.teamgotcha.tamagotchi.fragments.SettingsFragment"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/help_button"
-            android:translationZ="@dimen/first_z_layer">
-
-            <fragment
-                android:id="@+id/help_fragment"
-                android:name="at.teamgotcha.tamagotchi.fragments.HelpFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:text="zweite Texbox" />
+        </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
