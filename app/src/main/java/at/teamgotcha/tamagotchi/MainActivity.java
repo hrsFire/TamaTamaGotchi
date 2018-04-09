@@ -4,9 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
@@ -21,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment helpFragment;
     private View settingsLayout;
     private View helpLayout;
+    private View topMenuLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         settingsLayout = findViewById(R.id.settings_layout);
         helpLayout = findViewById(R.id.help_layout);
+        topMenuLayout = findViewById(R.id.top_menu_layout);
 
-        // set them invisible
+        // set invisible
         ViewHelper.setVisibility(settingsLayout, false);
         ViewHelper.setVisibility(helpLayout, false);
 
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ViewHelper.switchVisibility(settingsLayout);
                 disableHelpView();
+                // set it the correct position
+                ViewHelper.setXYAboveTranslation(settingsLayout, settingsButton);
             }
         });
 
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disableSettingsView();
                 ViewHelper.switchVisibility(helpLayout);
+                // set it the correct position
+                ViewHelper.setXYAboveTranslation(helpLayout, helpButton);
             }
         });
 

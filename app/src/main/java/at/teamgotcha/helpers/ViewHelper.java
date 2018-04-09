@@ -36,6 +36,11 @@ public class ViewHelper {
         return visibility == View.VISIBLE;
     }
 
+    public static void setXYAboveTranslation(View targetView, View sourceView) {
+        targetView.setTranslationX(sourceView.getX());
+        targetView.setTranslationY(sourceView.getY() + sourceView.getHeight());
+    }
+
     private static void switchVisibility(Fragment fragment, boolean visible) {
         ViewHelper.setVisibility(fragment.getView(), !visible);
     }
