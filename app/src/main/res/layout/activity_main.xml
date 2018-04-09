@@ -97,8 +97,7 @@
                     android:layout_weight="0.9">
                     <GridLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/bootstrap_brand_primary">
+                        android:layout_height="match_parent">
                     </GridLayout>
                 </LinearLayout>
 
