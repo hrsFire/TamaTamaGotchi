@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private BootstrapButton shopButton;
     private Fragment settingsFragment;
     private Fragment helpFragment;
+    private Fragment petFragment;
+    private Fragment petspriteFragment;
     private View settingsLayout;
     private View helpLayout;
     private View topMenuLayout;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         settingsFragment = mgr.findFragmentById(R.id.settings_fragment);
         helpFragment = mgr.findFragmentById(R.id.help_fragment);
+        petFragment = mgr.findFragmentById(R.id.pet_fragment);
+        petspriteFragment = mgr.findFragmentById(R.id.petsprite_fragment);
 
         settingsLayout = findViewById(R.id.settings_layout);
         helpLayout = findViewById(R.id.help_layout);
