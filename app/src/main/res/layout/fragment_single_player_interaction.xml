@@ -12,44 +12,44 @@
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/nutrition_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:layout_width="@dimen/side_button_width"
+            android:layout_height="@dimen/side_button_height"
+            android:src="@drawable/food_icon_colour"
             android:tooltipText="@string/nutrition"
             app:bootstrapSize="md"
             app:hasBorder="false" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/bathing_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/side_button_width"
+            android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:src="@drawable/shower_icon"
             android:tooltipText="@string/bathing" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/sleeping_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/side_button_width"
+            android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:src="@drawable/bed_icon"
             android:tooltipText="@string/sleeping" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/playing_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/side_button_width"
+            android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:src="@drawable/ball_icon_colour"
             android:tooltipText="@string/playing" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/strolling_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/side_button_width"
+            android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
             android:src="@drawable/common_google_signin_btn_icon_light"
@@ -57,11 +57,11 @@
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/make_music_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/side_button_width"
+            android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:src="@drawable/node_icon"
             android:tooltipText="@string/make_music" />
     </LinearLayout>
 </FrameLayout>
