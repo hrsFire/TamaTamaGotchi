@@ -17,4 +17,6 @@
     <string name="playing">Playing</string>
     <string name="strolling">Strolling</string>
     <string name="make_music">Make Music</string>
+    <string name="gender">Gender</string>
+    <string name="name">Name</string>
 </resources>

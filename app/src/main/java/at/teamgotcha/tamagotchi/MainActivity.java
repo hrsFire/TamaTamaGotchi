@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Fragment helpFragment;
     private Fragment petFragment;
     private Fragment petspriteFragment;
+    private Fragment statusMenuFragment;
     private View settingsLayout;
     private View helpLayout;
     private View topMenuLayout;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         helpFragment = mgr.findFragmentById(R.id.help_fragment);
         petFragment = mgr.findFragmentById(R.id.pet_fragment);
         petspriteFragment = mgr.findFragmentById(R.id.petsprite_fragment);
+        statusMenuFragment = mgr.findFragmentById(R.id.status_menu_fragment);
 
         settingsLayout = findViewById(R.id.settings_layout);
         helpLayout = findViewById(R.id.help_layout);
