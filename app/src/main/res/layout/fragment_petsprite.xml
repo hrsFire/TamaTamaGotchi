@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="at.teamgotcha.tamagotchi.fragments.PetSpriteFragment">
+    tools:context=".fragments.PetSpriteFragment">
 
     <ImageView
         android:id="@+id/petsprite_image"

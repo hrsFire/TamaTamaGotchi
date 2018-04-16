@@ -19,4 +19,7 @@
     <string name="make_music">Make Music</string>
     <string name="gender">Gender</string>
     <string name="name">Name</string>
+    <string name="communicate">Communicate</string>
+    <string name="send_gift">Send Gift</string>
+    <string name="have_fun">Have Fun</string>
 </resources>
