@@ -1,0 +1,67 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="at.teamgotcha.tamagotchi.fragments.SinglePlayerInteractionFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.beardedhen.androidbootstrap.BootstrapThumbnail
+            android:id="@+id/nutrition_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            app:hasBorder="false"
+            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:tooltipText="@string/nutrition" />
+
+        <com.beardedhen.androidbootstrap.BootstrapThumbnail
+            android:id="@+id/bathing_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            app:hasBorder="false"
+            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:tooltipText="@string/bathing" />
+
+        <com.beardedhen.androidbootstrap.BootstrapThumbnail
+            android:id="@+id/sleeping_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            app:hasBorder="false"
+            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:tooltipText="@string/sleeping" />
+
+        <com.beardedhen.androidbootstrap.BootstrapThumbnail
+            android:id="@+id/playing_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            app:hasBorder="false"
+            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:tooltipText="@string/playing" />
+
+        <com.beardedhen.androidbootstrap.BootstrapThumbnail
+            android:id="@+id/strolling_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            app:hasBorder="false"
+            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:tooltipText="@string/strolling" />
+
+        <com.beardedhen.androidbootstrap.BootstrapThumbnail
+            android:id="@+id/make_music_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            app:hasBorder="false"
+            android:src="@drawable/common_google_signin_btn_icon_light"
+            android:tooltipText="@string/make_music" />
+    </LinearLayout>
+</FrameLayout>
