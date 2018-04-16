@@ -85,11 +85,6 @@
                 android:layout_weight="0.9">
 
                 <!-- left -->
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-                </LinearLayout>
 
                 <!-- center -->
                 <LinearLayout
@@ -99,6 +94,13 @@
                     <GridLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+                           <fragment
+                                android:id ="@+id/pet_fragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation = "vertical"
+                                android:name ="at.teamgotcha.tamagotchi.fragments.PetFragment"/>
+
                     </GridLayout>
                 </LinearLayout>
 
@@ -140,6 +142,21 @@
                 android:layout_height="match_parent"
                 android:elevation="@dimen/first_z_layer" />
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="350dp"
+            android:translationX="150dp"
+            android:translationY="220dp"
+            android:elevation="10dp">
+            <fragment
+                android:id="@+id/petsprite_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="10dp"
+                android:name="at.teamgotcha.tamagotchi.fragments.PetSpriteFragment"/>
+
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:id="@+id/help_layout"
@@ -155,4 +172,5 @@
                 android:elevation="@dimen/first_z_layer" />
         </RelativeLayout>
     </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>
