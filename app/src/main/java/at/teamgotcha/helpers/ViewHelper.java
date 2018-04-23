@@ -36,18 +36,18 @@ public class ViewHelper {
         return visibility == View.VISIBLE;
     }
 
-    public static void setXYAboveTranslation(View targetView, View sourceView) {
-        targetView.setTranslationX(sourceView.getX());
-        targetView.setTranslationY(sourceView.getY() + sourceView.getHeight());
+    public static void setXYAbove(View targetView, View sourceView) {
+        targetView.setX(sourceView.getX());
+        targetView.setY(sourceView.getY() + sourceView.getHeight());
     }
 
-    public static void setXYTranslation(View targetView, float x, float y) {
-        targetView.setTranslationX(x);
-        targetView.setTranslationY(y);
+    public static void setXY(View targetView, float x, float y) {
+        targetView.setX(x);
+        targetView.setY(y);
     }
 
-    public static void setXYHalfTranslation(View targetView, View sourceView) {
-        setXYTranslation(targetView, sourceView.getX() + sourceView.getWidth() /2, sourceView.getY() + sourceView.getHeight() /2);
+    public static void setXYHalf(View targetView, View sourceView) {
+        setXY(targetView, sourceView.getX() - targetView.getWidth() /2 + sourceView.getWidth() /2, sourceView.getY() - targetView.getHeight() /2 + sourceView.getHeight() /2);
     }
 
     private static void switchVisibility(Fragment fragment, boolean visible) {

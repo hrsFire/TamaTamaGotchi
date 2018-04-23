@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 ViewHelper.switchVisibility(settingsLayout);
                 disableHelpView();
                 // set the correct position
-                ViewHelper.setXYAboveTranslation(settingsLayout, settingsButton);
+                ViewHelper.setXYAbove(settingsLayout, settingsButton);
             }
         });
 
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 disableSettingsView();
                 ViewHelper.switchVisibility(helpLayout);
                 // set it the correct position
-                ViewHelper.setXYAboveTranslation(helpLayout, helpButton);
+                ViewHelper.setXYAbove(helpLayout, helpButton);
             }
         });
 
@@ -141,7 +141,12 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private void showMainOverlayLayout() {
         disableSettingsView();
         ViewHelper.switchVisibility(mainOverlayLayout);
-        ViewHelper.setXYHalfTranslation(mainOverlayLayout, getView());
+        mainOverlayLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                ViewHelper.setXYHalf(mainOverlayLayout, getView());
+            }
+        });
     }
 
     private void disableMainOverlayLayout() {
@@ -188,13 +193,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     @Override
     public void restartGame() {
-        disableSettingsView();
+        disableMainOverlayLayout();
         // @todo:
     }
 
     @Override
     public void cancelRestartGame() {
-        disableSettingsView();
+        disableMainOverlayLayout();
     }
 
     @Override
