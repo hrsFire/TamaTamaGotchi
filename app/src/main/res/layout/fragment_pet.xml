@@ -11,6 +11,6 @@
         android:id="@+id/pet_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:srcCompat="@drawable/googleg_standard_color_18" />
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="parent" />
 </FrameLayout>

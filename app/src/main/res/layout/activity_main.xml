@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
-    tools:context="at.teamgotcha.tamagotchi.MainActivity">
+    tools:context="at.teamgotcha.tamagotchi.MainActivity"
+    android:background="@drawable/background">
 
     <FrameLayout
         android:orientation="vertical"
