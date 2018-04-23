@@ -2,17 +2,23 @@ package at.teamgotcha.tamagotchi.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
-import at.teamgotcha.helpers.AnimHelper;
-import at.teamgotcha.tamagotchi.R;
+import java.util.EnumSet;
 
-public class SinglePlayerInteractionFragment extends Fragment {
+import at.teamgotcha.helpers.AnimHelper;
+import at.teamgotcha.pets.Pet;
+import at.teamgotcha.tamagotchi.R;
+import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
+import at.teamgotcha.tamagotchi.enums.PetProperties;
+import at.teamgotcha.tamagotchi.interfaces.PetObserver;
+import at.teamgotcha.tamagotchi.interfaces.contracts.SinglePlayerInteractionContract;
+
+public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePlayerInteractionContract> implements PetObserver {
     private BootstrapThumbnail nutritionButton;
     private BootstrapThumbnail bathingButton;
     private BootstrapThumbnail sleepingButton;
@@ -51,11 +57,25 @@ public class SinglePlayerInteractionFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        getContract().getPetObserver().register(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+
+        getContract().getPetObserver().unregister(this);
+    }
+
+    @Override
+    public void changed(Pet value) {
+        // @todo: update fragment
+    }
+
+    @Override
+    public void changed(EnumSet<PetProperties> properties) {
+        // @todo: update fragment
     }
 
     private void setListeners() {

@@ -34,19 +34,9 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
         // Add Notification ...
         NotificationHelper.addPetHungerNotification(currentPet);
 
-        AddListeners();
+        setListeners();
 
         return view;
-    }
-
-    private void AddListeners()
-    {
-        spriteView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.startAnimation(AnimHelper.AddShakeOneAnimation(spriteView.getContext()));
-            }
-        });
     }
 
     @Override
@@ -76,5 +66,15 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
         if (properties.contains(PetProperties.APPEARANCE)) {
             spriteView.setImageBitmap(currentPet.getAppearance());
         }
+    }
+
+    private void setListeners()
+    {
+        spriteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.startAnimation(AnimHelper.AddShakeOneAnimation(spriteView.getContext()));
+            }
+        });
     }
 }

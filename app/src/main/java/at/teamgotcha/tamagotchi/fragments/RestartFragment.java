@@ -46,22 +46,6 @@ public class RestartFragment extends ContractV4Fragment<RestartContract> impleme
         return view;
     }
 
-    private void setListeners() {
-        noButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContract().cancelRestartGame();
-            }
-        });
-
-        yesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContract().restartGame();
-            }
-        });
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -84,5 +68,21 @@ public class RestartFragment extends ContractV4Fragment<RestartContract> impleme
     @Override
     public void changed(EnumSet<PetProperties> properties) {
         // @todo: update fragment
+    }
+
+    private void setListeners() {
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getContract().cancelRestartGame();
+            }
+        });
+
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getContract().restartGame();
+            }
+        });
     }
 }

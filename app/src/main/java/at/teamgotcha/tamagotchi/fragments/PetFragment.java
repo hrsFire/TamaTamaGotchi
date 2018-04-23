@@ -28,6 +28,8 @@ public class PetFragment extends ContractV4Fragment<PetBackgroundContract> imple
         backgroundView = view.findViewById(R.id.pet_image);
         currentPet = getContract().getPetObserver().getObject();
 
+        setListeners();
+
         return view;
     }
 
@@ -58,5 +60,8 @@ public class PetFragment extends ContractV4Fragment<PetBackgroundContract> imple
         if (properties.contains(PetProperties.BACKGROUND)) {
             backgroundView.setImageBitmap(currentPet.getBackground());
         }
+    }
+
+    private void setListeners() {
     }
 }

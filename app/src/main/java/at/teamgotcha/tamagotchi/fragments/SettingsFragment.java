@@ -7,12 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
+import java.util.EnumSet;
+
 import at.teamgotcha.helpers.AnimHelper;
+import at.teamgotcha.pets.Pet;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
+import at.teamgotcha.tamagotchi.enums.PetProperties;
+import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.interfaces.contracts.SettingsContract;
 
-public class SettingsFragment extends ContractV4Fragment<SettingsContract> {
+public class SettingsFragment extends ContractV4Fragment<SettingsContract> implements PetObserver {
     private BootstrapButton restartButton;
     private BootstrapButton languageButton;
     private BootstrapButton volumeButton;
@@ -20,10 +25,6 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContract> {
     private BootstrapButton selectPetButton;
 
     public SettingsFragment() {
-    }
-
-    public void onAttach(Context context) {
-        super.onAttach(context);
     }
 
     @Override
@@ -52,8 +53,27 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContract> {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        getContract().getPetObserver().register(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        getContract().getPetObserver().unregister(this);
+    }
+
+    @Override
+    public void changed(Pet value) {
+        // @todo: update fragment
+    }
+
+    @Override
+    public void changed(EnumSet<PetProperties> properties) {
+        // @todo: update fragment
     }
 
     private void setListeners() {

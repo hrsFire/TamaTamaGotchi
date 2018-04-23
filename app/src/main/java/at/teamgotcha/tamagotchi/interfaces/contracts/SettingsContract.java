@@ -1,6 +1,6 @@
 package at.teamgotcha.tamagotchi.interfaces.contracts;
 
-public interface SettingsContract {
+public interface SettingsContract extends PetObserverContract {
     void showRestartDialog();
     void showLanguageDialog();
     void showVolumeDialog();

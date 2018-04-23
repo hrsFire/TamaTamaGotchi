@@ -14,12 +14,18 @@ import at.teamgotcha.pets.Pet;
 import at.teamgotcha.pets.PetOne;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
+import at.teamgotcha.tamagotchi.interfaces.contracts.HelpContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.MoodMenuContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.MultiplayerInteractionContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.PetBackgroundContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.PetSpriteContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.RestartContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.SettingsContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.SinglePlayerInteractionContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.StatusMenuContract;
 
-public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract {
+public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
+        HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
