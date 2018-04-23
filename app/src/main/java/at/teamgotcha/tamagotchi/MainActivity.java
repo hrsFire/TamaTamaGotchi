@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 import at.teamgotcha.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.interfaces.SettingsContractable;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContracta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         TypefaceProvider.registerDefaultIconSets();
 
         // disable the action bar

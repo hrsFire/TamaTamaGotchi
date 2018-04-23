@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.beardedhen.androidbootstrap.BootstrapButton;
+
+import at.teamgotcha.helpers.AnimHelper;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
 import at.teamgotcha.tamagotchi.interfaces.SettingsContractable;
@@ -59,6 +61,7 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContractable> {
             @Override
             public void onClick(View v) {
                 getContract().showRestartDialog();
+                v.startAnimation(AnimHelper.AddAlphaAnimation(restartButton.getContext()));
             }
         });
 
@@ -66,6 +69,7 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContractable> {
             @Override
             public void onClick(View v) {
                 getContract().showLanguageDialog();
+                v.startAnimation(AnimHelper.AddAlphaAnimation(languageButton.getContext()));
             }
         });
 
@@ -73,6 +77,7 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContractable> {
             @Override
             public void onClick(View v) {
                 getContract().showVolumeDialog();
+                v.startAnimation(AnimHelper.AddAlphaAnimation(volumeButton.getContext()));
             }
         });
 
@@ -80,6 +85,7 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContractable> {
             @Override
             public void onClick(View v) {
                 getContract().showNotificationDialog();
+                v.startAnimation(AnimHelper.AddAlphaAnimation(notificationButton.getContext()));
             }
         });
 
@@ -87,6 +93,7 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContractable> {
             @Override
             public void onClick(View v) {
                 getContract().showSelectPetDialog();
+                v.startAnimation(AnimHelper.AddAlphaAnimation(selectPetButton.getContext()));
             }
         });
     }

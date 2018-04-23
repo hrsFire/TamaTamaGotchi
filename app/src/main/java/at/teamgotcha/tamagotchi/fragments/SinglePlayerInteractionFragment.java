@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
@@ -40,6 +39,7 @@ public class SinglePlayerInteractionFragment extends Fragment {
         bathingButton = view.findViewById(R.id.bathing_button);
         sleepingButton = view.findViewById(R.id.sleeping_button);
         playingButton = view.findViewById(R.id.playing_button);
+        playingButton.setBackgroundResource(R.drawable.icon_ball);
         strollingButton = view.findViewById(R.id.strolling_button);
         makeMusicButton = view.findViewById(R.id.make_music_button);
 
