@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.beardedhen.androidbootstrap.BootstrapButton;
+
+import at.teamgotcha.helpers.AnimHelper;
 import at.teamgotcha.tamagotchi.R;
 
 public class SettingsFragment extends Fragment {
@@ -72,30 +74,40 @@ public class SettingsFragment extends Fragment {
         restartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                v.startAnimation(AnimHelper.AddAlphaAnimation(restartButton.getContext()));
             }
         });
 
         languageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                v.startAnimation(AnimHelper.AddAlphaAnimation(languageButton.getContext()));
             }
         });
 
         volumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                v.startAnimation(AnimHelper.AddAlphaAnimation(volumeButton.getContext()));
             }
         });
 
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                v.startAnimation(AnimHelper.AddAlphaAnimation(notificationButton.getContext()));
             }
         });
 
         selectPetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                v.startAnimation(AnimHelper.AddAlphaAnimation(selectPetButton.getContext()));
             }
         });
     }

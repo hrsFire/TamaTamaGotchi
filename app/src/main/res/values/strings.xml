@@ -17,6 +17,14 @@
     <string name="playing">Playing</string>
     <string name="strolling">Strolling</string>
     <string name="make_music">Make Music</string>
+
+    <!-- Hunger stuff -->
+    <string name="notification_hunger">Hunger!</string>
+    <string name="hunger_full">I am full!</string>
+    <string name="hunger_empty">Please feed me!</string>
+    <string name="hunger_critical">I am hungry!</string>
+    
+    <!-- Pet properties -->
     <string name="gender">Gender</string>
     <string name="name">Name</string>
     <string name="communicate">Communicate</string>

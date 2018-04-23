@@ -7,17 +7,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import at.teamgotcha.pets.Pet;
+import at.teamgotcha.pets.PetOne;
 import at.teamgotcha.tamagotchi.R;
 
+// Background ...
 public class PetFragment extends Fragment {
-    private ImageView pet;
+
+    private Pet currentPet;
+    private ImageView background;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pet,container,false);
-        pet = view.findViewById(R.id.pet_image);
+
+        background = view.findViewById(R.id.pet_image);
+
+        currentPet = new PetOne(view);
+        // updateBackground();
 
         return view;
+    }
 
+    public ImageView getBackground(){
+
+        return background;
+    }
+
+    public void setBackground(ImageView nView){
+
+        background = nView;
+    }
+
+    public void updateBackground(){
+
+        background = currentPet.getMyBackground();
     }
 }
