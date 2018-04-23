@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import at.teamgotcha.helpers.AnimHelper;
 import at.teamgotcha.helpers.NotificationHelper;
 import at.teamgotcha.pets.Pet;
 import at.teamgotcha.pets.PetOne;
@@ -29,7 +30,7 @@ public class PetSpriteFragment extends Fragment {
 
         // Add Notification ...
         NotificationHelper.addPetHungerNotification(currentPet);
-        
+        AddListeners();
         return view;
     }
 
@@ -46,5 +47,15 @@ public class PetSpriteFragment extends Fragment {
     public void updateSprite(){
 
         sprite = currentPet.getMyBackground();
+    }
+
+    private void AddListeners()
+    {
+        sprite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.startAnimation(AnimHelper.AddShakeOneAnimation(sprite.getContext()));
+            }
+        });
     }
 }

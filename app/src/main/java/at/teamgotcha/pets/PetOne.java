@@ -17,6 +17,7 @@ public class PetOne extends Pet {
 
         appearance = currentView.findViewById(R.id.petsprite_image);
         background = currentView.findViewById(R.id.pet_image);
+
     }
 
 

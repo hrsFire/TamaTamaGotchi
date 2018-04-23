@@ -11,5 +11,5 @@
         android:id="@+id/petsprite_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:srcCompat="@drawable/pet_squid" />
 </FrameLayout>
