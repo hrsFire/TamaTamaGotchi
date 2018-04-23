@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.SinglePlayerInteractionFragment">
+    tools:context=".fragments.MultiPlayerInteractionFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,31 +13,13 @@
         android:orientation="vertical">
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/nutrition_button"
+            android:id="@+id/communication_button"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
-            android:src="@drawable/food_icon_colour"
-            android:tooltipText="@string/nutrition"
+            android:src="@drawable/googleg_disabled_color_18"
+            android:tooltipText="@string/communicate"
             app:bootstrapSize="md"
             app:hasBorder="false" />
-
-        <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/bathing_button"
-            android:layout_width="@dimen/side_button_width"
-            android:layout_height="@dimen/side_button_height"
-            app:bootstrapSize="md"
-            app:hasBorder="false"
-            android:src="@drawable/shower_icon"
-            android:tooltipText="@string/bathing" />
-
-        <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/sleeping_button"
-            android:layout_width="@dimen/side_button_width"
-            android:layout_height="@dimen/side_button_height"
-            app:bootstrapSize="md"
-            app:hasBorder="false"
-            android:src="@drawable/bed_icon"
-            android:tooltipText="@string/sleeping" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/playing_button"
@@ -49,21 +31,21 @@
             android:tooltipText="@string/playing" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/strolling_button"
+            android:id="@+id/send_gift_button"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/common_google_signin_btn_icon_light"
-            android:tooltipText="@string/strolling" />
+            android:src="@drawable/gift_icon_colour"
+            android:tooltipText="@string/send_gift" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/make_music_button"
+            android:id="@+id/have_fun_button"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/node_icon"
-            android:tooltipText="@string/make_music" />
+            android:src="@drawable/pacifier_icon"
+            android:tooltipText="@string/have_fun" />
     </LinearLayout>
 </FrameLayout>

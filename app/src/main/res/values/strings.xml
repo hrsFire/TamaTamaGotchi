@@ -23,6 +23,14 @@
     <string name="hunger_full">I am full!</string>
     <string name="hunger_empty">Please feed me!</string>
     <string name="hunger_critical">I am hungry!</string>
-
-
+    
+    <!-- Pet properties -->
+    <string name="gender">Gender</string>
+    <string name="name">Name</string>
+    <string name="communicate">Communicate</string>
+    <string name="send_gift">Send Gift</string>
+    <string name="have_fun">Have Fun</string>
+    <string name="mood_level">Mood Level</string>
+    <string name="health_level">Health Level</string>
+    <string name="hunger_level">Hunger Level</string>
 </resources>
