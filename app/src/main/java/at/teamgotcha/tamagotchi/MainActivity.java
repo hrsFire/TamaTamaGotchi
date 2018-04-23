@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 import at.teamgotcha.helpers.ViewHelper;
 
 public class MainActivity extends AppCompatActivity {

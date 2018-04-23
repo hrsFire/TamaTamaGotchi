@@ -21,7 +21,7 @@ public abstract class Pet {
     protected final static int MAX_HUNGER = 100;
     protected final static int MIN_HUNGER = 0;
     protected final static int CRITICAL_HUNGER = 20;
-    protected final static int INITIAL_HUNGER = 50;
+    protected final static int INITIAL_HUNGER = 10;
 
     protected int currentHunger;
 
@@ -77,7 +77,7 @@ public abstract class Pet {
         if(currentHunger >= MAX_HUNGER){
 
             currentHunger = MAX_HUNGER;
-            return currentView.getContext().getString(R.string.hunger_full);
+            // return currentView.getContext().getString(R.string.hunger_full);
 
         } else if(currentHunger <= CRITICAL_HUNGER){
 
@@ -86,7 +86,7 @@ public abstract class Pet {
         } else if(currentHunger <= MIN_HUNGER){
 
             currentHunger = MIN_HUNGER;
-            return currentView.getContext().getString(R.string.hunger_empty);
+            // return currentView.getContext().getString(R.string.hunger_empty);
         }
 
         return null;
