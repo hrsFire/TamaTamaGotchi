@@ -37,4 +37,6 @@ public class AnimHelper {
         // generate Scale Animation
         return AnimationUtils.loadAnimation(context, R.anim.scale);
     }
+
+
 }

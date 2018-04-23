@@ -62,6 +62,7 @@ public class SinglePlayerInteractionFragment extends Fragment {
         nutritionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 v.startAnimation(AnimHelper.AddBounceAnimation(nutritionButton.getContext()));
             }
         });
@@ -69,6 +70,7 @@ public class SinglePlayerInteractionFragment extends Fragment {
         bathingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 v.startAnimation(AnimHelper.AddBounceAnimation(bathingButton.getContext()));
             }
         });
@@ -76,6 +78,7 @@ public class SinglePlayerInteractionFragment extends Fragment {
         sleepingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 v.startAnimation(AnimHelper.AddBounceAnimation(sleepingButton.getContext()));
             }
         });
@@ -83,6 +86,7 @@ public class SinglePlayerInteractionFragment extends Fragment {
         playingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 v.startAnimation(AnimHelper.AddBounceAnimation(playingButton.getContext()));
             }
         });
@@ -90,6 +94,7 @@ public class SinglePlayerInteractionFragment extends Fragment {
         strollingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 v.startAnimation(AnimHelper.AddBounceAnimation(strollingButton.getContext()));
             }
         });
@@ -97,6 +102,7 @@ public class SinglePlayerInteractionFragment extends Fragment {
         makeMusicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 v.startAnimation(AnimHelper.AddBounceAnimation(makeMusicButton.getContext()));
             }
         });

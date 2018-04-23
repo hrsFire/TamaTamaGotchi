@@ -18,16 +18,11 @@ public class MainActivity extends AppCompatActivity {
     private BootstrapButton shopButton;
     private Fragment settingsFragment;
     private Fragment helpFragment;
-    private Fragment singlePlayerInteractionFragment;
-    private Fragment multiPlayerInteractionFragment;
-    private Fragment mainBackgroundFragment;
+    private Fragment petFragment;
     private Fragment petspriteFragment;
-    private Fragment statusMenuFragment;
     private View settingsLayout;
     private View helpLayout;
     private View topMenuLayout;
-    private View singlePlayerInteractionLayout;
-    private View multiPlayerInteractionLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
         settingsFragment = mgr.findFragmentById(R.id.settings_fragment);
         helpFragment = mgr.findFragmentById(R.id.help_fragment);
-        singlePlayerInteractionFragment = mgr.findFragmentById(R.id.single_player_interaction_fragment);
-        multiPlayerInteractionFragment = mgr.findFragmentById(R.id.multi_player_interaction_fragment);
-        mainBackgroundFragment = mgr.findFragmentById(R.id.pet_fragment);
+        petFragment = mgr.findFragmentById(R.id.pet_fragment);
         petspriteFragment = mgr.findFragmentById(R.id.petsprite_fragment);
-        statusMenuFragment = mgr.findFragmentById(R.id.status_menu_fragment);
 
         settingsLayout = findViewById(R.id.settings_layout);
         helpLayout = findViewById(R.id.help_layout);
         topMenuLayout = findViewById(R.id.top_menu_layout);
-        singlePlayerInteractionLayout = findViewById(R.id.single_player_interaction_layout);
-        multiPlayerInteractionLayout = findViewById(R.id.multi_player_interaction_layout);
 
         // set invisible
         ViewHelper.setVisibility(settingsLayout, false);
         ViewHelper.setVisibility(helpLayout, false);
-        ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
 
         // set listeners
         settingsButton.setOnClickListener(new View.OnClickListener() {

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Project.iml" filepath="$PROJECT_DIR$/Project.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TamaTamaGotchi.iml" filepath="$PROJECT_DIR$/TamaTamaGotchi.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TamaTamaGotchi.iml" filepath="$PROJECT_DIR$/.idea/TamaTamaGotchi.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
