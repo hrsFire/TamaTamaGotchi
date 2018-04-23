@@ -25,4 +25,10 @@
     <string name="mood_level">Mood Level</string>
     <string name="health_level">Health Level</string>
     <string name="hunger_level">Hunger Level</string>
+
+    <!-- Hunger stuff -->
+    <string name="notification_hunger">Hunger!</string>
+    <string name="hunger_full">I am full!</string>
+    <string name="hunger_empty">Please feed me!</string>
+    <string name="hunger_critical">I am hungry!</string>
 </resources>
