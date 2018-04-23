@@ -29,7 +29,7 @@ public class PetSpriteFragment extends Fragment {
 
         // Add Notification ...
         NotificationHelper.addPetHungerNotification(currentPet);
-
+        
         return view;
     }
 
