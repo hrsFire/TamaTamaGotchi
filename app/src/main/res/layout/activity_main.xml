@@ -193,6 +193,14 @@
                 android:layout_height="match_parent"
                 android:elevation="@dimen/first_z_layer" />
         </RelativeLayout>
-    </FrameLayout>
 
+        <RelativeLayout
+            android:id="@+id/main_overlay_layout"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:elevation="@dimen/first_z_layer">
+
+            <!-- @todo: -->
+        </RelativeLayout>
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
