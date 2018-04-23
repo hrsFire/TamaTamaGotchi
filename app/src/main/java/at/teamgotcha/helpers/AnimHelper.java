@@ -37,4 +37,11 @@ public class AnimHelper {
         // generate Scale Animation
         return AnimationUtils.loadAnimation(context, R.anim.scale);
     }
+
+    public static Animation AddShakeOneAnimation(Context context){
+
+        // generate Shake One Animation
+        return  AnimationUtils.loadAnimation(context, R.anim.shake_01);
+    }
+
 }

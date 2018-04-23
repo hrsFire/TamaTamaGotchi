@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import java.util.EnumSet;
 
+import at.teamgotcha.helpers.AnimHelper;
 import at.teamgotcha.helpers.NotificationHelper;
 import at.teamgotcha.pets.Pet;
 import at.teamgotcha.tamagotchi.R;
@@ -28,10 +29,24 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
         spriteView = view.findViewById(R.id.petsprite_image);
         currentPet = getContract().getPetObserver().getObject();
 
+        spriteView.setImageBitmap(currentPet.getAppearance());
+
         // Add Notification ...
         NotificationHelper.addPetHungerNotification(currentPet);
 
+        AddListeners();
+
         return view;
+    }
+
+    private void AddListeners()
+    {
+        spriteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.startAnimation(AnimHelper.AddShakeOneAnimation(spriteView.getContext()));
+            }
+        });
     }
 
     @Override
