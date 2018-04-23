@@ -8,9 +8,11 @@ import android.view.View;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
-import at.teamgotcha.helpers.ViewHelper;
 
-public class MainActivity extends AppCompatActivity {
+import at.teamgotcha.helpers.ViewHelper;
+import at.teamgotcha.tamagotchi.interfaces.SettingsContractable;
+
+public class MainActivity extends AppCompatActivity implements SettingsContractable {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -27,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private View topMenuLayout;
     private View singlePlayerInteractionLayout;
     private View multiPlayerInteractionLayout;
+    private View mainOverlayLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         TypefaceProvider.registerDefaultIconSets();
 
         // disable the action bar
@@ -59,11 +63,13 @@ public class MainActivity extends AppCompatActivity {
         topMenuLayout = findViewById(R.id.top_menu_layout);
         singlePlayerInteractionLayout = findViewById(R.id.single_player_interaction_layout);
         multiPlayerInteractionLayout = findViewById(R.id.multi_player_interaction_layout);
+        mainOverlayLayout = findViewById(R.id.main_overlay_layout);
 
         // set invisible
         ViewHelper.setVisibility(settingsLayout, false);
         ViewHelper.setVisibility(helpLayout, false);
         ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
+        ViewHelper.setVisibility(mainOverlayLayout, false);
 
         // set listeners
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -109,5 +115,48 @@ public class MainActivity extends AppCompatActivity {
 
     private void disableHelpView() {
         ViewHelper.setVisibility(helpLayout, false);
+    }
+
+    private void showMainOverlayLayout() {
+        disableSettingsView();
+        ViewHelper.switchVisibility(mainOverlayLayout);
+    }
+
+    private void disableMainOverlayLayout() {
+        disableSettingsView();
+        ViewHelper.switchVisibility(mainOverlayLayout);
+    }
+
+    // shared settings functions
+    @Override
+    public void showRestartDialog() {
+        showMainOverlayLayout();
+        // set it the correct position
+        //ViewHelper.setXYAboveTranslation(mainOverlayLayout, helpButton);
+        // @todo:
+    }
+
+    @Override
+    public void showLanguageDialog() {
+        disableSettingsView();
+        // @todo:
+    }
+
+    @Override
+    public void showVolumeDialog() {
+        disableSettingsView();
+        // @todo:
+    }
+
+    @Override
+    public void showNotificationDialog() {
+        disableSettingsView();
+        // @todo:
+    }
+
+    @Override
+    public void showSelectPetDialog() {
+        disableSettingsView();
+        // @todo:
     }
 }
