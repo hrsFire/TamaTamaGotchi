@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
+import at.teamgotcha.helpers.AnimHelper;
 import at.teamgotcha.tamagotchi.R;
 
 public class HelpFragment extends Fragment {
@@ -52,12 +53,16 @@ public class HelpFragment extends Fragment {
         faqButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                v.startAnimation(AnimHelper.AddAlphaAnimation(v.getContext()));
             }
         });
 
         tutorialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                v.startAnimation(AnimHelper.AddAlphaAnimation(v.getContext()));
             }
         });
     }

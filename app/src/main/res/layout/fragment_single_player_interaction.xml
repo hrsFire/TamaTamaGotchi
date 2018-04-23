@@ -14,10 +14,10 @@
             android:id="@+id/nutrition_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:bootstrapSize="md"
-            app:hasBorder="false"
             android:src="@drawable/common_google_signin_btn_icon_light"
-            android:tooltipText="@string/nutrition" />
+            android:tooltipText="@string/nutrition"
+            app:bootstrapSize="md"
+            app:hasBorder="false" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/bathing_button"
