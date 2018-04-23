@@ -22,4 +22,7 @@
     <string name="communicate">Communicate</string>
     <string name="send_gift">Send Gift</string>
     <string name="have_fun">Have Fun</string>
+    <string name="mood_level">Mood Level</string>
+    <string name="health_level">Health Level</string>
+    <string name="hunger_level">Hunger Level</string>
 </resources>
