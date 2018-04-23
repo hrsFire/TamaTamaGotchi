@@ -41,6 +41,15 @@ public class ViewHelper {
         targetView.setTranslationY(sourceView.getY() + sourceView.getHeight());
     }
 
+    public static void setXYTranslation(View targetView, float x, float y) {
+        targetView.setTranslationX(x);
+        targetView.setTranslationY(y);
+    }
+
+    public static void setXYHalfTranslation(View targetView, View sourceView) {
+        setXYTranslation(targetView, sourceView.getX() + sourceView.getWidth() /2, sourceView.getY() + sourceView.getHeight() /2);
+    }
+
     private static void switchVisibility(Fragment fragment, boolean visible) {
         ViewHelper.setVisibility(fragment.getView(), !visible);
     }

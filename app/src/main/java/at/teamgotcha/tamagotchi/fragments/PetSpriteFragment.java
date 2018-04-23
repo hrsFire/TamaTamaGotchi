@@ -1,31 +1,32 @@
 package at.teamgotcha.tamagotchi.fragments;
 
-import android.app.Fragment;
-import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.EnumSet;
+
 import at.teamgotcha.helpers.NotificationHelper;
 import at.teamgotcha.pets.Pet;
-import at.teamgotcha.pets.PetOne;
 import at.teamgotcha.tamagotchi.R;
+import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
+import at.teamgotcha.tamagotchi.enums.PetProperties;
+import at.teamgotcha.tamagotchi.interfaces.PetObserver;
+import at.teamgotcha.tamagotchi.interfaces.contracts.PetSpriteContract;
 
-public class PetSpriteFragment extends Fragment {
-
+public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> implements PetObserver {
     private Pet currentPet;
-    private ImageView sprite;
+    private ImageView spriteView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_petsprite,container,false);
 
-        sprite = view.findViewById(R.id.petsprite_image);
-
-        currentPet = new PetOne(view);
-        // updateSprite();
+        spriteView = view.findViewById(R.id.petsprite_image);
+        currentPet = getContract().getPetObserver().getObject();
 
         // Add Notification ...
         NotificationHelper.addPetHungerNotification(currentPet);
@@ -33,18 +34,32 @@ public class PetSpriteFragment extends Fragment {
         return view;
     }
 
-    public Pet getPet(){
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        return currentPet;
+        getContract().getPetObserver().register(this);
     }
 
-    public void setPet(Pet nPet){
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
-        currentPet = nPet;
+        getContract().getPetObserver().unregister(this);
     }
 
-    public void updateSprite(){
+    @Override
+    public void changed(Pet value) {
+        currentPet = value;
+        // @todo: update fragment
+    }
 
-        sprite = currentPet.getMyBackground();
+    @Override
+    public void changed(EnumSet<PetProperties> properties) {
+        // @todo: update fragment
+
+        if (properties.contains(PetProperties.APPEARANCE)) {
+            spriteView.setImageBitmap(currentPet.getAppearance());
+        }
     }
 }

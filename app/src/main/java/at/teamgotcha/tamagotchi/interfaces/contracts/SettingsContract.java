@@ -1,6 +1,6 @@
-package at.teamgotcha.tamagotchi.interfaces;
+package at.teamgotcha.tamagotchi.interfaces.contracts;
 
-public interface SettingsContractable {
+public interface SettingsContract {
     void showRestartDialog();
     void showLanguageDialog();
     void showVolumeDialog();

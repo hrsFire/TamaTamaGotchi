@@ -10,9 +10,9 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import at.teamgotcha.helpers.AnimHelper;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
-import at.teamgotcha.tamagotchi.interfaces.SettingsContractable;
+import at.teamgotcha.tamagotchi.interfaces.contracts.SettingsContract;
 
-public class SettingsFragment extends ContractV4Fragment<SettingsContractable> {
+public class SettingsFragment extends ContractV4Fragment<SettingsContract> {
     private BootstrapButton restartButton;
     private BootstrapButton languageButton;
     private BootstrapButton volumeButton;

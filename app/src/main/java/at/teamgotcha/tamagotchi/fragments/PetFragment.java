@@ -1,46 +1,62 @@
 package at.teamgotcha.tamagotchi.fragments;
 
-import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.EnumSet;
+
 import at.teamgotcha.pets.Pet;
-import at.teamgotcha.pets.PetOne;
 import at.teamgotcha.tamagotchi.R;
+import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
+import at.teamgotcha.tamagotchi.enums.PetProperties;
+import at.teamgotcha.tamagotchi.interfaces.contracts.PetBackgroundContract;
+import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 
-// Background ...
-public class PetFragment extends Fragment {
-
+// BACKGROUND ...
+public class PetFragment extends ContractV4Fragment<PetBackgroundContract> implements PetObserver {
     private Pet currentPet;
-    private ImageView background;
+    private ImageView backgroundView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pet,container,false);
 
-        background = view.findViewById(R.id.pet_image);
-
-        currentPet = new PetOne(view);
-        // updateBackground();
+        backgroundView = view.findViewById(R.id.pet_image);
+        currentPet = getContract().getPetObserver().getObject();
 
         return view;
     }
 
-    public ImageView getBackground(){
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        return background;
+        getContract().getPetObserver().register(this);
     }
 
-    public void setBackground(ImageView nView){
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
-        background = nView;
+        getContract().getPetObserver().unregister(this);
     }
 
-    public void updateBackground(){
+    @Override
+    public void changed(Pet value) {
+        currentPet = value;
+        // @todo: update fragment
+    }
 
-        background = currentPet.getMyBackground();
+    @Override
+    public void changed(EnumSet<PetProperties> properties) {
+        // @todo: update fragment
+
+        if (properties.contains(PetProperties.BACKGROUND)) {
+            backgroundView.setImageBitmap(currentPet.getBackground());
+        }
     }
 }

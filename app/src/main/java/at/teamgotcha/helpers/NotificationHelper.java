@@ -31,7 +31,7 @@ public class NotificationHelper {
 
                     int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
-                    NotificationChannel notificationChannel = new NotificationChannel("ID", "Name", importance);
+                    NotificationChannel notificationChannel = new NotificationChannel("ID", "NAME", importance);
 
                     notificationManager.createNotificationChannel(notificationChannel);
 
@@ -65,7 +65,5 @@ public class NotificationHelper {
 
             System.err.println(e.getMessage());
         }
-
     }
-
 }

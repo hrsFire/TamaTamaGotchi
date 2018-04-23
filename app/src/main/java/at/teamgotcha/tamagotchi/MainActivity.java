@@ -10,9 +10,16 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import at.teamgotcha.helpers.ViewHelper;
-import at.teamgotcha.tamagotchi.interfaces.SettingsContractable;
+import at.teamgotcha.pets.Pet;
+import at.teamgotcha.pets.PetOne;
+import at.teamgotcha.tamagotchi.base.ObservableSubject;
+import at.teamgotcha.tamagotchi.enums.PetProperties;
+import at.teamgotcha.tamagotchi.interfaces.contracts.PetBackgroundContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.PetSpriteContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.RestartContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.SettingsContract;
 
-public class MainActivity extends AppCompatActivity implements SettingsContractable {
+public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -24,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContracta
     private Fragment mainBackgroundFragment;
     private Fragment petspriteFragment;
     private Fragment statusMenuFragment;
+    private Fragment restartFragment;
     private View settingsLayout;
     private View helpLayout;
     private View topMenuLayout;
@@ -31,9 +39,15 @@ public class MainActivity extends AppCompatActivity implements SettingsContracta
     private View multiPlayerInteractionLayout;
     private View mainOverlayLayout;
 
+    private Pet pet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // create a new pet
+        // @todo:
+        pet = new PetOne(getApplicationContext());
 
         TypefaceProvider.registerDefaultIconSets();
 
@@ -57,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContracta
         mainBackgroundFragment = mgr.findFragmentById(R.id.pet_fragment);
         petspriteFragment = mgr.findFragmentById(R.id.petsprite_fragment);
         statusMenuFragment = mgr.findFragmentById(R.id.status_menu_fragment);
+        restartFragment = mgr.findFragmentById(R.id.restart_fragment);
 
         settingsLayout = findViewById(R.id.settings_layout);
         helpLayout = findViewById(R.id.help_layout);
@@ -77,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContracta
             public void onClick(View v) {
                 ViewHelper.switchVisibility(settingsLayout);
                 disableHelpView();
-                // set it the correct position
+                // set the correct position
                 ViewHelper.setXYAboveTranslation(settingsLayout, settingsButton);
             }
         });
@@ -120,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContracta
     private void showMainOverlayLayout() {
         disableSettingsView();
         ViewHelper.switchVisibility(mainOverlayLayout);
+        ViewHelper.setXYHalfTranslation(mainOverlayLayout, getView());
     }
 
     private void disableMainOverlayLayout() {
@@ -127,36 +143,56 @@ public class MainActivity extends AppCompatActivity implements SettingsContracta
         ViewHelper.switchVisibility(mainOverlayLayout);
     }
 
+    private View getView() {
+        return getWindow().getDecorView().getRootView();
+    }
+
     // shared settings functions
     @Override
     public void showRestartDialog() {
+        disableSettingsView();
         showMainOverlayLayout();
-        // set it the correct position
-        //ViewHelper.setXYAboveTranslation(mainOverlayLayout, helpButton);
+        // set the correct position
         // @todo:
     }
 
     @Override
     public void showLanguageDialog() {
-        disableSettingsView();
+        showMainOverlayLayout();
         // @todo:
     }
 
     @Override
     public void showVolumeDialog() {
-        disableSettingsView();
+        showMainOverlayLayout();
         // @todo:
     }
 
     @Override
     public void showNotificationDialog() {
-        disableSettingsView();
+        showMainOverlayLayout();
         // @todo:
     }
 
     @Override
     public void showSelectPetDialog() {
+        showMainOverlayLayout();
+        // @todo:
+    }
+
+    @Override
+    public void restartGame() {
         disableSettingsView();
         // @todo:
+    }
+
+    @Override
+    public void cancelRestartGame() {
+        disableSettingsView();
+    }
+
+    @Override
+    public ObservableSubject<Pet, PetProperties> getPetObserver() {
+        return pet;
     }
 }

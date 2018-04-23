@@ -1,21 +1,23 @@
 package at.teamgotcha.pets;
 
 import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
+import android.graphics.Bitmap;
+
+import java.util.EnumSet;
 
 import at.teamgotcha.tamagotchi.R;
+import at.teamgotcha.tamagotchi.base.ObservableSubject;
+import at.teamgotcha.tamagotchi.enums.PetProperties;
 
-public abstract class Pet {
-
+public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
     // pet's current view
-    protected View currentView;
+    protected Context context;
 
     // pet's appearance
-    protected ImageView appearance;
+    protected Bitmap appearance;
 
     // pet's background
-    protected ImageView background;
+    protected Bitmap background;
 
     // pet's nutrition
     protected final static int MAX_HUNGER = 100;
@@ -25,71 +27,61 @@ public abstract class Pet {
 
     protected int currentHunger;
 
-
-
     public Pet(){
-
+        super(PetProperties.class);
+        setObject(this);
         currentHunger = INITIAL_HUNGER;
     }
 
-    public Pet(View view){
-
+    public Pet(Context context){
         this();
-
-        currentView = view;
+        this.context = context;
     }
 
-    // Methods
-    public View getView(){
-
-        return currentView;
+    public Context getContext() {
+        return context;
     }
 
-    public Context getContext(){
-
-        return currentView.getContext();
-    }
-
-    public ImageView getMyLook(){
-
-        return appearance;
-    }
-
-    public ImageView getMyBackground(){
-
+    public Bitmap getBackground() {
         return background;
     }
 
-    // Hunger Games ;-)
-    public int getMyHunger(){
+    protected void setBackground(Bitmap background) {
+        this.background = background;
+        addChangedProperties(EnumSet.of(PetProperties.BACKGROUND));
+    }
 
+    public Bitmap getAppearance() {
+        return appearance;
+    }
+
+    public void setAppearance(Bitmap appearance) {
+        this.appearance = appearance;
+        addChangedProperties(EnumSet.of(PetProperties.APPEARANCE));
+    }
+
+    // HUNGER Games ;-)
+    public int getMyHunger() {
         return currentHunger;
     }
 
-    public void updateHunger(int change){
-
+    public void updateHunger(int change) {
         currentHunger += change;
+        addChangedProperties(EnumSet.of(PetProperties.HUNGER));
     }
 
     // String content crucial for notification
-    public String isHungry(){
-
+    public String isHungry() {
         if(currentHunger >= MAX_HUNGER){
-
             currentHunger = MAX_HUNGER;
             // return currentView.getContext().getString(R.string.hunger_full);
-
         } else if(currentHunger <= CRITICAL_HUNGER){
-
-            return currentView.getContext().getString(R.string.hunger_critical);
-
+            return context.getString(R.string.hunger_critical);
         } else if(currentHunger <= MIN_HUNGER){
-
             currentHunger = MIN_HUNGER;
             // return currentView.getContext().getString(R.string.hunger_empty);
         }
 
         return null;
     }
-
 }

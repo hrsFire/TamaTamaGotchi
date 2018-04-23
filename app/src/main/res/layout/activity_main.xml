@@ -200,7 +200,12 @@
             android:layout_height="400dp"
             android:elevation="@dimen/first_z_layer">
 
-            <!-- @todo: -->
+            <fragment
+                android:id="@+id/restart_fragment"
+                android:name="at.teamgotcha.tamagotchi.fragments.RestartFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/first_z_layer" />
         </RelativeLayout>
     </FrameLayout>
 </android.support.constraint.ConstraintLayout>
