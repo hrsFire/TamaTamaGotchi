@@ -1,4 +1,4 @@
-package at.teamgotcha.helpers;
+package at.teamgotcha.tamagotchi.helpers;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -8,27 +8,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-import at.teamgotcha.pets.Pet;
+import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.MainActivity;
 import at.teamgotcha.tamagotchi.R;
 
 public class NotificationHelper {
-
     private final static int REQ_CODE_HUNGER = 1;
 
-    @SuppressWarnings("deprecation")
-    public static void addPetHungerNotification(Pet pet){
+    public static void addPetHungerNotification(Pet pet) {
 
         try {
             // Build the Notifcation (if required)
-            if(pet.isHungry() != null){
+            if (pet.isHungry() != null) {
 
                 NotificationManager notificationManager = (NotificationManager) pet.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
                 NotificationCompat.Builder builder;
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-
                     int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
                     NotificationChannel notificationChannel = new NotificationChannel("ID", "NAME", importance);
@@ -36,9 +33,7 @@ public class NotificationHelper {
                     notificationManager.createNotificationChannel(notificationChannel);
 
                     builder = new NotificationCompat.Builder(pet.getContext().getApplicationContext(), notificationChannel.getId());
-
                 } else {
-
                     // note: deprecation on purpose for backwards compatibility
                     builder = new NotificationCompat.Builder(pet.getContext().getApplicationContext());
                 }
@@ -61,7 +56,7 @@ public class NotificationHelper {
                 notificationManager.notify(REQ_CODE_HUNGER, builder.build());
             }
 
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
 
             System.err.println(e.getMessage());
         }

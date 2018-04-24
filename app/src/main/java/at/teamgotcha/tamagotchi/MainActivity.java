@@ -9,9 +9,9 @@ import android.view.View;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
-import at.teamgotcha.helpers.ViewHelper;
-import at.teamgotcha.pets.Pet;
-import at.teamgotcha.pets.PetOne;
+import at.teamgotcha.tamagotchi.helpers.ViewHelper;
+import at.teamgotcha.tamagotchi.pets.Pet;
+import at.teamgotcha.tamagotchi.pets.PetOne;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
 import at.teamgotcha.tamagotchi.interfaces.contracts.HelpContract;

@@ -1,11 +1,10 @@
-package at.teamgotcha.helpers;
+package at.teamgotcha.tamagotchi.helpers;
 
 import android.view.animation.Interpolator;
 
 public class BounceInterpolator implements Interpolator {
-
-    private double mAmplitude = 1;
-    private double mFrequency = 10;
+    private double mAmplitude;
+    private double mFrequency;
 
     public BounceInterpolator(double amplitude, double frequency) {
         mAmplitude = amplitude;

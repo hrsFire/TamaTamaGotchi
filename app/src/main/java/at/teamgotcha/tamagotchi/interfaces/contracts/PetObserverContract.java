@@ -1,6 +1,6 @@
 package at.teamgotcha.tamagotchi.interfaces.contracts;
 
-import at.teamgotcha.pets.Pet;
+import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
 

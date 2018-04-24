@@ -9,8 +9,8 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import java.util.EnumSet;
 
-import at.teamgotcha.helpers.AnimHelper;
-import at.teamgotcha.pets.Pet;
+import at.teamgotcha.tamagotchi.helpers.AnimHelper;
+import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
 import at.teamgotcha.tamagotchi.enums.PetProperties;

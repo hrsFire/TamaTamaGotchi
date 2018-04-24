@@ -1,4 +1,4 @@
-package at.teamgotcha.pets;
+package at.teamgotcha.tamagotchi.pets;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,4 +1,4 @@
-package at.teamgotcha.helpers;
+package at.teamgotcha.tamagotchi.helpers;
 
 import android.app.Fragment;
 import android.view.View;
