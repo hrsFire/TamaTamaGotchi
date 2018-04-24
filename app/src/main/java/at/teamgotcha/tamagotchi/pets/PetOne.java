@@ -10,7 +10,7 @@ public class PetOne extends Pet {
         super();
     }
 
-    public PetOne(Context context){
+    public PetOne(Context context) {
         super(context);
 
         appearance = BitmapFactory.decodeResource(context.getResources(), R.drawable.pet_squid);

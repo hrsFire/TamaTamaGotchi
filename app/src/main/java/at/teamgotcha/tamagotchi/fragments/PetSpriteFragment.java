@@ -68,8 +68,7 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
         }
     }
 
-    private void setListeners()
-    {
+    private void setListeners() {
         spriteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
