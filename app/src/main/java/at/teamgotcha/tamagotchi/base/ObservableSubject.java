@@ -12,14 +12,10 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
     private Class<E> clazz;
     protected T object;
     private boolean hasChanged;
-    private EnumSet<E> allProperties;
-    private EnumSet<E> zeroProperties;
 
     public ObservableSubject(Class<E> clazz) {
         observers = new Vector<>();
         this.clazz = clazz;
-        allProperties = EnumSet.allOf(clazz);
-        zeroProperties = EnumSet.noneOf(clazz);
         clearChanged();
     }
 
@@ -42,7 +38,7 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
 
     @Override
     public boolean hasFullyChanged() {
-        return changedProperties.retainAll(allProperties);
+        return changedProperties.retainAll(EnumSet.allOf(clazz));
     }
 
     @Override
@@ -106,12 +102,12 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
 
     protected synchronized void clearChanged() {
         hasChanged = false;
-        changedProperties = zeroProperties;
+        changedProperties = EnumSet.noneOf(clazz);
     }
 
     protected void setObject(T newObject) {
         object = newObject;
-        changedProperties = allProperties;
+        changedProperties = EnumSet.allOf(clazz);
         setChanged();
     }
 }
