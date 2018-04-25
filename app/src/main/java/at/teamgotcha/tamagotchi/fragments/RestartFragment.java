@@ -54,15 +54,15 @@ public class RestartFragment extends ContractV4Fragment<RestartContract> impleme
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
 
     @Override
     public void changed(Pet value) {
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override

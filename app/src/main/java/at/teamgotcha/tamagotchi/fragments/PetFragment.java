@@ -41,8 +41,8 @@ public class PetFragment extends ContractV4Fragment<PetBackgroundContract> imple
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
@@ -50,7 +50,7 @@ public class PetFragment extends ContractV4Fragment<PetBackgroundContract> imple
     @Override
     public void changed(Pet value) {
         currentPet = value;
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override

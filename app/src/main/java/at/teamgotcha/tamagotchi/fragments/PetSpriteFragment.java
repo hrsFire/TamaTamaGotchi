@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import java.util.EnumSet;
 
 import at.teamgotcha.tamagotchi.helpers.AnimHelper;
-import at.teamgotcha.tamagotchi.helpers.NotificationHelper;
+import at.teamgotcha.tamagotchi.helpers.PetNotificationHelper;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
@@ -32,7 +32,7 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
         spriteView.setImageBitmap(currentPet.getAppearance());
 
         // Add Notification ...
-        NotificationHelper.addPetHungerNotification(currentPet);
+        PetNotificationHelper.addPetHungerNotification(getContext(), currentPet);
 
         setListeners();
 
@@ -47,8 +47,8 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
@@ -56,7 +56,7 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
     @Override
     public void changed(Pet value) {
         currentPet = value;
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override

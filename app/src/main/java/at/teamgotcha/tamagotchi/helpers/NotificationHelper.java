@@ -8,57 +8,43 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.MainActivity;
 import at.teamgotcha.tamagotchi.R;
 
 public class NotificationHelper {
-    private final static int REQ_CODE_HUNGER = 1;
+    public static void showNotification(Context context, int requestCode, String contentText) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-    public static void addPetHungerNotification(Pet pet) {
+        NotificationCompat.Builder builder;
 
-        try {
-            // Build the Notifcation (if required)
-            if (pet.isHungry() != null) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
-                NotificationManager notificationManager = (NotificationManager) pet.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannel = new NotificationChannel("ID", "NAME", importance);
 
-                NotificationCompat.Builder builder;
+            notificationManager.createNotificationChannel(notificationChannel);
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    int importance = NotificationManager.IMPORTANCE_DEFAULT;
-
-                    NotificationChannel notificationChannel = new NotificationChannel("ID", "NAME", importance);
-
-                    notificationManager.createNotificationChannel(notificationChannel);
-
-                    builder = new NotificationCompat.Builder(pet.getContext().getApplicationContext(), notificationChannel.getId());
-                } else {
-                    // note: deprecation on purpose for backwards compatibility
-                    builder = new NotificationCompat.Builder(pet.getContext().getApplicationContext());
-                }
-
-                // Create an explicit intent for an Activity in your app
-                Intent intent = new Intent(pet.getContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                PendingIntent pendingIntent = PendingIntent.getActivity(pet.getContext(), 0, intent, 0);
-
-                builder = builder
-                        .setSmallIcon(R.drawable.icon_ball)
-                        // .setColor(ContextCompat.getColor(context, R.color.color))
-                        .setContentTitle(pet.getContext().getString(R.string.notification_hunger))
-                        // .setTicker(context.getString(R.string.text))
-                        .setContentText(pet.isHungry())
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true);
-
-                notificationManager.notify(REQ_CODE_HUNGER, builder.build());
-            }
-
-        } catch (NullPointerException e) {
-
-            System.err.println(e.getMessage());
+            builder = new NotificationCompat.Builder(context.getApplicationContext(), notificationChannel.getId());
+        } else {
+            // note: deprecation on purpose for backwards compatibility
+            builder = new NotificationCompat.Builder(context.getApplicationContext());
         }
+
+        // Create an explicit intent for an Activity in your app
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+        builder = builder
+                .setSmallIcon(R.drawable.icon_ball)
+                // .setColor(ContextCompat.getColor(context, R.color.color))
+                .setContentTitle(context.getString(R.string.notification_hunger))
+                // .setTicker(context.getString(R.string.text))
+                .setContentText(contentText)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        notificationManager.notify(requestCode, builder.build());
     }
 }

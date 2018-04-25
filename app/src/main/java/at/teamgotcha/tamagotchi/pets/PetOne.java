@@ -1,19 +1,14 @@
 package at.teamgotcha.tamagotchi.pets;
 
-import android.content.Context;
-import android.graphics.BitmapFactory;
-
-import at.teamgotcha.tamagotchi.R;
+import android.graphics.Bitmap;
 
 public class PetOne extends Pet {
     private PetOne(){
         super();
     }
 
-    public PetOne(Context context) {
-        super(context);
-
-        appearance = BitmapFactory.decodeResource(context.getResources(), R.drawable.pet_squid);
-        background = BitmapFactory.decodeResource(context.getResources(), R.drawable.background);
+    public PetOne(Bitmap appearance, Bitmap background) {
+        this.appearance = appearance;
+        this.background = background;
     }
 }

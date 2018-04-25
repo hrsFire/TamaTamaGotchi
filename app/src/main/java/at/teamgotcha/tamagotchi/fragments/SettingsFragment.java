@@ -41,6 +41,7 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContract> imple
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
         restartButton = view.findViewById(R.id.restart_button);
         languageButton = view.findViewById(R.id.language_button);
         volumeButton = view.findViewById(R.id.volume_button);
@@ -60,15 +61,15 @@ public class SettingsFragment extends ContractV4Fragment<SettingsContract> imple
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
 
     @Override
     public void changed(Pet value) {
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override

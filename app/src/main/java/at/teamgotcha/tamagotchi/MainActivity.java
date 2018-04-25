@@ -1,5 +1,6 @@
 package at.teamgotcha.tamagotchi;
 
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
+import at.teamgotcha.tamagotchi.common.Icons;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.pets.PetOne;
@@ -51,9 +53,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Icons.setContext(getApplicationContext());
+        Icons icons = Icons.getInstance();
+
         // create a new pet
-        // @todo:
-        pet = new PetOne(getApplicationContext());
+        Bitmap appearance = icons.getSquidAppearance();
+        Bitmap background = icons.getYellowBackground();
+        pet = new PetOne(appearance, background);
 
         TypefaceProvider.registerDefaultIconSets();
 
@@ -92,7 +98,38 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
         ViewHelper.setVisibility(mainOverlayLayout, false);
 
-        // set listeners
+        setListeners();
+    }
+
+    private void disableSettingsView() {
+        ViewHelper.setVisibility(settingsLayout, false);
+    }
+
+    private void disableHelpView() {
+        ViewHelper.setVisibility(helpLayout, false);
+    }
+
+    private void showMainOverlayLayout() {
+        disableSettingsView();
+        ViewHelper.switchVisibility(mainOverlayLayout);
+        mainOverlayLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                ViewHelper.setXYHalf(mainOverlayLayout, getView());
+            }
+        });
+    }
+
+    private void disableMainOverlayLayout() {
+        disableSettingsView();
+        ViewHelper.switchVisibility(mainOverlayLayout);
+    }
+
+    private View getView() {
+        return getWindow().getDecorView().getRootView();
+    }
+
+    private void setListeners() {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,34 +165,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 disableHelpView();
             }
         });
-    }
 
-    private void disableSettingsView() {
-        ViewHelper.setVisibility(settingsLayout, false);
-    }
-
-    private void disableHelpView() {
-        ViewHelper.setVisibility(helpLayout, false);
-    }
-
-    private void showMainOverlayLayout() {
-        disableSettingsView();
-        ViewHelper.switchVisibility(mainOverlayLayout);
-        mainOverlayLayout.post(new Runnable() {
+        mainOverlayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                ViewHelper.setXYHalf(mainOverlayLayout, getView());
+            public void onClick(View v) {
+                // do nothing
             }
         });
-    }
-
-    private void disableMainOverlayLayout() {
-        disableSettingsView();
-        ViewHelper.switchVisibility(mainOverlayLayout);
-    }
-
-    private View getView() {
-        return getWindow().getDecorView().getRootView();
     }
 
     // shared settings functions

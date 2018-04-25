@@ -37,6 +37,7 @@ public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> i
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_status_menu, container, false);
+
         genderButton = view.findViewById(R.id.gender_button);
         nameTextBox = view.findViewById(R.id.name_textbox);
 
@@ -53,8 +54,8 @@ public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> i
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
@@ -75,7 +76,7 @@ public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> i
 
     @Override
     public void changed(Pet value) {
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override

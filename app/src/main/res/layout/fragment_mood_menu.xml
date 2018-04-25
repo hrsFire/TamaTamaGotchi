@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/communication_button"
+            android:id="@+id/health_level_indicator"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
             android:src="@drawable/googleg_disabled_color_18"
@@ -22,7 +22,7 @@
             app:hasBorder="false" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/playing_button"
+            android:id="@+id/mood_level_indicator"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
@@ -31,7 +31,7 @@
             android:tooltipText="@string/mood_level" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/send_gift_button"
+            android:id="@+id/hunger_level_indicator"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"

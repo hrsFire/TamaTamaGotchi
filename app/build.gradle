@@ -29,5 +29,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     // https://mvnrepository.com/artifact/com.beardedhen/androidbootstrap
-    compile group: 'com.beardedhen', name: 'androidbootstrap', version: '2.3.2'
+    implementation group: 'com.beardedhen', name: 'androidbootstrap', version: '2.3.2'
 }

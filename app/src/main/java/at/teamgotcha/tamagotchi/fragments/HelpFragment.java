@@ -37,6 +37,7 @@ public class HelpFragment extends ContractV4Fragment<HelpContract> implements Pe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_help, container, false);
+
         faqButton = view.findViewById(R.id.faq_button);
         tutorialButton = view.findViewById(R.id.tutorial_button);
 
@@ -53,15 +54,15 @@ public class HelpFragment extends ContractV4Fragment<HelpContract> implements Pe
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
 
     @Override
     public void changed(Pet value) {
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override

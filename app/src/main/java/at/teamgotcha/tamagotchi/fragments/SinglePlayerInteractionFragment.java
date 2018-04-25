@@ -41,6 +41,7 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_single_player_interaction, container, false);
+
         nutritionButton = view.findViewById(R.id.nutrition_button);
         bathingButton = view.findViewById(R.id.bathing_button);
         sleepingButton = view.findViewById(R.id.sleeping_button);
@@ -62,15 +63,15 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
 
     @Override
     public void changed(Pet value) {
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override

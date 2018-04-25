@@ -1,18 +1,11 @@
 package at.teamgotcha.tamagotchi.pets;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-
 import java.util.EnumSet;
-
-import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
 
 public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
-    // pet's current view
-    protected Context context;
-
     // pet's appearance
     protected Bitmap appearance;
 
@@ -20,26 +13,31 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
     protected Bitmap background;
 
     // pet's nutrition
-    protected final static int MAX_HUNGER = 100;
-    protected final static int MIN_HUNGER = 0;
-    protected final static int CRITICAL_HUNGER = 20;
-    protected final static int INITIAL_HUNGER = 10;
+    public final static int MAX_HUNGER = 100;
+    public final static int MIN_HUNGER = 0;
+    public final static int CRITICAL_HUNGER = 20;
+    public final static int INITIAL_HUNGER = 10;
 
-    protected int currentHunger;
+    public final static int MAX_HEALTH = 100;
+    public final static int MIN_HEALTH = 0;
+    public final static int CRITICAL_HEALTH = 20;
+    public final static int INITIAL_HEALTH = 100;
 
-    public Pet(){
+    public final static int MAX_MOOD = 100;
+    public final static int MIN_MOOD = 0;
+    public final static int CRITICAL_MOOD = 20;
+    public final static int INITIAL_MOOD = 100;
+
+    protected float health;
+    protected float mood;
+    protected float hunger;
+
+    public Pet() {
         super(PetProperties.class);
         setObject(this);
-        currentHunger = INITIAL_HUNGER;
-    }
-
-    public Pet(Context context){
-        this();
-        this.context = context;
-    }
-
-    public Context getContext() {
-        return context;
+        health = INITIAL_HEALTH;
+        mood = INITIAL_MOOD;
+        hunger = INITIAL_HUNGER;
     }
 
     public Bitmap getBackground() {
@@ -60,28 +58,60 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
         addChangedProperties(EnumSet.of(PetProperties.APPEARANCE));
     }
 
+    public float getHealth() {
+        return health;
+    }
+
+    public void updateHealth(int change) {
+        health += change;
+
+        if (health > MAX_HEALTH) {
+            health = MAX_HEALTH;
+        } else if(health < MIN_HEALTH) {
+            health = MIN_HEALTH;
+        }
+
+        addChangedProperties(EnumSet.of(PetProperties.HEALTH));
+    }
+
+    public float getMood() {
+        return mood;
+    }
+
+    public void updateMood(int change) {
+        mood += change;
+
+        if (mood > MAX_MOOD) {
+            mood = MAX_MOOD;
+        } else if(mood < MIN_MOOD) {
+            mood = MIN_MOOD;
+        }
+
+        addChangedProperties(EnumSet.of(PetProperties.MOOD));
+    }
+
     // HUNGER Games ;-)
-    public int getMyHunger() {
-        return currentHunger;
+    public float getHunger() {
+        return hunger;
     }
 
     public void updateHunger(int change) {
-        currentHunger += change;
+        hunger += change;
+
+        if (hunger > MAX_HUNGER) {
+            hunger = MAX_HUNGER;
+        } else if(hunger < MIN_HUNGER) {
+            hunger = MIN_HUNGER;
+        }
+
         addChangedProperties(EnumSet.of(PetProperties.HUNGER));
     }
 
-    // String content crucial for notification
-    public String isHungry() {
-        if(currentHunger >= MAX_HUNGER){
-            currentHunger = MAX_HUNGER;
-            // return currentView.getContext().getString(R.string.hunger_full);
-        } else if(currentHunger <= CRITICAL_HUNGER){
-            return context.getString(R.string.hunger_critical);
-        } else if(currentHunger <= MIN_HUNGER){
-            currentHunger = MIN_HUNGER;
-            // return currentView.getContext().getString(R.string.hunger_empty);
+    public boolean isHungry() {
+        if(hunger <= CRITICAL_HUNGER){
+            return true;
         }
 
-        return null;
+        return false;
     }
 }

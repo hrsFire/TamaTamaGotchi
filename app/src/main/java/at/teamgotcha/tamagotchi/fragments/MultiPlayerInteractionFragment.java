@@ -39,6 +39,7 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_multi_player_interaction, container, false);
+
         communicationButton = view.findViewById(R.id.communication_button);
         playingButton = view.findViewById(R.id.playing_button);
         sendGiftButton = view.findViewById(R.id.send_gift_button);
@@ -57,15 +58,15 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroy() {
+        super.onDestroy();
 
         getContract().getPetObserver().unregister(this);
     }
 
     @Override
     public void changed(Pet value) {
-        // @todo: update fragment
+        changed(EnumSet.allOf(PetProperties.class));
     }
 
     @Override
