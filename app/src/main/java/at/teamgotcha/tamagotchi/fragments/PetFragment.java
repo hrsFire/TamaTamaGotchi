@@ -18,7 +18,7 @@ import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 
 // BACKGROUND ...
 public class PetFragment extends ContractV4Fragment<PetBackgroundContract> implements PetObserver {
-    private Pet currentPet;
+    private Pet pet;
     private ImageView backgroundView;
 
     @Override
@@ -26,9 +26,10 @@ public class PetFragment extends ContractV4Fragment<PetBackgroundContract> imple
         View view = inflater.inflate(R.layout.fragment_pet,container,false);
 
         backgroundView = view.findViewById(R.id.pet_image);
-        currentPet = getContract().getPetObserver().getObject();
 
         setListeners();
+        pet = getContract().getPetObserver().getObject();
+        changed(pet);
 
         return view;
     }
@@ -49,16 +50,18 @@ public class PetFragment extends ContractV4Fragment<PetBackgroundContract> imple
 
     @Override
     public void changed(Pet value) {
-        currentPet = value;
-        changed(EnumSet.allOf(PetProperties.class));
+        pet = value;
+        changed(EnumSet.of(PetProperties.BACKGROUND));
     }
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
-
-        if (properties.contains(PetProperties.BACKGROUND)) {
-            backgroundView.setImageBitmap(currentPet.getBackground());
+        for (PetProperties property : properties) {
+            switch (property) {
+                case BACKGROUND:
+                    backgroundView.setImageBitmap(pet.getBackground());
+                    break;
+            }
         }
     }
 

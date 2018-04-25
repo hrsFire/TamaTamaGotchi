@@ -25,6 +25,7 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
     private BootstrapThumbnail playingButton;
     private BootstrapThumbnail strollingButton;
     private BootstrapThumbnail makeMusicButton;
+    private Pet pet;
 
     public SinglePlayerInteractionFragment() {
     }
@@ -51,6 +52,8 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
         makeMusicButton = view.findViewById(R.id.make_music_button);
 
         setListeners();
+        pet = getContract().getPetObserver().getObject();
+        changed(pet);
 
         return view;
     }
@@ -76,7 +79,11 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
+        for (PetProperties property : properties) {
+            switch (property) {
+                // @todo: update fragment
+            }
+        }
     }
 
     private void setListeners() {

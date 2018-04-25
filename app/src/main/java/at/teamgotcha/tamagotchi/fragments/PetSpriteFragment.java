@@ -19,7 +19,7 @@ import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.interfaces.contracts.PetSpriteContract;
 
 public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> implements PetObserver {
-    private Pet currentPet;
+    private Pet pet;
     private ImageView spriteView;
 
     @Override
@@ -27,14 +27,16 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
         View view = inflater.inflate(R.layout.fragment_petsprite,container,false);
 
         spriteView = view.findViewById(R.id.petsprite_image);
-        currentPet = getContract().getPetObserver().getObject();
+        pet = getContract().getPetObserver().getObject();
 
-        spriteView.setImageBitmap(currentPet.getAppearance());
+        spriteView.setImageBitmap(pet.getAppearance());
 
         // Add Notification ...
-        PetNotificationHelper.addPetHungerNotification(getContext(), currentPet);
+        PetNotificationHelper.addPetHungerNotification(getContext(), pet);
 
         setListeners();
+        pet = getContract().getPetObserver().getObject();
+        changed(pet);
 
         return view;
     }
@@ -55,16 +57,20 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
 
     @Override
     public void changed(Pet value) {
-        currentPet = value;
-        changed(EnumSet.allOf(PetProperties.class));
+        pet = value;
+        changed(EnumSet.of(PetProperties.APPEARANCE));
     }
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
         // @todo: update fragment
 
-        if (properties.contains(PetProperties.APPEARANCE)) {
-            spriteView.setImageBitmap(currentPet.getAppearance());
+        for (PetProperties property : properties) {
+            switch (property) {
+                case APPEARANCE:
+                    spriteView.setImageBitmap(pet.getAppearance());
+                    break;
+            }
         }
     }
 

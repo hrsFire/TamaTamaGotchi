@@ -54,12 +54,10 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         super.onCreate(savedInstanceState);
 
         Icons.setContext(getApplicationContext());
-        Icons icons = Icons.getInstance();
 
         // create a new pet
-        Bitmap appearance = icons.getSquidAppearance();
-        Bitmap background = icons.getYellowBackground();
-        pet = new PetOne(appearance, background);
+        pet = new PetOne();
+        pet.setName("Name");
 
         TypefaceProvider.registerDefaultIconSets();
 

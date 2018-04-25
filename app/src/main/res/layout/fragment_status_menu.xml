@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
-            android:id="@+id/gender_button"
+            android:id="@+id/gender_indicator"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"

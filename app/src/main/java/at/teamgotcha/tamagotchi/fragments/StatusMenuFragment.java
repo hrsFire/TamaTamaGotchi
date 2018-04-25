@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
+import com.google.android.gms.plus.model.people.Person;
 
 import java.util.EnumSet;
 
+import at.teamgotcha.tamagotchi.common.Icons;
+import at.teamgotcha.tamagotchi.enums.Gender;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
@@ -19,8 +22,9 @@ import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.interfaces.contracts.StatusMenuContract;
 
 public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> implements PetObserver {
-    private BootstrapThumbnail genderButton;
+    private BootstrapThumbnail genderIndicator;
     private TextView nameTextBox;
+    private Pet pet;
 
     public StatusMenuFragment() {
     }
@@ -38,10 +42,12 @@ public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> i
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_status_menu, container, false);
 
-        genderButton = view.findViewById(R.id.gender_button);
+        genderIndicator = view.findViewById(R.id.gender_indicator);
         nameTextBox = view.findViewById(R.id.name_textbox);
 
         setListeners();
+        pet = getContract().getPetObserver().getObject();
+        changed(pet);
 
         return view;
     }
@@ -61,7 +67,7 @@ public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> i
     }
 
     private void setListeners() {
-        genderButton.setOnClickListener(new View.OnClickListener() {
+        genderIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
@@ -76,11 +82,31 @@ public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> i
 
     @Override
     public void changed(Pet value) {
-        changed(EnumSet.allOf(PetProperties.class));
+        pet = value;
+        changed(EnumSet.of(PetProperties.GENDER,
+                PetProperties.NAME));
     }
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
+        Icons icons = Icons.getInstance();
+
+        for (PetProperties property : properties) {
+            switch (property) {
+                case GENDER:
+                    Gender gender = pet.getGender();
+
+                    if (gender == Gender.FEMALE) {
+                        genderIndicator.setImageBitmap(icons.getGenderFemale());
+                    } else if (gender == Gender.MALE) {
+                        genderIndicator.setImageBitmap(icons.getGenderMale());
+                    }
+
+                    break;
+                case NAME:
+                    nameTextBox.setText(pet.getName());
+                    break;
+            }
+        }
     }
 }

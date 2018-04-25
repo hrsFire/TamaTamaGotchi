@@ -3,6 +3,7 @@ package at.teamgotcha.tamagotchi.pets;
 import android.graphics.Bitmap;
 import java.util.EnumSet;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
+import at.teamgotcha.tamagotchi.enums.Gender;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
 
 public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
@@ -31,6 +32,8 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
     protected float health;
     protected float mood;
     protected float hunger;
+    protected String name;
+    protected Gender gender;
 
     public Pet() {
         super(PetProperties.class);
@@ -39,6 +42,8 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
         mood = INITIAL_MOOD;
         hunger = INITIAL_HUNGER;
     }
+
+    // getter and setters
 
     public Bitmap getBackground() {
         return background;
@@ -106,6 +111,24 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
 
         addChangedProperties(EnumSet.of(PetProperties.HUNGER));
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    // other methods
 
     public boolean isHungry() {
         if(hunger <= CRITICAL_HUNGER){

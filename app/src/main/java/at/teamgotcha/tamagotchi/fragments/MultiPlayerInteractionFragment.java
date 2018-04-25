@@ -23,6 +23,7 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
     private BootstrapThumbnail playingButton;
     private BootstrapThumbnail sendGiftButton;
     private BootstrapThumbnail haveFunButton;
+    private Pet pet;
 
     public MultiPlayerInteractionFragment() {
     }
@@ -46,6 +47,8 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
         haveFunButton = view.findViewById(R.id.have_fun_button);
 
         setListeners();
+        pet = getContract().getPetObserver().getObject();
+        changed(pet);
 
         return view;
     }
@@ -71,7 +74,11 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
+        for (PetProperties property : properties) {
+            switch (property) {
+                // @todo: update fragment
+            }
+        }
     }
 
     private void setListeners() {

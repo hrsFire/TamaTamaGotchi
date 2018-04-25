@@ -46,6 +46,7 @@ public class MoodMenuFragment extends ContractV4Fragment<MoodMenuContract> imple
         hungerLevelIndicator = view.findViewById(R.id.hunger_level_indicator);
 
         setListeners();
+        pet = getContract().getPetObserver().getObject();
         changed(pet);
 
         return view;
@@ -68,12 +69,13 @@ public class MoodMenuFragment extends ContractV4Fragment<MoodMenuContract> imple
     @Override
     public void changed(Pet value) {
         pet = value;
-        changed(EnumSet.allOf(PetProperties.class));
+        changed(EnumSet.of(PetProperties.HEALTH,
+                PetProperties.MOOD,
+                PetProperties.HUNGER));
     }
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
         Icons icons = Icons.getInstance();
 
         for (PetProperties property : properties) {

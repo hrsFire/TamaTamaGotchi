@@ -1,14 +1,12 @@
 package at.teamgotcha.tamagotchi.pets;
 
-import android.graphics.Bitmap;
+import at.teamgotcha.tamagotchi.common.Icons;
 
 public class PetOne extends Pet {
-    private PetOne(){
-        super();
-    }
+    public PetOne() {
+        Icons icons = Icons.getInstance();
 
-    public PetOne(Bitmap appearance, Bitmap background) {
-        this.appearance = appearance;
-        this.background = background;
+        this.appearance = icons.getSquidAppearance();
+        this.background = icons.getYellowBackground();
     }
 }

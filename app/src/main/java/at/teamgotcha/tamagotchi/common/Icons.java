@@ -77,6 +77,17 @@ public class Icons {
         return getBitmap(R.drawable.mood_icon);
     }
 
+    // Gender
+    public Bitmap getGenderFemale() {
+        // @todo:
+        return getBitmap(R.drawable.googleg_standard_color_18);
+    }
+
+    public Bitmap getGenderMale() {
+        // @todo:
+        return getBitmap(R.drawable.googleg_standard_color_18);
+    }
+
     private Bitmap getBitmap(int id) {
         Bitmap result = imageCache.get(id);
 
