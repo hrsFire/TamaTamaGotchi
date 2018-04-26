@@ -15,7 +15,7 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import at.teamgotcha.tamagotchi.common.Icons;
-import at.teamgotcha.tamagotchi.helpers.BluethoothHelper;
+import at.teamgotcha.tamagotchi.helpers.BluetoothHelper;
 import at.teamgotcha.tamagotchi.helpers.IntentHelper;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.pets.Pet;
@@ -32,7 +32,7 @@ import at.teamgotcha.tamagotchi.interfaces.contracts.SettingsContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.SinglePlayerInteractionContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.StatusMenuContract;
 
-import static at.teamgotcha.tamagotchi.helpers.BluethoothHelper.REQUEST_ENABLE_BT;
+import static at.teamgotcha.tamagotchi.helpers.BluetoothHelper.REQUEST_ENABLE_BT;
 
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract {
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     private Pet pet;
     private boolean isMultiplayerActive = false;
+    private boolean bluetoothVisibilityRequested = false;
 
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
@@ -70,16 +71,14 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
                 switch (state) {
                     case BluetoothAdapter.STATE_OFF:
-                        isMultiplayerActive = true;
-                        connectionButton.callOnClick();
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
+                        enableDisableMultiplayer(false);
                         break;
                     case BluetoothAdapter.STATE_ON:
-                        //isMultiplayerActive = false;
-                        //connectionButton.callOnClick();
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
+                        enableDisableMultiplayer(true);
                         break;
                 }
             }
@@ -141,18 +140,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         setListeners();
 
         // check if the bluetooth adapter is enabled
-        /*BluetoothAdapter bluetoothAdapter = BluethoothHelper.getBluethoothAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothHelper.getBluethoothAdapter();
 
         if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
-            isMultiplayerActive = false;
-            connectionButton.callOnClick();
+            enableDisableMultiplayer(true);
         } else {
-            isMultiplayerActive = true;
-            connectionButton.callOnClick();
-        }*/
-
-        isMultiplayerActive = true;
-        connectionButton.callOnClick();
+            enableDisableMultiplayer(false);
+        }
     }
 
     @Override
@@ -171,12 +165,9 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             case REQUEST_ENABLE_BT:
                 // successful
                 if (resultCode > 0) {
-                    isMultiplayerActive = true;
-                    connectionButton.setText(R.string.disconnect);
-                    ViewHelper.setVisibility(multiPlayerInteractionLayout, true);
-                    ViewHelper.setVisibility(singlePlayerInteractionLayout, false);
+                    enableDisableMultiplayer(true);
                 } else {
-                    isMultiplayerActive = false;
+                    enableDisableMultiplayer(false);
                 }
         }
     }
@@ -227,12 +218,9 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 disableHelpView();
 
                 if (!isMultiplayerActive) {
-                    BluethoothHelper.makeDiscoverable(MainActivity.this, 20*60);
+                    BluetoothHelper.makeDiscoverable(MainActivity.this, 20*60);
                 } else {
-                    isMultiplayerActive = false;
-                    connectionButton.setText(R.string.connect);
-                    ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
-                    ViewHelper.setVisibility(singlePlayerInteractionLayout, true);
+                    enableDisableMultiplayer(false);
                 }
             }
         });
@@ -271,6 +259,29 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 // do nothing
             }
         });
+    }
+
+    private void enableDisableMultiplayer(boolean targetState) {
+        if (targetState) {
+            BluetoothAdapter adapter = BluetoothHelper.getBluethoothAdapter();
+
+            if (adapter != null && !adapter.isEnabled() && !bluetoothVisibilityRequested) {
+                isMultiplayerActive = true;
+                bluetoothVisibilityRequested = true;
+                BluetoothHelper.makeDiscoverable(MainActivity.this, 20*60);
+            } else {
+                isMultiplayerActive = true;
+                connectionButton.setText(R.string.disconnect);
+                ViewHelper.setVisibility(multiPlayerInteractionLayout, true);
+                ViewHelper.setVisibility(singlePlayerInteractionLayout, false);
+            }
+        } else {
+            isMultiplayerActive = false;
+            bluetoothVisibilityRequested = false;
+            connectionButton.setText(R.string.connect);
+            ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
+            ViewHelper.setVisibility(singlePlayerInteractionLayout, true);
+        }
     }
 
     // shared settings functions

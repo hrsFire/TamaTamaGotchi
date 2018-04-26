@@ -14,7 +14,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class BluethoothHelper {
+public class BluetoothHelper {
     public final static int REQUEST_ENABLE_BT = 1;
 
     public static BluetoothAdapter getBluethoothAdapter() {

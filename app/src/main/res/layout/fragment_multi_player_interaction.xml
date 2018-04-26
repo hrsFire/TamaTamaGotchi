@@ -16,7 +16,7 @@
             android:id="@+id/communication_button"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
-            android:src="@drawable/googleg_disabled_color_18"
+            android:src="@drawable/friend_icon"
             android:tooltipText="@string/communicate"
             app:bootstrapSize="md"
             app:hasBorder="false" />
