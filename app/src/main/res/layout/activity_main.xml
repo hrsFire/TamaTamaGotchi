@@ -52,7 +52,7 @@
                             android:id="@+id/connection_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/connection"
+                            android:text="@string/connect"
                             app:bootstrapBrand="warning"
                             app:bootstrapSize="lg"
                             app:roundedCorners="true" />
@@ -62,6 +62,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/help"
+                            app:bootstrapBrand="warning"
+                            app:bootstrapSize="lg"
+                            app:roundedCorners="true" />
+
+                        <com.beardedhen.androidbootstrap.BootstrapButton
+                            android:id="@+id/share_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/share"
                             app:bootstrapBrand="warning"
                             app:bootstrapSize="lg"
                             app:roundedCorners="true" />

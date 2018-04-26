@@ -1,6 +1,10 @@
 package at.teamgotcha.tamagotchi;
 
-import android.graphics.Bitmap;
+import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +15,8 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import at.teamgotcha.tamagotchi.common.Icons;
+import at.teamgotcha.tamagotchi.helpers.BluethoothHelper;
+import at.teamgotcha.tamagotchi.helpers.IntentHelper;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.pets.PetOne;
@@ -26,11 +32,14 @@ import at.teamgotcha.tamagotchi.interfaces.contracts.SettingsContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.SinglePlayerInteractionContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.StatusMenuContract;
 
+import static at.teamgotcha.tamagotchi.helpers.BluethoothHelper.REQUEST_ENABLE_BT;
+
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
+    private BootstrapButton shareButton;
     private BootstrapButton shopButton;
     private Fragment settingsFragment;
     private Fragment helpFragment;
@@ -48,10 +57,42 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private View mainOverlayLayout;
 
     private Pet pet;
+    private boolean isMultiplayerActive = false;
+
+    // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
+    private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+
+                switch (state) {
+                    case BluetoothAdapter.STATE_OFF:
+                        isMultiplayerActive = true;
+                        connectionButton.callOnClick();
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_OFF:
+                        break;
+                    case BluetoothAdapter.STATE_ON:
+                        //isMultiplayerActive = false;
+                        //connectionButton.callOnClick();
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_ON:
+                        break;
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Register for broadcasts on BluetoothAdapter state change
+        IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(bluetoothReceiver, filter);
 
         Icons.setContext(getApplicationContext());
 
@@ -69,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         settingsButton = findViewById(R.id.settings_button);
         connectionButton = findViewById(R.id.connection_button);
         helpButton = findViewById(R.id.help_button);
+        shareButton = findViewById(R.id.share_button);
         shopButton = findViewById(R.id.shop_button);
 
         // https://stackoverflow.com/questions/17118339/how-do-i-retrieve-an-instance-of-a-fragment-defined-in-xml
@@ -97,6 +139,46 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         ViewHelper.setVisibility(mainOverlayLayout, false);
 
         setListeners();
+
+        // check if the bluetooth adapter is enabled
+        /*BluetoothAdapter bluetoothAdapter = BluethoothHelper.getBluethoothAdapter();
+
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled()) {
+            isMultiplayerActive = false;
+            connectionButton.callOnClick();
+        } else {
+            isMultiplayerActive = true;
+            connectionButton.callOnClick();
+        }*/
+
+        isMultiplayerActive = true;
+        connectionButton.callOnClick();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // Unregister broadcast listeners
+        unregisterReceiver(bluetoothReceiver);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQUEST_ENABLE_BT:
+                // successful
+                if (resultCode > 0) {
+                    isMultiplayerActive = true;
+                    connectionButton.setText(R.string.disconnect);
+                    ViewHelper.setVisibility(multiPlayerInteractionLayout, true);
+                    ViewHelper.setVisibility(singlePlayerInteractionLayout, false);
+                } else {
+                    isMultiplayerActive = false;
+                }
+        }
     }
 
     private void disableSettingsView() {
@@ -143,6 +225,15 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             public void onClick(View v) {
                 disableSettingsView();
                 disableHelpView();
+
+                if (!isMultiplayerActive) {
+                    BluethoothHelper.makeDiscoverable(MainActivity.this, 20*60);
+                } else {
+                    isMultiplayerActive = false;
+                    connectionButton.setText(R.string.connect);
+                    ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
+                    ViewHelper.setVisibility(singlePlayerInteractionLayout, true);
+                }
             }
         });
 
@@ -153,6 +244,16 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 ViewHelper.switchVisibility(helpLayout);
                 // set it the correct position
                 ViewHelper.setXYAbove(helpLayout, helpButton);
+            }
+        });
+
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disableSettingsView();
+                disableHelpView();
+
+                IntentHelper.startTextIntent(getView().getContext(), "Try TamaTamagotchi ;-)");
             }
         });
 
