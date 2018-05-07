@@ -137,4 +137,24 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
 
         return false;
     }
+
+    public boolean isInjured(){
+        if(health <= CRITICAL_HEALTH){
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isAngry(){
+        if(mood <= CRITICAL_MOOD){
+
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

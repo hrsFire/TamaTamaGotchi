@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,11 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import at.teamgotcha.tamagotchi.common.Icons;
+import at.teamgotcha.tamagotchi.enums.CustomPermissions;
 import at.teamgotcha.tamagotchi.helpers.BluetoothHelper;
+import at.teamgotcha.tamagotchi.helpers.BroadcastHelper;
 import at.teamgotcha.tamagotchi.helpers.IntentHelper;
+import at.teamgotcha.tamagotchi.helpers.PermissionHelper;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.pets.PetOne;
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private Pet pet;
     private boolean isMultiplayerActive = false;
     private boolean bluetoothVisibilityRequested = false;
+
+    private BroadcastHelper mBroadcasterHelper;
 
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
@@ -147,6 +153,16 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         } else {
             enableDisableMultiplayer(false);
         }
+
+        // (redundant at this point)
+        // get bluetooth permissions
+        // PermissionHelper.getAllBluetoothPermissions(this);
+
+        // Broadcast
+        mBroadcasterHelper = new BroadcastHelper();
+
+        // Register BroadcastHelper in application
+        registerReceiver(mBroadcasterHelper, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     @Override
@@ -331,5 +347,43 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     @Override
     public ObservableSubject<Pet, PetProperties> getPetObserver() {
         return pet;
+    }
+
+
+    // Permission Stuff
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+
+        if(requestCode == CustomPermissions.DEFAULT_REQUEST_CODE.getPermissionValue()) {
+
+            if(PermissionHelper.validateResponse(grantResults)){
+
+                // Success
+                // @todo
+            }
+            else{
+
+                // Failure
+                // @todo
+            }
+
+        }
+        else if(requestCode == CustomPermissions.BLUETOOTH_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+        else if(requestCode == CustomPermissions.BLUETOOTH_PRIVILED_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+        else if(requestCode == CustomPermissions.BLUETOOTH_ADMIN_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+        else if(requestCode == CustomPermissions.ALL_BLUETOOTH_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+
     }
 }
