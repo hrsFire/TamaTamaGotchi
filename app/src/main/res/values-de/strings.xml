@@ -1,3 +1,68 @@
 <resources>
     <string name="app_name">Tamagotchi</string>
+    <string name="settings">Optionen</string>
+    <string name="connect">Verbinden</string>
+    <string name="disconnect">Verbindung trennen</string>
+    <string name="help">Hilfe</string>
+    <string name="share">Teilen</string>
+    <string name="shop">Shop</string>
+    <string name="restart">Neustart</string>
+    <string name="language">Sprache</string>
+    <string name="volume">Lautstärke</string>
+    <string name="notification">Benachrichtigung</string>
+    <string name="select_pet">Tier auswählen</string>
+    <string name="faq">FAQ</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="nutrition">Ernährung</string>
+    <string name="bathing">Baden</string>
+    <string name="sleeping">Schlafen</string>
+    <string name="playing">Spielen</string>
+    <string name="strolling">Spazieren</string>
+    <string name="make_music">Musizieren</string>
+    <string name="gender">Geschlecht</string>
+    <string name="name">Name</string>
+    <string name="communicate">Kommunizieren</string>
+    <string name="send_gift">Geschenk senden</string>
+    <string name="have_fun">Spaß haben</string>
+    <string name="mood_level">Gemütszustand</string>
+    <string name="health_level">Gesundheitsanzeige</string>
+    <string name="hunger_level">Hungeranzeige</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="faq1">Wie fütter ich ein Tier?
+        Auf der rechten Seite der Ansicht ist ein Menü, auf dem du alle Icons findest, mit denen du dein Tier füttern,
+        waschen und mit ihm spielen kannst. Außerdem kannst du mit deinem Tier musizieren, es zu Bett bringen und
+        mit ihm spazieren gehen.</string>
+    <string name="faq2">
+        Wie kann ich es benennen?
+        Wenn du ein Tier neu erstellst, kannst du ihm einen Namen geben. Um ein neues Tier zu erstellen,
+        musst du oben auf Einstellungen
+        tippen und dann Neustart wählen. Dein altes Tier geht dabei verloren - du kannst immer nur
+        eines zur selben Zeit besitzen.</string>
+    <string name="faq3">
+        Wo sehe ich die Gemütsanzeigen?
+        Du siehst sie am unteren Rand der Ansicht. Wenn die Batterie grün ist, ist alles gut.
+        Ist sie gelb oder rot, solltest du dein Tier füttern, mit ihm spielen oder es zu Bett bringen.</string>
+    <string name="faq4">
+        Wie kann ich mich mit einem Freund verbinden?
+        Wenn du oben auf Verbinden tippst, schaltet sich auf deinem Smartphone Bluetooth ein, wenn ein anderes Gerät mit
+        der Tamagochi App in der Nähe ist, kannst du dich so mit diesem verbinden.</string>
+    <string name="faq5">
+        Kann mein Tier sterben?
+        Nein, dein Tier kann nicht sterben. Allerdings solltest du es trotzdem bei Laune halten, sonst wird es traurig!</string>
+    <string name="faq6">
+        Was kann ich mit meinem Tamagotchi Freund machen, wenn die Smartphones verbunden sind?
+        Du kannst deinem Freund ein Geschenk machen, mit ihm spielen, mit ihm kommunizieren und sogar ein Baby machen.</string>
+    <string name="faq7">
+        Wie mache ich ein Baby?
+        Wenn du dich mit einem Freund verbunden hast, kannst du in dem Menü rechts auf den Schnuller tippen.
+        Wenn eins der beiden Tiere weiblich und das andere männlich ist, bekommt der Besitzer des weiblichen Tieres ein Baby.
+        Das Baby hat ein zufälliges Geschlecht und du kannst dir einen neuen Namen aussuchen. Das alte Tier verschwindet in diesem Fall,
+        da du immer nur ein Tier zur selben Zeit haben kannst.</string>
+
+    <!-- HUNGER stuff -->
+    <string name="notification_hunger">Hunger!</string>
+    <string name="hunger_full">Ich bin satt!</string>
+    <string name="hunger_empty">Bitte fütter mich!</string>
+    <string name="hunger_critical">Ich habe hunger!</string>
 </resources>
