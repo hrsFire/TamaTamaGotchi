@@ -160,6 +160,19 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- center -->
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="400dp"
+            android:layout_gravity ="center">
+            <fragment
+                android:id="@+id/petsprite_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:name="at.teamgotcha.tamagotchi.fragments.PetSpriteFragment"/>
+        </RelativeLayout>
+
         <!-- popups: menus -->
         <RelativeLayout
             android:id="@+id/settings_layout"
@@ -174,19 +187,6 @@
                 android:layout_height="match_parent"
                 android:elevation="@dimen/first_z_layer" />
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="250dp"
-            android:layout_height="400dp"
-            android:layout_gravity ="center">
-            <fragment
-                android:id="@+id/petsprite_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:name="at.teamgotcha.tamagotchi.fragments.PetSpriteFragment"/>
-
-        </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/help_layout"
