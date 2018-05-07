@@ -21,6 +21,9 @@ import at.teamgotcha.tamagotchi.helpers.BluetoothHelper;
 import at.teamgotcha.tamagotchi.helpers.BroadcastHelper;
 import at.teamgotcha.tamagotchi.helpers.IntentHelper;
 import at.teamgotcha.tamagotchi.helpers.PermissionHelper;
+import at.teamgotcha.tamagotchi.helpers.PersistenceHelper;
+import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
+import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.pets.PetOne;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private View mainOverlayLayout;
 
     private Pet pet;
+    private PetSaveHelper petSaveHelper;
     private boolean isMultiplayerActive = false;
     private boolean bluetoothVisibilityRequested = false;
 
@@ -102,8 +106,19 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         Icons.setContext(getApplicationContext());
 
         // create a new pet
-        pet = new PetOne();
-        pet.setName("Name");
+        PetValues pv = PersistenceHelper.GetPet(this);
+        if(pv != null)
+        {
+            PetOne po = new PetOne(pv);
+        }
+        else
+        {
+            pet = new PetOne();
+            pet.setName("Name");
+        }
+        petSaveHelper= new PetSaveHelper(this);
+        pet.register(petSaveHelper);
+
 
         TypefaceProvider.registerDefaultIconSets();
 
@@ -163,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // Register BroadcastHelper in application
         registerReceiver(mBroadcasterHelper, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
     }
 
     @Override
@@ -171,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // Unregister broadcast listeners
         unregisterReceiver(bluetoothReceiver);
+        pet.unregister(petSaveHelper);
     }
 
     @Override

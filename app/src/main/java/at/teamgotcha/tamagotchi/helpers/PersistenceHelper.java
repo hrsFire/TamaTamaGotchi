@@ -65,13 +65,14 @@ public class PersistenceHelper {
         return cursor.getCount() > 0;
     }
 
-    private PetValues GetPet(Context context)
+    public static PetValues GetPet(Context context)
     {
         SQLiteDatabase db = dbhelper.getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM pet WHERE id = ?",new String[]{String.valueOf(PET_INDEX)});
-        PetValues pv = new PetValues();
+        PetValues pv = null;
         if(c.getCount() > 0)
         {
+            pv = new PetValues();
             pv.setHealth(c.getFloat(1));
             pv.setMood(c.getFloat(2));
             pv.setHunger(c.getFloat(3));
