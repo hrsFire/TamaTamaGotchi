@@ -81,7 +81,24 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
     public void changed(EnumSet<PetProperties> properties) {
         for (PetProperties property : properties) {
             switch (property) {
-                // @todo: update fragment
+                // feed the pet
+                case HUNGER:
+                    break;
+
+                // increase the pet's moord
+                case MOOD:
+                    break;
+
+                case HEALTH:
+                    break;
+                case GENDER:
+                    break;
+                case NAME:
+                    break;
+                case BACKGROUND:
+                    break;
+                case APPEARANCE:
+                    break;
             }
         }
     }
@@ -91,6 +108,11 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(nutritionButton.getContext()));
+
+                pet.updateHunger(10);
+                pet.updateHealth(10);
+
+                pet.notifyObservers();
             }
         });
 
@@ -98,6 +120,8 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(bathingButton.getContext()));
+
+                // pet.notifyObservers();
             }
         });
 
@@ -105,6 +129,8 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(sleepingButton.getContext()));
+
+                // pet.notifyObservers();
             }
         });
 
@@ -112,6 +138,16 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(playingButton.getContext()));
+
+                if(!pet.isHungry() && !pet.isInjured()){
+                    pet.updateMood(10);
+                    pet.updateHealth(-10);
+                    pet.updateHunger(-10);
+
+                    pet.notifyObservers();
+                }
+
+
             }
         });
 
@@ -119,6 +155,10 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(strollingButton.getContext()));
+
+                pet.updateMood(20);
+
+                pet.notifyObservers();
             }
         });
 
@@ -126,6 +166,13 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(makeMusicButton.getContext()));
+
+                if(!pet.isHungry()){
+                    pet.updateMood(25);
+                    pet.updateHunger(-15);
+
+                    pet.notifyObservers();
+                }
             }
         });
     }

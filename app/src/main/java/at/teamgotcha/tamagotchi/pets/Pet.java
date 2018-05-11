@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
 import at.teamgotcha.tamagotchi.enums.Gender;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
+import at.teamgotcha.tamagotchi.helpers.PetValues;
 
 public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
     // pet's appearance
@@ -41,6 +42,17 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
         health = INITIAL_HEALTH;
         mood = INITIAL_MOOD;
         hunger = INITIAL_HUNGER;
+    }
+
+    public Pet(PetValues pv)
+    {
+        super(PetProperties.class);
+        health = pv.getHealth();
+        mood = pv.getMood();
+        hunger = pv.getHunger();
+        name = pv.getName();
+        gender = pv.getGender();
+        setObject(this);
     }
 
     // getter and setters
@@ -137,4 +149,24 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
 
         return false;
     }
+
+    public boolean isInjured(){
+        if(health <= CRITICAL_HEALTH){
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isAngry(){
+        if(mood <= CRITICAL_MOOD){
+
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

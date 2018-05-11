@@ -1,5 +1,6 @@
 package at.teamgotcha.tamagotchi.base;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Vector;
 
@@ -43,7 +44,7 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
 
     @Override
     public void notifyObservers() {
-        Observer<T, E>[] cloned;
+        Observer[] cloned;
         EnumSet<E> tmpChangedProperties;
 
         synchronized (this) {
@@ -51,12 +52,14 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
                 return;
             }
 
-            cloned = (Observer<T, E>[]) observers.toArray();
+            Object[] tmpCloned = observers.toArray();
+          cloned = Arrays.copyOf(tmpCloned, tmpCloned.length, Observer[].class);
+
             tmpChangedProperties = changedProperties;
             clearChanged();
         }
 
-        for(Observer<T, E> item : cloned) {
+        for(Observer item : cloned) {
             if (hasFullyChanged()) {
                 item.changed(getObject());
             } else {

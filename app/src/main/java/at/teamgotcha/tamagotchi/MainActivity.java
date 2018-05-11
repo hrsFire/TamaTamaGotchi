@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,8 +23,14 @@ import at.teamgotcha.tamagotchi.common.FragmentEntry;
 import at.teamgotcha.tamagotchi.common.Icons;
 import at.teamgotcha.tamagotchi.fragments.LanguageFragment;
 import at.teamgotcha.tamagotchi.fragments.RestartFragment;
+import at.teamgotcha.tamagotchi.enums.CustomPermissions;
 import at.teamgotcha.tamagotchi.helpers.BluetoothHelper;
+import at.teamgotcha.tamagotchi.helpers.BroadcastHelper;
 import at.teamgotcha.tamagotchi.helpers.IntentHelper;
+import at.teamgotcha.tamagotchi.helpers.PermissionHelper;
+import at.teamgotcha.tamagotchi.helpers.PersistenceHelper;
+import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
+import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.interfaces.contracts.LanguageContract;
 import at.teamgotcha.tamagotchi.pets.Pet;
@@ -66,11 +73,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private View mainOverlayLayout;
 
     private Pet pet;
+    private PetSaveHelper petSaveHelper;
     private boolean isMultiplayerActive = false;
     private boolean bluetoothVisibilityRequested = false;
 
     private FragmentManager fragmentManager;
     private List<FragmentEntry> mainOverlayFragmentList;
+    private BroadcastHelper mBroadcasterHelper;
 
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
@@ -108,8 +117,19 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         Icons.setContext(getApplicationContext());
 
         // create a new pet
-        pet = new PetOne();
-        pet.setName("Name");
+        PetValues pv = PersistenceHelper.GetPet(this);
+        if(pv != null)
+        {
+            PetOne po = new PetOne(pv);
+        }
+        else
+        {
+            pet = new PetOne();
+            pet.setName("Name");
+        }
+        petSaveHelper= new PetSaveHelper(this);
+        pet.register(petSaveHelper);
+
 
         TypefaceProvider.registerDefaultIconSets();
 
@@ -160,6 +180,17 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         } else {
             enableDisableMultiplayer(false);
         }
+
+        // (redundant at this point)
+        // get bluetooth permissions
+        // PermissionHelper.getAllBluetoothPermissions(this);
+
+        // Broadcast
+        mBroadcasterHelper = new BroadcastHelper();
+
+        // Register BroadcastHelper in application
+        registerReceiver(mBroadcasterHelper, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
     }
 
     @Override
@@ -168,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // Unregister broadcast listeners
         unregisterReceiver(bluetoothReceiver);
+        pet.unregister(petSaveHelper);
     }
 
     @Override
@@ -389,5 +421,43 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     @Override
     public ObservableSubject<Pet, PetProperties> getPetObserver() {
         return pet;
+    }
+
+
+    // Permission Stuff
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+
+        if(requestCode == CustomPermissions.DEFAULT_REQUEST_CODE.getPermissionValue()) {
+
+            if(PermissionHelper.validateResponse(grantResults)){
+
+                // Success
+                // @todo
+            }
+            else{
+
+                // Failure
+                // @todo
+            }
+
+        }
+        else if(requestCode == CustomPermissions.BLUETOOTH_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+        else if(requestCode == CustomPermissions.BLUETOOTH_PRIVILED_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+        else if(requestCode == CustomPermissions.BLUETOOTH_ADMIN_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+        else if(requestCode == CustomPermissions.ALL_BLUETOOTH_REQUEST_CODE.getPermissionValue()){
+
+            // @todo
+        }
+
     }
 }
