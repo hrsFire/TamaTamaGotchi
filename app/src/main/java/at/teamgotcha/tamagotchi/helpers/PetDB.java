@@ -4,10 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by nikol_000 on 07.05.2018.
- */
-
 public class PetDB extends SQLiteOpenHelper{
     private static final String DB_NAME = "tamatamagotchi.db";
     private static final int VERSION = 1;

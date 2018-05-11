@@ -8,23 +8,25 @@ import android.database.sqlite.SQLiteStatement;
 import at.teamgotcha.tamagotchi.enums.Gender;
 import at.teamgotcha.tamagotchi.pets.Pet;
 
-/**
- * Created by nikol_000 on 07.05.2018.
- */
-
 public class PersistenceHelper {
     private static PetDB dbhelper;
     private static final int PET_INDEX = 0;
 
     private static SQLiteDatabase getWriteableDb(Context context)
     {
-        dbhelper = new PetDB(context);
+        if (dbhelper == null) {
+            dbhelper = new PetDB(context);
+        }
+
         return dbhelper.getWritableDatabase();
     }
 
     private static SQLiteDatabase getReadableDB(Context context)
     {
-        dbhelper = new PetDB(context);
+        if (dbhelper == null) {
+            dbhelper = new PetDB(context);
+        }
+
         return dbhelper.getReadableDatabase();
     }
 
@@ -34,7 +36,7 @@ public class PersistenceHelper {
             UpdatePet(p, context);
             return;
         }
-        SQLiteDatabase db = dbhelper.getWritableDatabase();
+        SQLiteDatabase db = getWriteableDb(context);
         SQLiteStatement statement = db.compileStatement("INSERT INTO pet VALUES(?,?,?,?,?,?");
         statement.bindString(1,String.valueOf(PET_INDEX));
         statement.bindDouble(2,p.getHealth());
@@ -47,7 +49,7 @@ public class PersistenceHelper {
 
     private static void UpdatePet(Pet p, Context context)
     {
-        SQLiteDatabase db = dbhelper.getWritableDatabase();
+        SQLiteDatabase db = getWriteableDb(context);
         SQLiteStatement statement = db.compileStatement("UPDATE pet SET health = ?, mood = ?, hunger = ?, name = ?, gender = ? WHERE id = ?");
         statement.bindDouble(1,p.getHealth());
         statement.bindDouble(2,p.getMood());
@@ -60,14 +62,14 @@ public class PersistenceHelper {
 
     private static boolean PetSaved(Pet p, Context context)
     {
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
+        SQLiteDatabase db = getReadableDB(context);
         Cursor cursor = db.rawQuery("SELECT * FROM pet WHERE id = ?",new String[]{String.valueOf(PET_INDEX)});
         return cursor.getCount() > 0;
     }
 
     public static PetValues GetPet(Context context)
     {
-        SQLiteDatabase db = dbhelper.getReadableDatabase();
+        SQLiteDatabase db = getReadableDB(context);
         Cursor c = db.rawQuery("SELECT * FROM pet WHERE id = ?",new String[]{String.valueOf(PET_INDEX)});
         PetValues pv = null;
         if(c.getCount() > 0)

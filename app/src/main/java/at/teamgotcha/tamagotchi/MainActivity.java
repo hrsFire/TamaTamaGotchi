@@ -429,33 +429,20 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
 
         if(requestCode == CustomPermissions.DEFAULT_REQUEST_CODE.getPermissionValue()) {
-
             if(PermissionHelper.validateResponse(grantResults)){
-
                 // Success
                 // @todo
-            }
-            else{
-
+            } else {
                 // Failure
                 // @todo
             }
-
-        }
-        else if(requestCode == CustomPermissions.BLUETOOTH_REQUEST_CODE.getPermissionValue()){
-
+        } else if(requestCode == CustomPermissions.BLUETOOTH_REQUEST_CODE.getPermissionValue()){
             // @todo
-        }
-        else if(requestCode == CustomPermissions.BLUETOOTH_PRIVILED_REQUEST_CODE.getPermissionValue()){
-
+        } else if(requestCode == CustomPermissions.BLUETOOTH_PRIVILED_REQUEST_CODE.getPermissionValue()){
             // @todo
-        }
-        else if(requestCode == CustomPermissions.BLUETOOTH_ADMIN_REQUEST_CODE.getPermissionValue()){
-
+        } else if(requestCode == CustomPermissions.BLUETOOTH_ADMIN_REQUEST_CODE.getPermissionValue()){
             // @todo
-        }
-        else if(requestCode == CustomPermissions.ALL_BLUETOOTH_REQUEST_CODE.getPermissionValue()){
-
+        } else if(requestCode == CustomPermissions.ALL_BLUETOOTH_REQUEST_CODE.getPermissionValue()){
             // @todo
         }
 

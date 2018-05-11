@@ -177,7 +177,7 @@
         <RelativeLayout
             android:id="@+id/settings_layout"
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:elevation="@dimen/first_z_layer">
 
             <fragment
