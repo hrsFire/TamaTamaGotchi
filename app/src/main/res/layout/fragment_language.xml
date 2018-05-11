@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/german"
             android:layout_marginBottom="@dimen/button_separator"
-            app:bootstrapBrand="danger"
+            app:bootstrapBrand="secondary"
             app:bootstrapSize="lg"
             app:roundedCorners="true" />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/english"
             android:layout_marginBottom="@dimen/button_separator"
-            app:bootstrapBrand="primary"
+            app:bootstrapBrand="secondary"
             app:bootstrapSize="lg"
             app:roundedCorners="true" />
     </LinearLayout>

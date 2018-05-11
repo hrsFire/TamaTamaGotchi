@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -110,9 +109,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Register for broadcasts on BluetoothAdapter state change
-        IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-        registerReceiver(bluetoothReceiver, filter);
+        registerBroadcastReceiver();
 
         Icons.setContext(getApplicationContext());
 
@@ -187,19 +184,25 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // Broadcast
         mBroadcasterHelper = new BroadcastHelper();
+    }
 
-        // Register BroadcastHelper in application
-        registerReceiver(mBroadcasterHelper, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+        unregisterBroadcastReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        registerBroadcastReceiver();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // Unregister broadcast listeners
-        unregisterReceiver(bluetoothReceiver);
-        pet.unregister(petSaveHelper);
     }
 
     @Override
@@ -445,6 +448,17 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         } else if(requestCode == CustomPermissions.ALL_BLUETOOTH_REQUEST_CODE.getPermissionValue()){
             // @todo
         }
+    }
 
+    private void registerBroadcastReceiver() {
+        // Register for broadcasts on BluetoothAdapter state change
+        IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(bluetoothReceiver, filter);
+    }
+
+    private void unregisterBroadcastReceiver() {
+        // Unregister broadcast listeners
+        unregisterReceiver(bluetoothReceiver);
+        pet.unregister(petSaveHelper);
     }
 }
