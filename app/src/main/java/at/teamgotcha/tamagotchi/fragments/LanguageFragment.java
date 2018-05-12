@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
+import java.util.Locale;
+
 import at.teamgotcha.tamagotchi.MainActivity;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
 import at.teamgotcha.tamagotchi.helpers.LanguageHelper;
+import at.teamgotcha.tamagotchi.helpers.PersistenceHelper;
 import at.teamgotcha.tamagotchi.interfaces.contracts.LanguageContract;
 
 public class LanguageFragment extends ContractV4Fragment<LanguageContract> {
@@ -44,19 +47,21 @@ public class LanguageFragment extends ContractV4Fragment<LanguageContract> {
         germanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setLanguage("de");
+                setLanguage(new Locale("de"));
             }
         });
 
         englishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setLanguage("en");
+                setLanguage(new Locale("en"));
             }
         });
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage(Locale language) {
+        // update the language in the database
+        PersistenceHelper.updateLanguage(language, getContext());
         LanguageHelper.setLocale(language, getActivity().getClass(), getContext(), getActivity());
     }
 }

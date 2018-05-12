@@ -71,4 +71,8 @@
     <!-- Language -->
     <string name="german">German</string>
     <string name="english">English</string>
+
+    <!-- Battery -->
+    <string name="battery_low_1">Your pet will go sleeping due to low battery.</string>
+    <string name="battery_low_2">To enjoy the game even longer load your phone.</string>
 </resources>

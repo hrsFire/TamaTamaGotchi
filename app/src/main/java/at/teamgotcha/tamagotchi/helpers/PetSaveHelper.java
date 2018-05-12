@@ -21,14 +21,14 @@ public class PetSaveHelper implements PetObserver {
     public void changed(Pet value) {
         if (pet != null) {
             pet = value;
-            PersistenceHelper.SavePet(pet,context);
+            PersistenceHelper.savePet(pet,context);
         }
     }
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
         if(pet != null) {
-            PersistenceHelper.SavePet(pet,context);
+            PersistenceHelper.savePet(pet,context);
         }
     }
 }

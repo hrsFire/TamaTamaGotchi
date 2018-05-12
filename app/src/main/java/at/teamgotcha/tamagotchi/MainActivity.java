@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.BatteryManager;
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +19,7 @@ import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import at.teamgotcha.tamagotchi.common.FragmentEntry;
 import at.teamgotcha.tamagotchi.common.Icons;
@@ -27,6 +30,8 @@ import at.teamgotcha.tamagotchi.fragments.VolumeFragment;
 import at.teamgotcha.tamagotchi.helpers.BluetoothHelper;
 import at.teamgotcha.tamagotchi.helpers.BroadcastHelper;
 import at.teamgotcha.tamagotchi.helpers.IntentHelper;
+import at.teamgotcha.tamagotchi.helpers.LanguageHelper;
+import at.teamgotcha.tamagotchi.helpers.NotificationHelper;
 import at.teamgotcha.tamagotchi.helpers.PermissionHelper;
 import at.teamgotcha.tamagotchi.helpers.PersistenceHelper;
 import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
@@ -81,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private List<FragmentEntry> mainOverlayFragmentList;
     private BroadcastHelper mBroadcasterHelper;
 
+    private final int BATTERY_REQUEST_CODE = 50;
+
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
@@ -106,16 +113,74 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         }
     };
 
+    private final BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
+                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+
+                if (level < 20) {
+                    NotificationHelper.showNotification(context, BATTERY_REQUEST_CODE, R.string.battery_low_1 + " (" + level + "%)\n" + R.string.battery_low_2);
+                }
+            } else if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
+                NotificationHelper.closeNotification(context, BATTERY_REQUEST_CODE);
+            } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
+
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        registerBroadcastReceiver();
+        Locale targetLanguage = PersistenceHelper.getLanguage(this);
+        Locale currentLanguage = LanguageHelper.getLocale(this);
+
+        String targetLanguageString;
+        String currentLanguageString;
+
+        if (targetLanguage == null) {
+            targetLanguageString = "";
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                targetLanguageString = targetLanguage.toLanguageTag();
+            } else {
+                targetLanguageString = targetLanguage.toString();
+            }
+        }
+
+        if (currentLanguage == null) {
+            currentLanguageString = "";
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                currentLanguageString = currentLanguage.toLanguageTag();
+            } else {
+                currentLanguageString = currentLanguage.toString();
+            }
+        }
+
+        targetLanguageString = targetLanguageString.replace("-", "_");
+        currentLanguageString = currentLanguageString.replace("-", "_");
+
+        if (!currentLanguageString.equalsIgnoreCase(targetLanguageString)) {
+            if (targetLanguage == null) {
+                // set current language
+                PersistenceHelper.updateLanguage(currentLanguage, this);
+            } else {
+                // restart with the target language
+                LanguageHelper.setLocale(targetLanguage, this.getClass(), this, this);
+            }
+        }
+
+        registerBroadcastReceivers();
 
         Icons.setContext(getApplicationContext());
 
         // create a new pet
-        PetValues pv = PersistenceHelper.GetPet(this);
+        PetValues pv = PersistenceHelper.getPet(this);
         if(pv != null)
         {
             PetOne po = new PetOne(pv);
@@ -125,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             pet = new PetOne();
             pet.setName("Name");
         }
+
         petSaveHelper= new PetSaveHelper(this);
         pet.register(petSaveHelper);
 
@@ -190,19 +256,21 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     protected void onPause() {
         super.onPause();
 
-        unregisterBroadcastReceiver();
+        unregisterBroadcastReceivers();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        registerBroadcastReceiver();
+        registerBroadcastReceivers();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        pet.unregister(petSaveHelper);
     }
 
     @Override
@@ -455,15 +523,23 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         }
     }
 
-    private void registerBroadcastReceiver() {
-        // Register for broadcasts on BluetoothAdapter state change
+    private void registerBroadcastReceivers() {
+        // bluetooth
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(bluetoothReceiver, filter);
+
+        // battery
+        filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        filter.addAction(Intent.ACTION_POWER_CONNECTED);
+        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        registerReceiver(batteryReceiver, filter);
     }
 
-    private void unregisterBroadcastReceiver() {
-        // Unregister broadcast listeners
+    private void unregisterBroadcastReceivers() {
+        // bluetooth
         unregisterReceiver(bluetoothReceiver);
-        pet.unregister(petSaveHelper);
+
+        // battery
+        unregisterReceiver(batteryReceiver);
     }
 }

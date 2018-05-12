@@ -47,4 +47,9 @@ public class NotificationHelper {
 
         notificationManager.notify(requestCode, builder.build());
     }
+
+    public static void closeNotification(Context context, int requestCode) {
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(requestCode);
+    }
 }
