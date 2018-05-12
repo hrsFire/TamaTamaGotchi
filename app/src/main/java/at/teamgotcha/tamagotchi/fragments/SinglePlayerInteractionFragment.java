@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
@@ -113,6 +114,7 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
                 pet.updateHealth(10);
 
                 pet.notifyObservers();
+                Toast.makeText(getContext(), R.string.nutrition, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -122,6 +124,7 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
                 v.startAnimation(AnimHelper.AddBounceAnimation(bathingButton.getContext()));
 
                 // pet.notifyObservers();
+                Toast.makeText(getContext(), R.string.bathing, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -131,6 +134,7 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
                 v.startAnimation(AnimHelper.AddBounceAnimation(sleepingButton.getContext()));
 
                 // pet.notifyObservers();
+                Toast.makeText(getContext(), R.string.sleeping, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -145,9 +149,9 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
                     pet.updateHunger(-10);
 
                     pet.notifyObservers();
+
+                    Toast.makeText(getContext(), R.string.playing, Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
@@ -159,6 +163,8 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
                 pet.updateMood(20);
 
                 pet.notifyObservers();
+
+                Toast.makeText(getContext(), R.string.strolling, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -172,6 +178,8 @@ public class SinglePlayerInteractionFragment extends ContractV4Fragment<SinglePl
                     pet.updateHunger(-15);
 
                     pet.notifyObservers();
+
+                    Toast.makeText(getContext(), R.string.make_music, Toast.LENGTH_SHORT).show();
                 }
             }
         });

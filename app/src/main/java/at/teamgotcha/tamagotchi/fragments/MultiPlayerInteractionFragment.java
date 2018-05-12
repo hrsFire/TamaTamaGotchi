@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
@@ -86,6 +87,8 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(communicationButton.getContext()));
+
+                Toast.makeText(getContext(), R.string.communicate, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,6 +96,8 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(playingButton.getContext()));
+
+                Toast.makeText(getContext(), R.string.playing, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,6 +105,8 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(sendGiftButton.getContext()));
+
+                Toast.makeText(getContext(), R.string.send_gift, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -107,6 +114,8 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddBounceAnimation(haveFunButton.getContext()));
+
+                Toast.makeText(getContext(), R.string.have_fun, Toast.LENGTH_SHORT).show();
             }
         });
     }

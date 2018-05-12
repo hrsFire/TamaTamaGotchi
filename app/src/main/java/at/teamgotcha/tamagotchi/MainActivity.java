@@ -21,6 +21,8 @@ import com.beardedhen.androidbootstrap.TypefaceProvider;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import at.teamgotcha.tamagotchi.common.FragmentEntry;
 import at.teamgotcha.tamagotchi.common.Icons;
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     private final int BATTERY_REQUEST_CODE = 50;
     private final String CRASH_INFO = "error";
+    private TimerTask petUpdateTask;
 
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
@@ -168,7 +171,16 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         }
 
         // set an exception handler to handle unexpected
-        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
+        //Thread.setDefaultUncaughtExceptionHandler(crashHandler);
+
+        // load the icons
+        Icons.setContext(getApplicationContext());
+
+        // bootstrap initialization
+        TypefaceProvider.registerDefaultIconSets();
+
+        // disable the action bar
+        getSupportActionBar().hide();
 
         // load the language
         Locale targetLanguage = PersistenceHelper.getLanguage(this);
@@ -212,8 +224,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         registerBroadcastReceivers();
 
-        Icons.setContext(getApplicationContext());
-
         // create a new pet
         PetValues pv = PersistenceHelper.getPet(this);
         if(pv != null)
@@ -228,12 +238,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         petSaveHelper= new PetSaveHelper(this);
         pet.register(petSaveHelper);
-
-
-        TypefaceProvider.registerDefaultIconSets();
-
-        // disable the action bar
-        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_main);
 
@@ -286,6 +290,23 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // Broadcast
         mBroadcasterHelper = new BroadcastHelper();
+
+        // set an timer for the update process
+        petUpdateTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // notify only about the properties which have changed in the mean time
+                        pet.notifyObservers();
+                    }
+                });
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(petUpdateTask, 2000, 10);
     }
 
     @Override
@@ -307,6 +328,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         super.onDestroy();
 
         pet.unregister(petSaveHelper);
+        petUpdateTask.cancel();
     }
 
     @Override
