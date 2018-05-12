@@ -32,6 +32,7 @@
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
     <string name="try_the_game">Try TamaTamagotchi ;-)</string>
+    <string name="create">Create</string>
     <string name="faq1">How can I feed my Pet?
         On the right side of the screen is a menu, there
         you can find all the icons with which you can feed your pet, wash it or play with it.
@@ -79,4 +80,15 @@
 
     <!-- Exceptions -->
     <string name="uncaught_exception_info">An uncaught Exception occurred, but your game data has been saved.</string>
+
+    <!-- Gender -->
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+
+    <!-- Pet creation -->
+    <string name="pet_creation_name_not_valid">Your pet needs an awesome name.</string>
+
+    <!-- Pets -->
+    <string name="pet_squid">Squid</string>
+    <string name="pet_bubblegum">Bubblegum</string>
 </resources>

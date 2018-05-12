@@ -27,6 +27,7 @@ import java.util.TimerTask;
 import at.teamgotcha.tamagotchi.common.FragmentEntry;
 import at.teamgotcha.tamagotchi.common.Icons;
 import at.teamgotcha.tamagotchi.fragments.LanguageFragment;
+import at.teamgotcha.tamagotchi.fragments.PetCreationFragment;
 import at.teamgotcha.tamagotchi.fragments.RestartFragment;
 import at.teamgotcha.tamagotchi.enums.CustomPermissions;
 import at.teamgotcha.tamagotchi.fragments.VolumeFragment;
@@ -226,17 +227,15 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // create a new pet
         PetValues pv = PersistenceHelper.getPet(this);
-        if(pv != null)
-        {
+
+        if(pv != null) {
             PetOne po = new PetOne(pv);
-        }
-        else
-        {
+        } else {
             pet = new PetOne();
             pet.setName("Name");
         }
 
-        petSaveHelper= new PetSaveHelper(this);
+        petSaveHelper = new PetSaveHelper(this);
         pet.register(petSaveHelper);
 
         setContentView(R.layout.activity_main);
@@ -540,7 +539,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     @Override
     public void restartGame() {
         disableMainOverlay();
-        // @todo:
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(PetCreationFragment.class);
+        fragmentEntry.setActive(true);
+        fragmentTransaction.add(R.id.main_overlay_layout, fragmentEntry.getFragment());
+        fragmentTransaction.commit();
+        showMainOverlayLayout();
     }
 
     @Override

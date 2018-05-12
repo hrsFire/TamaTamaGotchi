@@ -32,6 +32,7 @@
     <string name="cancel">Abbrechen</string>
     <string name="ok">Ok</string>
     <string name="try_the_game">Probiere TamaTamaGotchi aus ;-)</string>
+    <string name="create">Erstellen</string>
     <string name="faq1">Wie fütter ich ein Tier?
         Auf der rechten Seite der Ansicht ist ein Menü, auf dem du alle Icons findest, mit denen du dein Tier füttern,
         waschen und mit ihm spielen kannst. Außerdem kannst du mit deinem Tier musizieren, es zu Bett bringen und
@@ -79,4 +80,15 @@
 
     <!-- Exceptions -->
     <string name="uncaught_exception_info">Ein unerwarteter Fehler ist aufgetaucht. Deine Spieldaten wurden aber gesichert.</string>
+
+    <!-- Gender -->
+    <string name="female">Weiblich</string>
+    <string name="male">Mänlich</string>
+
+    <!-- Pet creation -->
+    <string name="pet_creation_name_not_valid">Dein Haustier braucht einen tollen Namen.</string>
+
+    <!-- Pets -->
+    <string name="pet_squid">Squid</string>
+    <string name="pet_bubblegum">Bubblegum</string>
 </resources>
