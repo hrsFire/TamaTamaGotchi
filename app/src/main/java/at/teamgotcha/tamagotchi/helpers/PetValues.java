@@ -2,10 +2,6 @@ package at.teamgotcha.tamagotchi.helpers;
 
 import at.teamgotcha.tamagotchi.enums.Gender;
 
-/**
- * Created by nikol_000 on 07.05.2018.
- */
-
 public class PetValues{
     protected float health;
     protected float mood;

@@ -30,32 +30,32 @@ public class PersistenceHelper {
         return dbhelper.getReadableDatabase();
     }
 
-    public static void SavePet(Pet p, Context context)
+    public static void SavePet(Pet pet, Context context)
     {
-        if(PetSaved(p,context)) {
-            UpdatePet(p, context);
+        if(PetSaved(pet,context)) {
+            UpdatePet(pet, context);
             return;
         }
         SQLiteDatabase db = getWriteableDb(context);
         SQLiteStatement statement = db.compileStatement("INSERT INTO pet VALUES(?,?,?,?,?,?)");
         statement.bindString(1,String.valueOf(PET_INDEX));
-        statement.bindDouble(2,p.getHealth());
-        statement.bindDouble(3,p.getMood());
-        statement.bindDouble(4,p.getHunger());
-        statement.bindString(5,p.getName());
-        statement.bindString(6,String.valueOf(p.getGender().value));
+        statement.bindDouble(2, pet.getHealth());
+        statement.bindDouble(3, pet.getMood());
+        statement.bindDouble(4, pet.getHunger());
+        statement.bindString(5, pet.getName());
+        statement.bindString(6,String.valueOf(pet.getGender().value));
         statement.executeInsert();
     }
 
-    private static void UpdatePet(Pet p, Context context)
+    private static void UpdatePet(Pet pet, Context context)
     {
         SQLiteDatabase db = getWriteableDb(context);
         SQLiteStatement statement = db.compileStatement("UPDATE pet SET health = ?, mood = ?, hunger = ?, name = ?, gender = ? WHERE id = ?");
-        statement.bindDouble(1,p.getHealth());
-        statement.bindDouble(2,p.getMood());
-        statement.bindDouble(3,p.getHunger());
-        statement.bindString(4,p.getName());
-        statement.bindString(5,String.valueOf(p.getGender().value));
+        statement.bindDouble(1, pet.getHealth());
+        statement.bindDouble(2, pet.getMood());
+        statement.bindDouble(3, pet.getHunger());
+        statement.bindString(4, pet.getName());
+        statement.bindString(5,String.valueOf(pet.getGender().value));
         statement.bindString(6,String.valueOf(PET_INDEX));
         statement.executeUpdateDelete();
     }

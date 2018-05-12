@@ -29,6 +29,8 @@
     <string name="hunger_level">Hungeranzeige</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="ok">Ok</string>
     <string name="faq1">Wie fütter ich ein Tier?
         Auf der rechten Seite der Ansicht ist ein Menü, auf dem du alle Icons findest, mit denen du dein Tier füttern,
         waschen und mit ihm spielen kannst. Außerdem kannst du mit deinem Tier musizieren, es zu Bett bringen und
@@ -65,4 +67,8 @@
     <string name="hunger_full">Ich bin satt!</string>
     <string name="hunger_empty">Bitte fütter mich!</string>
     <string name="hunger_critical">Ich habe hunger!</string>
+
+    <!-- Language -->
+    <string name="german">Deutsch</string>
+    <string name="english">Englisch</string>
 </resources>

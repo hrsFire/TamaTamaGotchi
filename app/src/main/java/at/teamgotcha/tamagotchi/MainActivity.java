@@ -23,6 +23,7 @@ import at.teamgotcha.tamagotchi.common.Icons;
 import at.teamgotcha.tamagotchi.fragments.LanguageFragment;
 import at.teamgotcha.tamagotchi.fragments.RestartFragment;
 import at.teamgotcha.tamagotchi.enums.CustomPermissions;
+import at.teamgotcha.tamagotchi.fragments.VolumeFragment;
 import at.teamgotcha.tamagotchi.helpers.BluetoothHelper;
 import at.teamgotcha.tamagotchi.helpers.BroadcastHelper;
 import at.teamgotcha.tamagotchi.helpers.IntentHelper;
@@ -32,6 +33,7 @@ import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.interfaces.contracts.LanguageContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.VolumeContract;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.pets.PetOne;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
@@ -50,7 +52,7 @@ import static at.teamgotcha.tamagotchi.helpers.BluetoothHelper.REQUEST_ENABLE_BT
 
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract,
-        LanguageContract {
+        LanguageContract, VolumeContract {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -63,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private Fragment mainBackgroundFragment;
     private Fragment petspriteFragment;
     private Fragment statusMenuFragment;
-    private Fragment restartFragment;
     private View settingsLayout;
     private View helpLayout;
     private View topMenuLayout;
@@ -151,7 +152,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         mainBackgroundFragment = fragmentManager.findFragmentById(R.id.pet_fragment);
         petspriteFragment = fragmentManager.findFragmentById(R.id.petsprite_fragment);
         statusMenuFragment = fragmentManager.findFragmentById(R.id.status_menu_fragment);
-        restartFragment = fragmentManager.findFragmentById(R.id.restart_fragment);
 
         settingsLayout = findViewById(R.id.settings_layout);
         helpLayout = findViewById(R.id.help_layout);
@@ -232,17 +232,12 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         disableSettingsView();
         ViewHelper.setVisibility(mainOverlayLayout, true);
 
-        mainOverlayLayout.post(new Runnable() {
+        mainOverlayLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
                 ViewHelper.setXYHalf(mainOverlayLayout, getView());
             }
-        });
-    }
-
-    private void disableMainOverlayLayout() {
-        disableSettingsView();
-        ViewHelper.setVisibility(mainOverlayLayout, false);
+        }, 10);
     }
 
     private View getView() {
@@ -370,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     // shared settings functions
     @Override
     public void showRestartDialog() {
-        disableSettingsView();
+        disableMainOverlay();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(RestartFragment.class);
@@ -382,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     @Override
     public void showLanguageDialog() {
-        disableSettingsView();
+        disableMainOverlay();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(LanguageFragment.class);
@@ -394,8 +389,14 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     @Override
     public void showVolumeDialog() {
+        disableMainOverlay();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(VolumeFragment.class);
+        fragmentEntry.setActive(true);
+        fragmentTransaction.add(R.id.main_overlay_layout, fragmentEntry.getFragment());
+        fragmentTransaction.commit();
         showMainOverlayLayout();
-        // @todo:
     }
 
     @Override
@@ -412,13 +413,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     @Override
     public void restartGame() {
-        disableMainOverlayLayout();
+        disableMainOverlay();
         // @todo:
     }
 
     @Override
     public void cancelRestartGame() {
-        disableMainOverlayLayout();
+        disableMainOverlay();
     }
 
     @Override
@@ -426,6 +427,10 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         return pet;
     }
 
+    @Override
+    public void closeVolumeView() {
+        disableMainOverlay();
+    }
 
     // Permission Stuff
     @Override

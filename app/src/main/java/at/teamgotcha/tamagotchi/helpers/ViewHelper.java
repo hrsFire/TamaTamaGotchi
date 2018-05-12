@@ -47,7 +47,7 @@ public class ViewHelper {
     }
 
     public static void setXYHalf(View targetView, View sourceView) {
-        setXY(targetView, sourceView.getX() - targetView.getWidth() /2 + sourceView.getWidth() /2, sourceView.getY() - targetView.getHeight() /2 + sourceView.getHeight() /2);
+        setXY(targetView, (sourceView.getX() + sourceView.getWidth() /2) - targetView.getWidth() /2, (sourceView.getY() + sourceView.getHeight() /2) - targetView.getHeight() /2);
     }
 
     private static void switchVisibility(Fragment fragment, boolean visible) {
