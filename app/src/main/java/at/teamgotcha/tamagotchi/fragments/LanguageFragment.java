@@ -63,5 +63,7 @@ public class LanguageFragment extends ContractV4Fragment<LanguageContract> {
         // update the language in the database
         PersistenceHelper.updateLanguage(language, getContext());
         LanguageHelper.setLocale(language, getActivity().getClass(), getContext(), getActivity());
+        Object s = null;
+        s.toString();
     }
 }

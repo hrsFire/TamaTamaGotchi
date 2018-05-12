@@ -31,6 +31,7 @@
     <string name="no">Nein</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">Ok</string>
+    <string name="try_the_game">Probiere TamaTamaGotchi aus ;-)</string>
     <string name="faq1">Wie fütter ich ein Tier?
         Auf der rechten Seite der Ansicht ist ein Menü, auf dem du alle Icons findest, mit denen du dein Tier füttern,
         waschen und mit ihm spielen kannst. Außerdem kannst du mit deinem Tier musizieren, es zu Bett bringen und
@@ -75,4 +76,7 @@
     <!-- Battery -->
     <string name="battery_low_1">Dein Haustier wird bald aufgrund der schwachen Batterie schlafen gehen.</string>
     <string name="battery_low_2">Lade dein Smartphone um das Spiel noch länger genießen zu können.</string>
+
+    <!-- Exceptions -->
+    <string name="uncaught_exception_info">Ein unerwarteter Fehler ist aufgetaucht. Deine Spieldaten wurden aber gesichert.</string>
 </resources>

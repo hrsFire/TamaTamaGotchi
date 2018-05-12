@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private BroadcastHelper mBroadcasterHelper;
 
     private final int BATTERY_REQUEST_CODE = 50;
+    private final String CRASH_INFO = "error";
 
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
@@ -132,10 +134,42 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         }
     };
 
+    private final Thread.UncaughtExceptionHandler crashHandler = new Thread.UncaughtExceptionHandler() {
+
+        @Override
+        public void uncaughtException(Thread thread, final Throwable ex) {
+            /*Thread.UncaughtExceptionHandler exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+            exceptionHandler.uncaughtException(thread, ex);*/
+
+            Context context = getApplicationContext();
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(CRASH_INFO, ex.toString());
+            context.startActivity(intent);
+
+            System.exit(0);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // check if the app was restarted after a crash
+        Intent intent = getIntent();
+
+        if (intent != null) {
+            String crashInfo = intent.getStringExtra(CRASH_INFO);
+
+            if (crashInfo != null) {
+                Toast.makeText(MainActivity.this, R.string.uncaught_exception_info, Toast.LENGTH_LONG).show();
+            }
+        }
+
+        // set an exception handler to handle unexpected
+        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
+
+        // load the language
         Locale targetLanguage = PersistenceHelper.getLanguage(this);
         Locale currentLanguage = LanguageHelper.getLocale(this);
 
@@ -353,7 +387,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 disableSettingsView();
                 disableHelpView();
 
-                IntentHelper.startTextIntent(getView().getContext(), "Try TamaTamagotchi ;-)");
+                IntentHelper.startTextIntent(getView().getContext(), getString(R.string.try_the_game));
             }
         });
 

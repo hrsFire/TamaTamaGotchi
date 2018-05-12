@@ -31,6 +31,7 @@
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
+    <string name="try_the_game">Try TamaTamagotchi ;-)</string>
     <string name="faq1">How can I feed my Pet?
         On the right side of the screen is a menu, there
         you can find all the icons with which you can feed your pet, wash it or play with it.
@@ -75,4 +76,7 @@
     <!-- Battery -->
     <string name="battery_low_1">Your pet will go sleeping due to low battery.</string>
     <string name="battery_low_2">To enjoy the game even longer load your phone.</string>
+
+    <!-- Exceptions -->
+    <string name="uncaught_exception_info">An uncaught Exception occurred, but your game data has been saved.</string>
 </resources>
