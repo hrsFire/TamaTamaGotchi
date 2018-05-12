@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         }
 
         // set an exception handler to handle unexpected
-        //Thread.setDefaultUncaughtExceptionHandler(crashHandler);
+        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
 
         // load the icons
         Icons.setContext(getApplicationContext());
