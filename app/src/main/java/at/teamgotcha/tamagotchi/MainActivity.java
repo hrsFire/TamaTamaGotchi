@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private Fragment mainBackgroundFragment;
     private Fragment petspriteFragment;
     private Fragment statusMenuFragment;
+    private Fragment moodeMenuFragment;
     private View settingsLayout;
     private View helpLayout;
     private View topMenuLayout;
@@ -252,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         mainBackgroundFragment = fragmentManager.findFragmentById(R.id.pet_fragment);
         petspriteFragment = fragmentManager.findFragmentById(R.id.petsprite_fragment);
         statusMenuFragment = fragmentManager.findFragmentById(R.id.status_menu_fragment);
+        moodeMenuFragment = fragmentManager.findFragmentById(R.id.mood_menu_fragment);
 
         settingsLayout = findViewById(R.id.settings_layout);
         helpLayout = findViewById(R.id.help_layout);

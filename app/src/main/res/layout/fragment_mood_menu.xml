@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/health_level_indicator"
@@ -19,7 +19,8 @@
             android:src="@drawable/googleg_disabled_color_18"
             android:tooltipText="@string/health_level"
             app:bootstrapSize="md"
-            app:hasBorder="false" />
+            app:hasBorder="false"
+            android:layout_marginRight="10dp" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/mood_level_indicator"
@@ -28,7 +29,8 @@
             app:bootstrapSize="md"
             app:hasBorder="false"
             android:src="@drawable/googleg_disabled_color_18"
-            android:tooltipText="@string/mood_level" />
+            android:tooltipText="@string/mood_level"
+            android:layout_marginRight="10dp" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/hunger_level_indicator"
@@ -37,6 +39,7 @@
             app:bootstrapSize="md"
             app:hasBorder="false"
             android:src="@drawable/googleg_disabled_color_18"
-            android:tooltipText="@string/hunger_level" />
+            android:tooltipText="@string/hunger_level"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
 </FrameLayout>
