@@ -37,7 +37,7 @@ public class PersistenceHelper {
             return;
         }
         SQLiteDatabase db = getWriteableDb(context);
-        SQLiteStatement statement = db.compileStatement("INSERT INTO pet VALUES(?,?,?,?,?,?");
+        SQLiteStatement statement = db.compileStatement("INSERT INTO pet VALUES(?,?,?,?,?,?)");
         statement.bindString(1,String.valueOf(PET_INDEX));
         statement.bindDouble(2,p.getHealth());
         statement.bindDouble(3,p.getMood());
