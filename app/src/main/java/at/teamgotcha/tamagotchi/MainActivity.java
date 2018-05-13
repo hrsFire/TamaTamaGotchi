@@ -396,7 +396,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                         Display display = getWindowManager().getDefaultDisplay();
                         Point size = new Point();
                         display.getSize(size);
-                        int width = size.x;
+                        //int width = size.x;
                         int height = size.y;
 
                         if (mainOverlayLayout.getY() + mainOverlayLayout.getHeight() > height) {
