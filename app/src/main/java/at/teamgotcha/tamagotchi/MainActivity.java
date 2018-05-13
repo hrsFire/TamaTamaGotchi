@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // create a new pet
         PetValues pv = PersistenceHelper.getPet(this);
+        boolean showSelectPetDialog = false;
 
         if(pv != null) {
             pet = new Pet(pv);
@@ -248,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             pet.setBackground(icons.getSquidAppearance());*/
 
             // for the first time you have to select the pet
-            showSelectPetDialog();
+            showSelectPetDialog = true;
         }
 
         registerBroadcastReceivers();
@@ -304,6 +305,10 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // Broadcast
         mBroadcasterHelper = new BroadcastHelper();
+
+        if (showSelectPetDialog) {
+            showSelectPetDialog();
+        }
     }
 
     @Override
@@ -315,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         pet.unregister(petSaveHelper);
         pet.unregister(this);
 
-        petUpdateTask.cancel();
+        //petUpdateTask.cancel();
     }
 
     @Override
@@ -329,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         pet.register(this);
 
         // set an timer for the update process
-        petUpdateTask = new TimerTask() {
+        /*petUpdateTask = new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -343,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(petUpdateTask, 2000, 10);
+        timer.scheduleAtFixedRate(petUpdateTask, 2000, 10);*/
     }
 
     @Override
