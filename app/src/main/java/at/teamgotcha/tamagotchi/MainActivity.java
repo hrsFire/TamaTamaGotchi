@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     private final int BATTERY_REQUEST_CODE = 50;
     private final String CRASH_INFO = "error";
+    private final int BLUETOOTH_VISIBLE_DURATION = 20 * 60;
     private TimerTask petUpdateTask;
 
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
@@ -434,7 +435,8 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 disableHelpView();
 
                 if (!isMultiplayerActive) {
-                    BluetoothHelper.makeDiscoverable(MainActivity.this, 20*60);
+                    enableDisableMultiplayer(true);
+                    //BluetoothHelper.makeDiscoverable(MainActivity.this, BLUETOOTH_VISIBLE_DURATION);
                 } else {
                     enableDisableMultiplayer(false);
                 }
@@ -484,7 +486,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             if (adapter != null && !adapter.isEnabled() && !bluetoothVisibilityRequested) {
                 isMultiplayerActive = true;
                 bluetoothVisibilityRequested = true;
-                BluetoothHelper.makeDiscoverable(MainActivity.this, 20*60);
+                BluetoothHelper.makeDiscoverable(MainActivity.this, BLUETOOTH_VISIBLE_DURATION);
             } else {
                 isMultiplayerActive = true;
                 connectionButton.setText(R.string.disconnect);
