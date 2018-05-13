@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         }
 
         // set an exception handler to handle unexpected
-        //Thread.setDefaultUncaughtExceptionHandler(crashHandler);
+        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
 
         // load the icons
         Icons.setContext(getApplicationContext());
@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         pet.unregister(petSaveHelper);
         pet.unregister(this);
 
-        //petUpdateTask.cancel();
+        petUpdateTask.cancel();
     }
 
     @Override
@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         pet.register(this);
 
         // set an timer for the update process
-        /*petUpdateTask = new TimerTask() {
+        petUpdateTask = new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(petUpdateTask, 2000, 10);*/
+        timer.scheduleAtFixedRate(petUpdateTask, 2000, 10);
     }
 
     @Override
