@@ -1,6 +1,5 @@
 package at.teamgotcha.tamagotchi.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
-import com.google.android.gms.plus.model.people.Person;
 
 import java.util.EnumSet;
 
@@ -53,17 +51,17 @@ public class StatusMenuFragment extends ContractV4Fragment<StatusMenuContract> i
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onPause() {
+        super.onPause();
 
-        getContract().getPetObserver().register(this);
+        getContract().getPetObserver().unregister(this);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
 
-        getContract().getPetObserver().unregister(this);
+        getContract().getPetObserver().register(this);
     }
 
     private void setListeners() {

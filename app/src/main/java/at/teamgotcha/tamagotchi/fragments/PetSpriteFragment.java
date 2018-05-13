@@ -1,11 +1,10 @@
 package at.teamgotcha.tamagotchi.fragments;
 
-import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.EnumSet;
 
@@ -20,7 +19,7 @@ import at.teamgotcha.tamagotchi.interfaces.contracts.PetSpriteContract;
 
 public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> implements PetObserver {
     private Pet pet;
-    private ImageView spriteView;
+    private View spriteView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,8 +27,7 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
 
         spriteView = view.findViewById(R.id.petsprite_image);
         pet = getContract().getPetObserver().getObject();
-
-        spriteView.setImageBitmap(pet.getAppearance());
+        changed(pet);
 
         // Add Notification ...
         PetNotificationHelper.addPetHungerNotification(getContext(), pet);
@@ -42,17 +40,17 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onPause() {
+        super.onPause();
 
-        getContract().getPetObserver().register(this);
+        getContract().getPetObserver().unregister(this);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
 
-        getContract().getPetObserver().unregister(this);
+        getContract().getPetObserver().register(this);
     }
 
     @Override
@@ -63,12 +61,11 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
-
         for (PetProperties property : properties) {
             switch (property) {
                 case APPEARANCE:
-                    spriteView.setImageBitmap(pet.getAppearance());
+                    spriteView.setBackground(new BitmapDrawable(getResources(), pet.getAppearance()));
+                    //spriteView.setBackground(new BitmapDrawable(getResources(), pet.getAppearance()));
                     break;
             }
         }

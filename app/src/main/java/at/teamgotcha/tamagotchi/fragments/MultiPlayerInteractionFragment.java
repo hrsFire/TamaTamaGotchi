@@ -1,6 +1,5 @@
 package at.teamgotcha.tamagotchi.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,17 +54,17 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onPause() {
+        super.onPause();
 
-        getContract().getPetObserver().register(this);
+        getContract().getPetObserver().unregister(this);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
 
-        getContract().getPetObserver().unregister(this);
+        getContract().getPetObserver().register(this);
     }
 
     @Override

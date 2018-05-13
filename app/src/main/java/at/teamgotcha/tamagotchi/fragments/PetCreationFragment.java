@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,12 +13,12 @@ import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
+import at.teamgotcha.tamagotchi.common.Icons;
 import at.teamgotcha.tamagotchi.enums.Gender;
 import at.teamgotcha.tamagotchi.helpers.PersistenceHelper;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.interfaces.contracts.PetCreationContract;
 import at.teamgotcha.tamagotchi.pets.Pet;
-import at.teamgotcha.tamagotchi.pets.PetOne;
 
 public class PetCreationFragment extends ContractV4Fragment<PetCreationContract> {
     private EditText nameTextbox;
@@ -117,7 +116,6 @@ public class PetCreationFragment extends ContractV4Fragment<PetCreationContract>
             @Override
             public void onClick(View v) {
                 String name = nameTextbox.getText().toString();
-                boolean isFemale = femaleCheckbox.isChecked();
 
                 if (name.isEmpty() || name.trim().equals("")) {
                     Toast.makeText(getContext(), R.string.pet_creation_name_not_valid, Toast.LENGTH_SHORT).show();
@@ -132,6 +130,8 @@ public class PetCreationFragment extends ContractV4Fragment<PetCreationContract>
                 petValues.setName(name);
 
                 // gender
+                boolean isFemale = femaleCheckbox.isChecked();
+
                 if (isFemale) {
                     gender = Gender.FEMALE;
                 } else {
@@ -140,13 +140,24 @@ public class PetCreationFragment extends ContractV4Fragment<PetCreationContract>
 
                 petValues.setGender(gender);
 
-                // add them to the pet
-                // @todo: which pet
-                pet = new PetOne(petValues);
+                // get the pet selection
+                boolean isSquitSelected = petSquidheckbox.isChecked();
+                boolean isBubblegumSelected = petBubblegumCheckbox.isChecked();
+                Icons icons = Icons.getInstance();
 
+                if (isSquitSelected) {
+                    petValues.setAppearance(icons.getSquidAppearance());
+                    petValues.setBackground(icons.getYellowBackground());
+                } else if (isBubblegumSelected) {
+                    petValues.setAppearance(icons.getBubblegumAppearance());
+                    petValues.setBackground(icons.getBlueBackground());
+                }
+
+                // add the values to the pet
+                pet = new Pet(petValues);
                 PersistenceHelper.savePet(pet, getContext());
 
-                getContract().petCreated(pet);
+                getContract().petCreated(petValues);
             }
         });
     }

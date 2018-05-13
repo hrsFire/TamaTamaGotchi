@@ -1,7 +1,8 @@
 package at.teamgotcha.tamagotchi.interfaces.contracts;
 
-import at.teamgotcha.tamagotchi.pets.Pet;
+
+import at.teamgotcha.tamagotchi.helpers.PetValues;
 
 public interface PetCreationContract {
-    void petCreated(Pet pet);
+    void petCreated(PetValues petValues);
 }

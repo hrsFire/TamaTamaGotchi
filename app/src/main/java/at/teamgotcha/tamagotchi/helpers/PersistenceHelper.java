@@ -38,25 +38,37 @@ public class PersistenceHelper {
         }
 
         SQLiteDatabase db = getWriteableDb(context);
-        SQLiteStatement statement = db.compileStatement("INSERT INTO pet VALUES(?,?,?,?,?,?)");
+        SQLiteStatement statement = db.compileStatement("INSERT INTO " + PetDB.PET_TABLE +" VALUES(?,?,?,?,?,?,?,?)");
         statement.bindString(1, String.valueOf(PET_INDEX));
         statement.bindDouble(2, pet.getHealth());
         statement.bindDouble(3, pet.getMood());
         statement.bindDouble(4, pet.getHunger());
         statement.bindString(5, pet.getName());
         statement.bindString(6, String.valueOf(pet.getGender().value));
+        statement.bindBlob(7, ImageHelper.getBytes(pet.getAppearance()));
+        statement.bindBlob(8, ImageHelper.getBytes(pet.getBackground()));
         statement.executeInsert();
     }
 
     private static void updatePet(Pet pet, Context context) {
         SQLiteDatabase db = getWriteableDb(context);
-        SQLiteStatement statement = db.compileStatement("UPDATE pet SET health = ?, mood = ?, hunger = ?, name = ?, gender = ? WHERE id = ?");
+        SQLiteStatement statement = db.compileStatement("UPDATE pet SET " +
+                PetDB.PET_HEALTH_COLUMN + " = ?," +
+                PetDB.PET_MOOD_COLUMN + " = ?," +
+                PetDB.PET_HUNGER_COLUMN + " = ?," +
+                PetDB.PET_NAME_COLUMN + " = ?," +
+                PetDB.PET_GENDER_COLUMN + " = ?," +
+                PetDB.PET_APPEARANCE_COLUMN + " = ?, " +
+                PetDB.PET_BACKGROUND_COLUMN + " = ? " +
+                " WHERE id = ?");
         statement.bindDouble(1, pet.getHealth());
         statement.bindDouble(2, pet.getMood());
         statement.bindDouble(3, pet.getHunger());
         statement.bindString(4, pet.getName());
         statement.bindString(5, String.valueOf(pet.getGender().value));
-        statement.bindString(6, String.valueOf(PET_INDEX));
+        statement.bindBlob(6, ImageHelper.getBytes(pet.getAppearance()));
+        statement.bindBlob(7, ImageHelper.getBytes(pet.getBackground()));
+        statement.bindString(8, String.valueOf(PET_INDEX));
         statement.executeUpdateDelete();
     }
 
@@ -79,6 +91,12 @@ public class PersistenceHelper {
             pv.setHunger(c.getFloat(c.getColumnIndex(PetDB.PET_HUNGER_COLUMN)));
             pv.setName(c.getString(c.getColumnIndex(PetDB.PET_NAME_COLUMN)));
             pv.setGender(Gender.values()[c.getInt(c.getColumnIndex(PetDB.PET_GENDER_COLUMN))]);
+
+            byte[] backgroundImage = c.getBlob(c.getColumnIndex(PetDB.PET_BACKGROUND_COLUMN));
+            byte[] appearanceImage = c.getBlob(c.getColumnIndex(PetDB.PET_APPEARANCE_COLUMN));
+
+            pv.setBackground(ImageHelper.getImage(backgroundImage));
+            pv.setAppearance(ImageHelper.getImage(appearanceImage));
         }
 
         c.close();

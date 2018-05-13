@@ -1,5 +1,7 @@
 package at.teamgotcha.tamagotchi.helpers;
 
+import android.graphics.Bitmap;
+
 import at.teamgotcha.tamagotchi.enums.Gender;
 
 public class PetValues{
@@ -8,7 +10,8 @@ public class PetValues{
     protected float hunger;
     protected String name;
     protected Gender gender;
-
+    protected Bitmap appearance;
+    protected Bitmap background;
 
     public float getHealth() {
         return health;
@@ -50,4 +53,19 @@ public class PetValues{
         this.gender = gender;
     }
 
+    public Bitmap getAppearance() {
+        return appearance;
+    }
+
+    public void setAppearance(Bitmap appearance) {
+        this.appearance = appearance;
+    }
+
+    public Bitmap getBackground() {
+        return background;
+    }
+
+    public void setBackground(Bitmap background) {
+        this.background = background;
+    }
 }

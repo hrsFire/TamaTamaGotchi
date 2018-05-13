@@ -38,6 +38,18 @@ public class Icons {
         return getBitmap(R.drawable.background);
     }
 
+    public Bitmap getBlueBackground() {
+        return getBitmap(R.drawable.background2);
+    }
+
+    public Bitmap getPinkBackground() {
+        return getBitmap(R.drawable.background3);
+    }
+
+    public Bitmap getGreenBackground() {
+        return getBitmap(R.drawable.background4);
+    }
+
     // Appearances
     public Bitmap getSquidAppearance() {
         return getBitmap(R.drawable.pet_squid);

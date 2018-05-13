@@ -46,6 +46,7 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
     public void notifyObservers() {
         Observer[] cloned;
         EnumSet<E> tmpChangedProperties;
+        boolean hasFullyChanged;
 
         synchronized (this) {
             if (!hasChanged()) {
@@ -53,14 +54,16 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
             }
 
             Object[] tmpCloned = observers.toArray();
-          cloned = Arrays.copyOf(tmpCloned, tmpCloned.length, Observer[].class);
+            cloned = Arrays.copyOf(tmpCloned, tmpCloned.length, Observer[].class);
 
             tmpChangedProperties = changedProperties;
+
+            hasFullyChanged = hasFullyChanged();
             clearChanged();
         }
 
         for(Observer item : cloned) {
-            if (hasFullyChanged()) {
+            if (hasFullyChanged) {
                 item.changed(getObject());
             } else {
                 item.changed(tmpChangedProperties);

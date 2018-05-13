@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -42,11 +44,11 @@ import at.teamgotcha.tamagotchi.helpers.PersistenceHelper;
 import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
+import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.interfaces.contracts.LanguageContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.PetCreationContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.VolumeContract;
 import at.teamgotcha.tamagotchi.pets.Pet;
-import at.teamgotcha.tamagotchi.pets.PetOne;
 import at.teamgotcha.tamagotchi.base.ObservableSubject;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
 import at.teamgotcha.tamagotchi.interfaces.contracts.HelpContract;
@@ -63,7 +65,7 @@ import static at.teamgotcha.tamagotchi.helpers.BluetoothHelper.REQUEST_ENABLE_BT
 
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract,
-        LanguageContract, VolumeContract, PetCreationContract {
+        LanguageContract, VolumeContract, PetCreationContract, PetObserver {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private Fragment helpFragment;
     private Fragment singlePlayerInteractionFragment;
     private Fragment multiPlayerInteractionFragment;
-    private Fragment mainBackgroundFragment;
     private Fragment petspriteFragment;
     private Fragment statusMenuFragment;
     private Fragment moodeMenuFragment;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private View singlePlayerInteractionLayout;
     private View multiPlayerInteractionLayout;
     private View mainOverlayLayout;
+    private View petSpriteLayout;
 
     private Pet pet;
     private PetSaveHelper petSaveHelper;
@@ -179,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         }
 
         // set an exception handler to handle unexpected
-        Thread.setDefaultUncaughtExceptionHandler(crashHandler);
+        //Thread.setDefaultUncaughtExceptionHandler(crashHandler);
 
         // load the icons
         Icons.setContext(getApplicationContext());
@@ -230,21 +232,26 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             }
         }
 
-        registerBroadcastReceivers();
-
         // create a new pet
         PetValues pv = PersistenceHelper.getPet(this);
 
         if(pv != null) {
-            pet = new PetOne(pv);
+            pet = new Pet(pv);
         } else {
-            pet = new PetOne();
+            // default values
+            pet = new Pet();
             pet.setName("Name");
             pet.setGender(Gender.FEMALE);
+
+            /*Icons icons = Icons.getInstance();
+            pet.setAppearance(icons.getSquidAppearance());
+            pet.setBackground(icons.getSquidAppearance());*/
+
+            // for the first time you have to select the pet
+            showSelectPetDialog();
         }
 
-        petSaveHelper = new PetSaveHelper(this);
-        pet.register(petSaveHelper);
+        registerBroadcastReceivers();
 
         setContentView(R.layout.activity_main);
 
@@ -261,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         helpFragment = fragmentManager.findFragmentById(R.id.help_fragment);
         singlePlayerInteractionFragment = fragmentManager.findFragmentById(R.id.single_player_interaction_fragment);
         multiPlayerInteractionFragment = fragmentManager.findFragmentById(R.id.multi_player_interaction_fragment);
-        mainBackgroundFragment = fragmentManager.findFragmentById(R.id.pet_fragment);
         petspriteFragment = fragmentManager.findFragmentById(R.id.petsprite_fragment);
         statusMenuFragment = fragmentManager.findFragmentById(R.id.status_menu_fragment);
         moodeMenuFragment = fragmentManager.findFragmentById(R.id.mood_menu_fragment);
@@ -272,6 +278,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         singlePlayerInteractionLayout = findViewById(R.id.single_player_interaction_layout);
         multiPlayerInteractionLayout = findViewById(R.id.multi_player_interaction_layout);
         mainOverlayLayout = findViewById(R.id.main_overlay_layout);
+        petSpriteLayout = findViewById(R.id.pet_sprite_background);
 
         // set invisible
         ViewHelper.setVisibility(settingsLayout, false);
@@ -297,9 +304,32 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // Broadcast
         mBroadcasterHelper = new BroadcastHelper();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterBroadcastReceivers();
+
+        pet.unregister(petSaveHelper);
+        pet.unregister(this);
+
+        //petUpdateTask.cancel();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        registerBroadcastReceivers();
+
+        petSaveHelper = new PetSaveHelper(this);
+        pet.register(petSaveHelper);
+        pet.register(this);
 
         // set an timer for the update process
-        petUpdateTask = new TimerTask() {
+        /*petUpdateTask = new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
@@ -313,29 +343,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         };
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(petUpdateTask, 2000, 10);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        unregisterBroadcastReceivers();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        registerBroadcastReceivers();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        pet.unregister(petSaveHelper);
-        petUpdateTask.cancel();
+        timer.scheduleAtFixedRate(petUpdateTask, 2000, 10);*/
     }
 
     @Override
@@ -540,12 +548,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     @Override
     public void showSelectPetDialog() {
-        showMainOverlayLayout();
-        // @todo:
-    }
-
-    @Override
-    public void restartGame() {
         disableMainOverlay();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -554,6 +556,11 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         fragmentTransaction.add(R.id.main_overlay_layout, fragmentEntry.getFragment());
         fragmentTransaction.commit();
         showMainOverlayLayout();
+    }
+
+    @Override
+    public void restartGame() {
+        showSelectPetDialog();
     }
 
     @Override
@@ -572,10 +579,11 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     }
 
     @Override
-    public void petCreated(Pet pet) {
+    public void petCreated(PetValues petValues) {
+        disableMainOverlay();
         this.pet.reset();
-        this.pet.setName(pet.getName());
-        this.pet.setGender(pet.getGender());
+        this.pet.setValues(petValues);
+        this.pet.notifyObservers();
     }
 
     // Permission Stuff
@@ -619,5 +627,22 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // battery
         unregisterReceiver(batteryReceiver);
+    }
+
+    @Override
+    public void changed(Pet value) {
+        pet = value;
+        changed(EnumSet.of(PetProperties.BACKGROUND));
+    }
+
+    @Override
+    public void changed(EnumSet<PetProperties> properties) {
+        for (PetProperties property : properties) {
+            switch (property) {
+                case BACKGROUND:
+                    petSpriteLayout.setBackground(new BitmapDrawable(getResources(), pet.getBackground()));
+                    break;
+            }
+        }
     }
 }

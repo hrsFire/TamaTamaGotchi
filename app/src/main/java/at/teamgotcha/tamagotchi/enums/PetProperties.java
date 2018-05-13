@@ -8,5 +8,4 @@ public enum PetProperties {
     HUNGER,
     BACKGROUND,
     APPEARANCE;
-    // @todo:
 }

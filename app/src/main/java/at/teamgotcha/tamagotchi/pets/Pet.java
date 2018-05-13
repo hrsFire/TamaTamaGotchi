@@ -7,7 +7,7 @@ import at.teamgotcha.tamagotchi.enums.Gender;
 import at.teamgotcha.tamagotchi.enums.PetProperties;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 
-public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
+public class Pet extends ObservableSubject<Pet,PetProperties> {
     // pet's appearance
     protected Bitmap appearance;
 
@@ -42,15 +42,23 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
         reset();
     }
 
-    public Pet(PetValues pv)
+    public Pet(PetValues petValues)
     {
         super(PetProperties.class);
-        health = pv.getHealth();
-        mood = pv.getMood();
-        hunger = pv.getHunger();
-        name = pv.getName();
-        gender = pv.getGender();
+        setValues(petValues);
         setObject(this);
+    }
+
+    public void setValues(PetValues petValues) {
+        health = petValues.getHealth();
+        mood = petValues.getMood();
+        hunger = petValues.getHunger();
+        this.setName(petValues.getName());
+        this.setGender(petValues.getGender());
+        this.setBackground(petValues.getBackground());
+        this.setAppearance(petValues.getAppearance());
+
+        addChangedProperties(EnumSet.of(PetProperties.HEALTH, PetProperties.MOOD, PetProperties.HUNGER));
     }
 
     // getter and setters
@@ -59,7 +67,7 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
         return background;
     }
 
-    protected void setBackground(Bitmap background) {
+    public void setBackground(Bitmap background) {
         this.background = background;
         addChangedProperties(EnumSet.of(PetProperties.BACKGROUND));
     }
