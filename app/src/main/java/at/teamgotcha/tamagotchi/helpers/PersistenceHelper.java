@@ -72,12 +72,13 @@ public class PersistenceHelper {
         PetValues pv = null;
 
         if(c.getCount() > 0) {
+            c.moveToFirst();
             pv = new PetValues();
-            pv.setHealth(c.getFloat(1));
-            pv.setMood(c.getFloat(2));
-            pv.setHunger(c.getFloat(3));
-            pv.setName(c.getString(4));
-            pv.setGender(Gender.values()[c.getInt(5)]);
+            pv.setHealth(c.getFloat(c.getColumnIndex(PetDB.PET_HEALTH_COLUMN)));
+            pv.setMood(c.getFloat(c.getColumnIndex(PetDB.PET_MOOD_COLUMN)));
+            pv.setHunger(c.getFloat(c.getColumnIndex(PetDB.PET_HUNGER_COLUMN)));
+            pv.setName(c.getString(c.getColumnIndex(PetDB.PET_NAME_COLUMN)));
+            pv.setGender(Gender.values()[c.getInt(c.getColumnIndex(PetDB.PET_GENDER_COLUMN))]);
         }
 
         c.close();
@@ -86,7 +87,6 @@ public class PersistenceHelper {
 
     public static void updateLanguage(Locale language, Context context) {
         SQLiteDatabase db = getWriteableDb(context);
-
         String tmpLanguage;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -107,7 +107,7 @@ public class PersistenceHelper {
 
         if(c.getCount() > 0) {
             c.moveToFirst();
-            String lang = c.getString(c.getColumnIndex("language"));
+            String lang = c.getString(c.getColumnIndex(PetDB.SETTINGS_LANGUAGE_COLUMN));
 
             if (Objects.equals(lang, "")) {
                 language = null;

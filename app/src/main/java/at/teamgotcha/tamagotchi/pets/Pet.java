@@ -39,9 +39,7 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
     public Pet() {
         super(PetProperties.class);
         setObject(this);
-        health = INITIAL_HEALTH;
-        mood = INITIAL_MOOD;
-        hunger = INITIAL_HUNGER;
+        reset();
     }
 
     public Pet(PetValues pv)
@@ -164,5 +162,11 @@ public abstract class Pet extends ObservableSubject<Pet,PetProperties> {
         }
 
         return false;
+    }
+
+    public void reset() {
+        health = INITIAL_HEALTH;
+        mood = INITIAL_MOOD;
+        hunger = INITIAL_HUNGER;
     }
 }

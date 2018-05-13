@@ -121,6 +121,7 @@ public class PetCreationFragment extends ContractV4Fragment<PetCreationContract>
 
                 if (name.isEmpty() || name.trim().equals("")) {
                     Toast.makeText(getContext(), R.string.pet_creation_name_not_valid, Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 PetValues petValues = new PetValues();

@@ -75,6 +75,7 @@
     <string name="english">Englisch</string>
 
     <!-- Battery -->
+    <string name="low_battery">Niedriger Batteriestatus</string>
     <string name="battery_low_1">Dein Haustier wird bald aufgrund der schwachen Batterie schlafen gehen.</string>
     <string name="battery_low_2">Lade dein Smartphone um das Spiel noch länger genießen zu können.</string>
 

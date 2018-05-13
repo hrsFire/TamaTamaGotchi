@@ -16,7 +16,7 @@
             android:id="@+id/health_level_indicator"
             android:layout_width="@dimen/side_button_width"
             android:layout_height="@dimen/side_button_height"
-            android:src="@drawable/googleg_disabled_color_18"
+            android:src="@drawable/battery_icon_full"
             android:tooltipText="@string/health_level"
             app:bootstrapSize="md"
             app:hasBorder="false"
@@ -28,10 +28,11 @@
             android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/googleg_disabled_color_18"
+            android:src="@drawable/mood_icon"
             android:tooltipText="@string/mood_level"
             android:layout_marginRight="10dp" />
 
+        <!-- we do not have an icon for this @todo: add one -->
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/hunger_level_indicator"
             android:layout_width="@dimen/side_button_width"
@@ -40,6 +41,7 @@
             app:hasBorder="false"
             android:src="@drawable/googleg_disabled_color_18"
             android:tooltipText="@string/hunger_level"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:visibility="gone" />
     </LinearLayout>
 </FrameLayout>

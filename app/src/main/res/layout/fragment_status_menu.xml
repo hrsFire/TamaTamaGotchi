@@ -18,7 +18,7 @@
             android:layout_height="@dimen/side_button_height"
             app:bootstrapSize="md"
             app:hasBorder="false"
-            android:src="@drawable/googleg_disabled_color_18"
+            android:src="@drawable/female_icon"
             android:tooltipText="@string/gender" />
 
         <com.beardedhen.androidbootstrap.AwesomeTextView

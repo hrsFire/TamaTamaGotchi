@@ -100,9 +100,9 @@ public class MoodMenuFragment extends ContractV4Fragment<MoodMenuContract> imple
                     float mood = pet.getMood();
 
                     if (mood <= pet.CRITICAL_MOOD) {
-                        healthLevelIndicator.setImageBitmap(icons.getMoodLow());
+                        moodLevelIndicator.setImageBitmap(icons.getMoodLow());
                     } else if (mood <= pet.MAX_MOOD / 4 *3) {
-                        healthLevelIndicator.setImageBitmap(icons.getMoodAverage());
+                        moodLevelIndicator.setImageBitmap(icons.getMoodAverage());
                     } else {
                         moodLevelIndicator.setImageBitmap(icons.getMoodHappy());
                     }
@@ -111,6 +111,7 @@ public class MoodMenuFragment extends ContractV4Fragment<MoodMenuContract> imple
                 case HUNGER:
                     float hunger = pet.getHunger();
                     // @todo:
+                    //hungerLevelIndicator.setImageBitmap(icons.getHunger());
 
                     break;
             }

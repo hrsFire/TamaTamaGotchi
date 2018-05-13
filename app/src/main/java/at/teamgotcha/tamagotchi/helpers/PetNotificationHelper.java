@@ -10,7 +10,7 @@ public class PetNotificationHelper {
 
     public static void addPetHungerNotification(Context context, Pet pet) {
         if (pet.isHungry()) {
-            NotificationHelper.showNotification(context, REQ_CODE_HUNGER, context.getString(R.string.notification_hunger));
+            NotificationHelper.showNotification(context, REQ_CODE_HUNGER, context.getString(R.string.notification_hunger), context.getString(R.string.notification_hunger), false);
         }
     }
 }

@@ -10,6 +10,14 @@ public class PetDB extends SQLiteOpenHelper{
     private static final String DB_NAME = "tamatamagotchi.db";
     private static final int VERSION = 1;
 
+    protected static final String PET_NAME_COLUMN = "name";
+    protected static final String PET_HEALTH_COLUMN = "health";
+    protected static final String PET_MOOD_COLUMN = "mood";
+    protected static final String PET_HUNGER_COLUMN = "hunger";
+    protected static final String PET_GENDER_COLUMN = "gender";
+
+    protected static final String SETTINGS_LANGUAGE_COLUMN = "language";
+
     public PetDB(Context context) {
         super(context, DB_NAME,null, VERSION);
     }

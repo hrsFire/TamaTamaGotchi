@@ -26,6 +26,7 @@ import java.util.TimerTask;
 
 import at.teamgotcha.tamagotchi.common.FragmentEntry;
 import at.teamgotcha.tamagotchi.common.Icons;
+import at.teamgotcha.tamagotchi.enums.Gender;
 import at.teamgotcha.tamagotchi.fragments.LanguageFragment;
 import at.teamgotcha.tamagotchi.fragments.PetCreationFragment;
 import at.teamgotcha.tamagotchi.fragments.RestartFragment;
@@ -42,6 +43,7 @@ import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.interfaces.contracts.LanguageContract;
+import at.teamgotcha.tamagotchi.interfaces.contracts.PetCreationContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.VolumeContract;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.pets.PetOne;
@@ -61,7 +63,7 @@ import static at.teamgotcha.tamagotchi.helpers.BluetoothHelper.REQUEST_ENABLE_BT
 
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract,
-        LanguageContract, VolumeContract {
+        LanguageContract, VolumeContract, PetCreationContract {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
+            String action = intent.getAction();
 
             if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
                 final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
@@ -121,20 +123,25 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     };
 
     private final BroadcastReceiver batteryReceiver = new BroadcastReceiver() {
+        private int lastBatteryLevel = 0;
+
         @Override
         public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
+            String action = intent.getAction();
 
             if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
                 int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 
                 if (level < 20) {
-                    NotificationHelper.showNotification(context, BATTERY_REQUEST_CODE, R.string.battery_low_1 + " (" + level + "%)\n" + R.string.battery_low_2);
+                    // do not update the notification on each battery change
+                    if (Math.abs(lastBatteryLevel - level) > 2) {
+                        NotificationHelper.showNotification(context, BATTERY_REQUEST_CODE, getString(R.string.battery_low_1) + " (" + level + "%)\n" + getString(R.string.battery_low_2), getString(R.string.low_battery), true);
+                        lastBatteryLevel = level;
+                    }
                 }
             } else if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
                 NotificationHelper.closeNotification(context, BATTERY_REQUEST_CODE);
             } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
-
             }
         }
     };
@@ -229,10 +236,11 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         PetValues pv = PersistenceHelper.getPet(this);
 
         if(pv != null) {
-            PetOne po = new PetOne(pv);
+            pet = new PetOne(pv);
         } else {
             pet = new PetOne();
             pet.setName("Name");
+            pet.setGender(Gender.FEMALE);
         }
 
         petSaveHelper = new PetSaveHelper(this);
@@ -561,6 +569,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     @Override
     public void closeVolumeView() {
         disableMainOverlay();
+    }
+
+    @Override
+    public void petCreated(Pet pet) {
+        this.pet.reset();
+        this.pet.setName(pet.getName());
+        this.pet.setGender(pet.getGender());
     }
 
     // Permission Stuff

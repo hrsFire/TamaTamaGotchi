@@ -43,6 +43,10 @@ public class Icons {
         return getBitmap(R.drawable.pet_squid);
     }
 
+    public Bitmap getBubblegumAppearance() {
+        return getBitmap(R.drawable.pet_bubblegum);
+    }
+
     // Battery
     public Bitmap getBatteryEmpty() {
         return getBitmap(R.drawable.battery_icon_empty);
@@ -79,13 +83,11 @@ public class Icons {
 
     // Gender
     public Bitmap getGenderFemale() {
-        // @todo:
-        return getBitmap(R.drawable.googleg_standard_color_18);
+        return getBitmap(R.drawable.female_icon);
     }
 
     public Bitmap getGenderMale() {
-        // @todo:
-        return getBitmap(R.drawable.googleg_standard_color_18);
+        return getBitmap(R.drawable.male_icon);
     }
 
     private Bitmap getBitmap(int id) {
