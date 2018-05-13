@@ -1,6 +1,7 @@
 package at.teamgotcha.tamagotchi;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import java.util.TimerTask;
 import at.teamgotcha.tamagotchi.common.FragmentEntry;
 import at.teamgotcha.tamagotchi.common.Icons;
 import at.teamgotcha.tamagotchi.enums.Gender;
+import at.teamgotcha.tamagotchi.fragments.BluetoothDeviceSelectionFragment;
 import at.teamgotcha.tamagotchi.fragments.FAQFragment;
 import at.teamgotcha.tamagotchi.fragments.LanguageFragment;
 import at.teamgotcha.tamagotchi.fragments.PetCreationFragment;
@@ -48,6 +50,7 @@ import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.interfaces.PetObserver;
+import at.teamgotcha.tamagotchi.interfaces.contracts.BluetoothDeviceSelectionContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.FaqFragmentContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.LanguageContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.PetCreationContract;
@@ -69,7 +72,7 @@ import static at.teamgotcha.tamagotchi.helpers.BluetoothHelper.REQUEST_ENABLE_BT
 
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract,
-        LanguageContract, VolumeContract, PetCreationContract, PetObserver, FaqFragmentContract {
+        LanguageContract, VolumeContract, PetCreationContract, PetObserver, FaqFragmentContract, BluetoothDeviceSelectionContract {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -103,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private final String CRASH_INFO = "error";
     private final int BLUETOOTH_VISIBLE_DURATION = 20 * 60;
     private TimerTask petUpdateTask;
+
+    private BluetoothDevice connectedBluetoothDevice;
 
     // https://stackoverflow.com/questions/9693755/detecting-state-changes-made-to-the-bluetoothadapter
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
@@ -483,6 +488,8 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         if (targetState) {
             BluetoothAdapter adapter = BluetoothHelper.getBluethoothAdapter();
 
+            showSearchBluetoothDevicesDialog();
+
             if (adapter != null && !adapter.isEnabled() && !bluetoothVisibilityRequested) {
                 isMultiplayerActive = true;
                 bluetoothVisibilityRequested = true;
@@ -499,6 +506,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             connectionButton.setText(R.string.connect);
             ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
             ViewHelper.setVisibility(singlePlayerInteractionLayout, true);
+            connectedBluetoothDevice = null;
         }
     }
 
@@ -575,20 +583,13 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     @Override
     public void showNotificationDialog() {
-        showMainOverlayLayout();
+        //showMainOverlayLayout();
         // @todo:
     }
 
     @Override
     public void showSelectPetDialog() {
-        disableMainOverlay();
-
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(PetCreationFragment.class);
-        fragmentEntry.setActive(true);
-        fragmentTransaction.add(R.id.main_overlay_layout, fragmentEntry.getFragment());
-        fragmentTransaction.commit();
-        showMainOverlayLayout();
+        // @todo
     }
 
     @Override
@@ -601,9 +602,25 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         showMainOverlayLayout();
     }
 
+    public void showSearchBluetoothDevicesDialog() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(BluetoothDeviceSelectionFragment.class);
+        fragmentEntry.setActive(true);
+        fragmentTransaction.add(R.id.main_overlay_layout, fragmentEntry.getFragment());
+        fragmentTransaction.commit();
+        showMainOverlayLayout();
+    }
+
     @Override
     public void restartGame() {
-        showSelectPetDialog();
+        disableMainOverlay();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(PetCreationFragment.class);
+        fragmentEntry.setActive(true);
+        fragmentTransaction.add(R.id.main_overlay_layout, fragmentEntry.getFragment());
+        fragmentTransaction.commit();
+        showMainOverlayLayout();
     }
 
     @Override
@@ -624,6 +641,18 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     @Override
     public void closeFaqView() {
         disableMainOverlay();
+    }
+
+    @Override
+    public void closeBluetoothDeviceSelectionView() {
+        disableMainOverlay();
+        enableDisableMultiplayer(false);
+    }
+
+    @Override
+    public void devicePaired(BluetoothDevice device) {
+        disableMainOverlay();
+        connectedBluetoothDevice = device;
     }
 
     @Override

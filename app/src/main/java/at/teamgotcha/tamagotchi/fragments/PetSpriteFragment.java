@@ -65,7 +65,6 @@ public class PetSpriteFragment extends ContractV4Fragment<PetSpriteContract> imp
             switch (property) {
                 case APPEARANCE:
                     spriteView.setBackground(new BitmapDrawable(getResources(), pet.getAppearance()));
-                    //spriteView.setBackground(new BitmapDrawable(getResources(), pet.getAppearance()));
                     break;
             }
         }
