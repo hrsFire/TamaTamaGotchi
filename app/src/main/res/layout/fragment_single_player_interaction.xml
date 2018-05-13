@@ -48,6 +48,7 @@
             android:src="@drawable/ball_icon_colour"
             android:tooltipText="@string/playing" />
 
+        <!-- @todo: icon is missing -->
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/strolling_button"
             android:layout_width="@dimen/side_button_width"
@@ -55,7 +56,8 @@
             app:bootstrapSize="md"
             app:hasBorder="false"
             android:src="@drawable/common_google_signin_btn_icon_light"
-            android:tooltipText="@string/strolling" />
+            android:tooltipText="@string/strolling"
+            android:visibility="gone" />
 
         <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/make_music_button"

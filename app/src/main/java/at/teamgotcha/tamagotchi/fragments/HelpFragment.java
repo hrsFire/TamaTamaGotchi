@@ -7,17 +7,12 @@ import android.view.ViewGroup;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
-import java.util.EnumSet;
-
 import at.teamgotcha.tamagotchi.helpers.AnimHelper;
-import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
-import at.teamgotcha.tamagotchi.enums.PetProperties;
-import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.interfaces.contracts.HelpContract;
 
-public class HelpFragment extends ContractV4Fragment<HelpContract> implements PetObserver {
+public class HelpFragment extends ContractV4Fragment<HelpContract> {
     private BootstrapButton faqButton;
     private BootstrapButton tutorialButton;
 
@@ -27,6 +22,7 @@ public class HelpFragment extends ContractV4Fragment<HelpContract> implements Pe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
         }
     }
@@ -45,35 +41,12 @@ public class HelpFragment extends ContractV4Fragment<HelpContract> implements Pe
         return view;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        getContract().getPetObserver().unregister(this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        getContract().getPetObserver().register(this);
-    }
-
-    @Override
-    public void changed(Pet value) {
-        changed(EnumSet.allOf(PetProperties.class));
-    }
-
-    @Override
-    public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
-    }
-
     private void setListeners() {
         faqButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.startAnimation(AnimHelper.AddAlphaAnimation(v.getContext()));
+                getContract().showFaqs();
             }
         });
 

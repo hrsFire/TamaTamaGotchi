@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.BatteryManager;
 import android.os.Build;
@@ -13,7 +14,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -23,12 +26,12 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import at.teamgotcha.tamagotchi.common.FragmentEntry;
 import at.teamgotcha.tamagotchi.common.Icons;
 import at.teamgotcha.tamagotchi.enums.Gender;
+import at.teamgotcha.tamagotchi.fragments.FAQFragment;
 import at.teamgotcha.tamagotchi.fragments.LanguageFragment;
 import at.teamgotcha.tamagotchi.fragments.PetCreationFragment;
 import at.teamgotcha.tamagotchi.fragments.RestartFragment;
@@ -45,6 +48,7 @@ import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
 import at.teamgotcha.tamagotchi.interfaces.PetObserver;
+import at.teamgotcha.tamagotchi.interfaces.contracts.FaqFragmentContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.LanguageContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.PetCreationContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.VolumeContract;
@@ -65,7 +69,7 @@ import static at.teamgotcha.tamagotchi.helpers.BluetoothHelper.REQUEST_ENABLE_BT
 
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract,
-        LanguageContract, VolumeContract, PetCreationContract, PetObserver {
+        LanguageContract, VolumeContract, PetCreationContract, PetObserver, FaqFragmentContract {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -381,9 +385,31 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         mainOverlayLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ViewHelper.setXYHalf(mainOverlayLayout, getView());
+                //ViewHelper.setXYHalf(mainOverlayLayout, getView());
+                mainOverlayLayout.setX(0);
+                final float topMargin = (topMenuLayout.getY() + topMenuLayout.getHeight()) / 2;
+                mainOverlayLayout.setY(topMargin);
+
+                mainOverlayLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Display display = getWindowManager().getDefaultDisplay();
+                        Point size = new Point();
+                        display.getSize(size);
+                        int width = size.x;
+                        int height = size.y;
+
+                        if (mainOverlayLayout.getY() + mainOverlayLayout.getHeight() > height) {
+                            ViewGroup.LayoutParams params = mainOverlayLayout.getLayoutParams();
+                            params.height = (int) (mainOverlayLayout.getHeight() - topMargin);
+                            params.width = mainOverlayLayout.getWidth();
+
+                            mainOverlayLayout.setLayoutParams(params);
+                        }
+                    }
+                }, 100);
             }
-        }, 10);
+        }, 100);
     }
 
     private View getView() {
@@ -564,6 +590,16 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     }
 
     @Override
+    public void showFaqs() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentEntry fragmentEntry = getFirstOrDefaultMainOverlayFragment(FAQFragment.class);
+        fragmentEntry.setActive(true);
+        fragmentTransaction.add(R.id.main_overlay_layout, fragmentEntry.getFragment());
+        fragmentTransaction.commit();
+        showMainOverlayLayout();
+    }
+
+    @Override
     public void restartGame() {
         showSelectPetDialog();
     }
@@ -580,6 +616,11 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
     @Override
     public void closeVolumeView() {
+        disableMainOverlay();
+    }
+
+    @Override
+    public void closeFaqView() {
         disableMainOverlay();
     }
 

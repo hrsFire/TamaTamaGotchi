@@ -33,30 +33,30 @@
     <string name="ok">Ok</string>
     <string name="try_the_game">Try TamaTamagotchi ;-)</string>
     <string name="create">Create</string>
-    <string name="faq1">How can I feed my Pet?
+    <string name="faq1">How can I feed my Pet?\n\n
         On the right side of the screen is a menu, there
         you can find all the icons with which you can feed your pet, wash it or play with it.
         You can make music with your pet, take it for a walk or get it to bed.</string>
     <string name="faq2">
-        How can I rename my pet?
+        How can I rename my pet?\n\n
         When you create a new pet, you can give it a name. To create a new pet, go to Settings and select Restart.
         Your old pet will be deleted, you can only have one pet at a time.</string>
     <string name="faq3">
-        Where can I see the Mood Level?
+        Where can I see the Mood Level?\n\n
         You find the Mood Level on the bottom side of your screen. If the battery is green, everything is fine.
         If its yellow or red, you should feed your pet, play with it or send it to bed.</string>
     <string name="faq4">
-        How can I connect with a friend?
+        How can I connect with a friend?\n\n
         When you select Connection on the upper side of your screen, your smartphone will turn on Bluetooth
         and then connect to another device, if it also has the app and is near you.</string>
     <string name="faq5">
-        Can my pet die?
+        Can my pet die?\n\n
         No, your pet can\'t die. But make sure that it is happy, otherwise it will get very sad!</string>
     <string name="faq6">
-        What can I do with my Tamagotchi friend when the smartphones are connected?
+        What can I do with my Tamagotchi friend when the smartphones are connected?\n\n
         You can send your friend gifts, play with him, communicate and even make a baby.</string>
     <string name="faq7">
-        How do I make a baby?
+        How do I make a baby?\n\n
         If you are connected with a friend, you can tap on the pacifier in the menu on the right side
         of your screen.
         One of the pets has to be female and the other one male. The owner of the female pet will
