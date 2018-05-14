@@ -39,7 +39,8 @@ public abstract class ObservableSubject<T extends Observable<T,E>, E extends Enu
 
     @Override
     public boolean hasFullyChanged() {
-        return changedProperties.retainAll(EnumSet.allOf(clazz));
+        // check the size
+        return  changedProperties.size() == EnumSet.allOf(clazz).size();
     }
 
     @Override

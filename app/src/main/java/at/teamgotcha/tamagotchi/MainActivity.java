@@ -23,6 +23,10 @@ import android.widget.Toast;
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,6 +53,7 @@ import at.teamgotcha.tamagotchi.helpers.PersistenceHelper;
 import at.teamgotcha.tamagotchi.helpers.PetSaveHelper;
 import at.teamgotcha.tamagotchi.helpers.PetValues;
 import at.teamgotcha.tamagotchi.helpers.ViewHelper;
+import at.teamgotcha.tamagotchi.interfaces.BluetoothReceiver;
 import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.interfaces.contracts.BluetoothDeviceSelectionContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.FaqFragmentContract;
@@ -67,12 +72,14 @@ import at.teamgotcha.tamagotchi.interfaces.contracts.RestartContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.SettingsContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.SinglePlayerInteractionContract;
 import at.teamgotcha.tamagotchi.interfaces.contracts.StatusMenuContract;
+import at.teamgotcha.tamagotchi.pets.PetBluetoothServer;
 
 import static at.teamgotcha.tamagotchi.helpers.BluetoothHelper.REQUEST_ENABLE_BT;
 
 public class MainActivity extends AppCompatActivity implements SettingsContract, RestartContract, PetBackgroundContract, PetSpriteContract,
         HelpContract, MoodMenuContract, MultiplayerInteractionContract, SinglePlayerInteractionContract, StatusMenuContract,
-        LanguageContract, VolumeContract, PetCreationContract, PetObserver, FaqFragmentContract, BluetoothDeviceSelectionContract {
+        LanguageContract, VolumeContract, PetCreationContract, PetObserver, FaqFragmentContract, BluetoothDeviceSelectionContract,
+        BluetoothReceiver {
     private BootstrapButton settingsButton;
     private BootstrapButton connectionButton;
     private BootstrapButton helpButton;
@@ -106,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     private final String CRASH_INFO = "error";
     private final int BLUETOOTH_VISIBLE_DURATION = 20 * 60;
     private TimerTask petUpdateTask;
+    private Thread petBluetoothServer;
 
     private BluetoothDevice connectedBluetoothDevice;
 
@@ -244,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
 
         // create a new pet
         PetValues pv = PersistenceHelper.getPet(this);
-        boolean showSelectPetDialog = false;
+        boolean showRestartDialog = false;
 
         if(pv != null) {
             pet = new Pet(pv);
@@ -259,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             pet.setBackground(icons.getSquidAppearance());*/
 
             // for the first time you have to select the pet
-            showSelectPetDialog = true;
+            showRestartDialog = true;
         }
 
         registerBroadcastReceivers();
@@ -316,8 +324,8 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         // Broadcast
         mBroadcasterHelper = new BroadcastHelper();
 
-        if (showSelectPetDialog) {
-            showSelectPetDialog();
+        if (showRestartDialog) {
+            showRestartDialog();
         }
     }
 
@@ -442,6 +450,7 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                 if (!isMultiplayerActive) {
                     enableDisableMultiplayer(true);
                     //BluetoothHelper.makeDiscoverable(MainActivity.this, BLUETOOTH_VISIBLE_DURATION);
+                    showSearchBluetoothDevicesDialog();
                 } else {
                     enableDisableMultiplayer(false);
                 }
@@ -488,8 +497,6 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
         if (targetState) {
             BluetoothAdapter adapter = BluetoothHelper.getBluethoothAdapter();
 
-            showSearchBluetoothDevicesDialog();
-
             if (adapter != null && !adapter.isEnabled() && !bluetoothVisibilityRequested) {
                 isMultiplayerActive = true;
                 bluetoothVisibilityRequested = true;
@@ -506,6 +513,12 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
             connectionButton.setText(R.string.connect);
             ViewHelper.setVisibility(multiPlayerInteractionLayout, false);
             ViewHelper.setVisibility(singlePlayerInteractionLayout, true);
+
+            if (petBluetoothServer != null) {
+                petBluetoothServer.interrupt();
+                petBluetoothServer = null;
+            }
+
             connectedBluetoothDevice = null;
         }
     }
@@ -653,6 +666,9 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
     public void devicePaired(BluetoothDevice device) {
         disableMainOverlay();
         connectedBluetoothDevice = device;
+
+        petBluetoothServer = new Thread(new PetBluetoothServer(this));
+        petBluetoothServer.start();
     }
 
     @Override
@@ -721,5 +737,31 @@ public class MainActivity extends AppCompatActivity implements SettingsContract,
                     break;
             }
         }
+    }
+
+    @Override
+    public void receiveBluetoothData(InputStream inputStream) {
+        String newLine = System.getProperty("line.separator");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder result = new StringBuilder();
+        String line;
+        boolean flag = false;
+
+        try {
+            while ((line = reader.readLine()) != null) {
+                result.append(flag? newLine: "").append(line);
+                flag = true;
+            }
+        } catch (IOException e) {
+        }
+
+        String info = result.toString();
+
+        Toast.makeText(MainActivity.this, getString(R.string.gift_received), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public BluetoothDevice getActiveBluetoothDevice() {
+        return connectedBluetoothDevice;
     }
 }

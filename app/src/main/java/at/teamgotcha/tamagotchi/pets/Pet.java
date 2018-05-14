@@ -136,6 +136,7 @@ public class Pet extends ObservableSubject<Pet,PetProperties> {
 
     public void setName(String name) {
         this.name = name;
+        EnumSet.of(PetProperties.NAME);
     }
 
     public Gender getGender() {
@@ -144,6 +145,7 @@ public class Pet extends ObservableSubject<Pet,PetProperties> {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+        addChangedProperties(EnumSet.of(PetProperties.GENDER));
     }
 
     // other methods

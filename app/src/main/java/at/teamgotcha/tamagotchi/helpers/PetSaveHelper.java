@@ -8,7 +8,7 @@ import at.teamgotcha.tamagotchi.enums.PetProperties;
 import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.pets.Pet;
 
-public class PetSaveHelper implements PetObserver {
+public class PetSaveHelper implements PetObserver, Runnable {
     private Pet pet;
     private Context context;
 
@@ -19,16 +19,22 @@ public class PetSaveHelper implements PetObserver {
 
     @Override
     public void changed(Pet value) {
+        pet = value;
+
         if (pet != null) {
-            pet = value;
-            PersistenceHelper.savePet(pet,context);
+            PersistenceHelper.savePet(pet, context);
         }
     }
 
     @Override
     public void changed(EnumSet<PetProperties> properties) {
         if(pet != null) {
-            PersistenceHelper.savePet(pet,context);
+            new Thread(this).start();
         }
+    }
+
+    @Override
+    public void run() {
+        PersistenceHelper.savePet(pet, context);
     }
 }

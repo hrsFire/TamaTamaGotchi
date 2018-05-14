@@ -1,5 +1,6 @@
 package at.teamgotcha.tamagotchi.fragments;
 
+import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,11 @@ import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
+import java.io.IOException;
 import java.util.EnumSet;
 
 import at.teamgotcha.tamagotchi.helpers.AnimHelper;
+import at.teamgotcha.tamagotchi.helpers.BluetoothHelper;
 import at.teamgotcha.tamagotchi.pets.Pet;
 import at.teamgotcha.tamagotchi.R;
 import at.teamgotcha.tamagotchi.base.ContractV4Fragment;
@@ -88,6 +91,13 @@ public class MultiPlayerInteractionFragment extends ContractV4Fragment<Multiplay
                 v.startAnimation(AnimHelper.AddBounceAnimation(communicationButton.getContext()));
 
                 Toast.makeText(getContext(), R.string.communicate, Toast.LENGTH_SHORT).show();
+
+                try {
+                    BluetoothDevice device = getContract().getActiveBluetoothDevice();
+                    BluetoothHelper.sendData("this is a test", device);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 

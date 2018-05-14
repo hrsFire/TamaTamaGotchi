@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.os.ParcelUuid;
 import android.util.Log;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -43,8 +46,8 @@ public class BluetoothHelper {
     }
 
     // https://stackoverflow.com/questions/22899475/android-sample-bluetooth-code-to-send-a-simple-string-via-bluetooth
-    public static OutputStream sendData(InputStream inStream, BluetoothDevice targetDevice) throws IOException {
-        OutputStream outputStream = null;
+    public static void sendData(String content, BluetoothDevice targetDevice) throws IOException {
+        OutputStream outputStream;
         BluetoothAdapter adapter = getBluethoothAdapter();
 
         if (adapter != null) {
@@ -53,17 +56,32 @@ public class BluetoothHelper {
             }
 
             if (adapter.isEnabled()) {
-                ParcelUuid[] uuids = targetDevice.getUuids();
                 // https://stackoverflow.com/questions/16457693/the-differences-between-createrfcommsockettoservicerecord-and-createrfcommsocket
-                BluetoothSocket socket = targetDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
-                socket.connect();
-                outputStream = socket.getOutputStream();
-                inStream = socket.getInputStream();
+                /*BluetoothSocket socket = targetDevice.createInsecureRfcommSocketToServiceRecord(uuids[0].getUuid());*/
+                Method createSocket;
+
+                try {
+                    targetDevice.createBond();
+                    createSocket = targetDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class});
+                    BluetoothSocket socket = null;
+                    socket = (BluetoothSocket) createSocket.invoke(targetDevice, Integer.valueOf(1));
+                    socket.connect();
+                    outputStream = socket.getOutputStream();
+
+                    outputStream.write(content.getBytes());
+                    outputStream.flush();
+                    outputStream.close();
+                    socket.close();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
             } else {
                 Log.e("error", "Bluetooth is disabled.");
             }
         }
-
-        return outputStream;
     }
 }

@@ -16,7 +16,7 @@ import at.teamgotcha.tamagotchi.enums.PetProperties;
 import at.teamgotcha.tamagotchi.interfaces.PetObserver;
 import at.teamgotcha.tamagotchi.interfaces.contracts.RestartContract;
 
-public class RestartFragment extends ContractV4Fragment<RestartContract> implements PetObserver {
+public class RestartFragment extends ContractV4Fragment<RestartContract> {
     private BootstrapButton yesButton;
     private BootstrapButton noButton;
 
@@ -43,30 +43,6 @@ public class RestartFragment extends ContractV4Fragment<RestartContract> impleme
         setListeners();
 
         return view;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        getContract().getPetObserver().unregister(this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        getContract().getPetObserver().register(this);
-    }
-
-    @Override
-    public void changed(Pet value) {
-        changed(EnumSet.allOf(PetProperties.class));
-    }
-
-    @Override
-    public void changed(EnumSet<PetProperties> properties) {
-        // @todo: update fragment
     }
 
     private void setListeners() {

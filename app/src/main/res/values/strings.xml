@@ -92,4 +92,7 @@
     <!-- Pets -->
     <string name="pet_squid">Squid</string>
     <string name="pet_bubblegum">Bubblegum</string>
+
+    <!-- Multiplayer -->
+    <string name="gift_received">Gift received</string>
 </resources>
